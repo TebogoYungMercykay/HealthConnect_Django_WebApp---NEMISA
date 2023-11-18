@@ -18,8 +18,9 @@ urlpatterns = [
     path('close_consultation/<int:consultation_id>', views.close_consultation , name='close_consultation'),
     path('post', views.post, name='post'),
     path('chat_messages', views.chat_messages, name='chat_messages'),
-    path('blog' , views.retrieve_public_post, name='blog'),
-    path('posted' , views.load_public_post, name='recent_post')
+    path('allposts' , views.retrieve_public_post, name='posts'),
+    path('posted' , views.load_public_post, name='recent_post'),
+    path('reply' , views.createreply, name='create_reply')
     
 
 ]  

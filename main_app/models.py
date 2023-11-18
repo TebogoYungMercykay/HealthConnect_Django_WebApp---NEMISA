@@ -1,3 +1,4 @@
+import datetime
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.postgres.fields import ArrayField
@@ -66,7 +67,7 @@ class diseaseinfo(models.Model):
 
     diseasename = models.CharField(max_length = 200)
     no_of_symp = models.IntegerField()
-    symptomsname = ArrayField(models.CharField(max_length=200))
+    symptomsname = models.TextField()
     confidence = models.DecimalField(max_digits=5, decimal_places=2)
     consultdoctor = models.CharField(max_length = 200)
 
@@ -83,9 +84,19 @@ class consultation(models.Model):
 
 class public_post(models.Model):
     post_id = models.AutoField(primary_key=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE,default=1)
     post_header = models.CharField(max_length=250)
-    post_text = models.CharField(max_length=100000)
+    post_text = models.TextField()
+    created_at = models.DateTimeField(default=datetime.datetime.now)
 
+
+    
+
+class Reply(models.Model):
+    user = models.ForeignKey(doctor, on_delete=models.CASCADE)
+    post = models.ForeignKey(public_post, on_delete=models.CASCADE, related_name='replies')
+    content = models.TextField()
+    created_at = models.DateTimeField(default=datetime.datetime.now)
 
 class rating_review(models.Model):
 

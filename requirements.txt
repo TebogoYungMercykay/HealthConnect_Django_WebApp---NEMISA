@@ -1,5 +1,14 @@
-  
-django
+asgiref
+Django
 joblib
-scikit-learn
+mysqlclient
+numpy
+pip
 psycopg2
+python-decouple
+scikit-learn
+scipy
+setuptools
+sqlparse
+threadpoolctl
+tzdata

@@ -499,12 +499,12 @@ def retrieve_public_post(request):
    if request.method == 'GET':
       #retrieving the public posts
       all_posts = public_post.objects.all()
-      return render(request , 'blog/blog.html', {'all_posts': all_posts})
+      return render(request , 'blog/posts.html', {'all_posts': all_posts})
 
 def load_public_post(request):
      if request.method == 'POST':
         # Get data from the form
-        public_user_name = request.POST.get('username',None)
+        public_user_name =request.user.username
         public_post_text = request.POST.get('posttext',None)
         print("##",public_user_name,public_post_text)
         # Create a new post instance
@@ -512,5 +512,7 @@ def load_public_post(request):
         new_post.save()
 
          # Redirect to the retrieve_public_post view using GET
-        return JsonResponse({ 'msg': "Done" })
-    
+        return JsonResponse({ 'msg': "Done" }) 
+     
+def createreply(request):
+   pass
