@@ -132,7 +132,7 @@
 								<i class="i-plain bi-telephone m-0"></i>
 								<div class="he-text">
 									Call Us
-									<span>(1) 22 54215821</span>
+									<span>(+27) 011 542 9821</span>
 								</div>
 							</li>
 							<li>
@@ -146,7 +146,7 @@
 								<i class="i-plain bi-clock m-0"></i>
 								<div class="he-text">
 									We'are Open
-									<span>Mon - Mon, 00AM to 00PM</span>
+									<span>24/7</span>
 								</div>
 							</li>
 						</ul>
@@ -181,18 +181,20 @@
 						<nav class="primary-menu with-arrows">
 
 							<ul class="menu-container">
-								<li class="menu-item current"><a class="menu-link" href="demo-construction.html"><div>Home</div></a></li>
-								<li class="menu-item"><a class="menu-link" href="demo-construction-services.html"><div>What we do</div></a>
+								<li class="menu-item current"><a class="menu-link" href="{% url 'home' %}"><div>Home</div></a></li>
+								<li class="menu-item"><a class="menu-link" href="{% url 'home' %}"><div>What we do</div></a>
 									<ul class="sub-menu-container">
-										<li class="menu-item"><a class="menu-link" href="#"><div>Professional Medical insights</div></a></li>
-										<li class="menu-item"><a class="menu-link" href="#"><div>View Posts</div></a></li>
-										<li class="menu-item"><a class="menu-link" href="#"><div>Blogs</div></a></li>
-										<li class="menu-item"><a class="menu-link" href="#"><div>Schedule Video Consultation</div></a></li>
+										<li class="menu-item"><a class="menu-link" href="{% url 'home' %}"><div>Professional Medical insights</div></a></li>
+										<li class="menu-item"><a class="menu-link" href="{% url 'home' %}"><div>View Posts</div></a></li>
+										<li class="menu-item"><a class="menu-link" href="{% url 'home' %}"><div>Blogs</div></a></li>
+										<li class="menu-item"><a class="menu-link" href="{% url 'home' %}"><div>Schedule Video Consultation</div></a></li>
 					
 									</ul>
 								</li>
-								<li class="menu-item"><a class="menu-link" href="demo-construction-about-us.html"><div>About Us</div></a></li>
-							
+								<li class="menu-item"><a class="menu-link" href="{% url 'home' %}"><div>About Us</div></a></li>
+								<li class="menu-item"><a class="menu-link nav-item ml-"  data-toggle="modal" data-target=".bd-example-modal-lg"><div>Sign in</div></a></li>
+								<li class="menu-item"><a class="menu-link nav-item ml-2"  data-toggle="modal" data-target=".bd-example-modal-lg2"><div>Register</div></a></li>
+
 							</ul>
 
 						</nav><!-- #primary-menu end -->
@@ -281,16 +283,16 @@
       
       
                       <!-- Small modal -->
-      
-      <div class="modal fade" id="logout-modal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-sm">
-          <div class="modal-content">
-            <div class="modal-header"><h4>Logout <i class="fa fa-lock"></i></h4></div>
-            <div class="modal-body"><i class="fa fa-question-circle"></i><span style="color: rgb(42, 187, 6);">{{user.patient.name}}</span>, Are you sure you want to log-off?</div>
-            <div class="modal-footer"><a href="{% url 'logout' %}" class="btn btn-primary btn-block">Logout</a></div>
-          </div>
-        </div>
-      </div>
+					
+					<div class="modal fade" id="logout-modal" tabindex="-1" role="dialog" aria-hidden="true">
+						<div class="modal-dialog modal-sm">
+						<div class="modal-content">
+							<div class="modal-header"><h4>Logout <i class="fa fa-lock"></i></h4></div>
+							<div class="modal-body"><i class="fa fa-question-circle"></i><span style="color: rgb(42, 187, 6);">{{user.patient.name}}</span>, Are you sure you want to logout?</div>
+							<div class="modal-footer"><a href="{% url 'logout' %}" class="btn btn-primary btn-block">Logout</a></div>
+						</div>
+						</div>
+					</div>
                       
                       {% else %}
                       
