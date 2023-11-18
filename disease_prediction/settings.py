@@ -25,7 +25,7 @@ SECRET_KEY = 'v3v5vfsn0xxjtmb=eoawoiw$5br4g0r&jy_l39995h_93l+-z5'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['healthconnectapp.azurewebsites.net']
+#ALLOWED_HOSTS = ['healthconnectapp.azurewebsites.net']
 
 # Application definition
 
@@ -79,18 +79,19 @@ WSGI_APPLICATION = 'disease_prediction.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.environ.get('SERVERNAME'),
-        'USER': os.environ.get('secrets.USER'),
-        'PASSWORD': os.environ.get('secrets.PASSWORD'),
-        'HOST': os.environ.get('secrets.HOST'),
-        'PORT': os.environ.get('secrets.PORT'),
+        'NAME':config('SERVERNAME'),
+        'USER':config('USER'),
+        'PASSWORD': config('PASSWORD'),
+        'HOST':config('HOST'),
+        'PORT':config('PORT'),
         'OPTIONS': {
             'ssl': {
-                'ca': os.environ.get('SSLPATH'),  # Path to your CA certificate
+                'ca': config('SSLPATH'),  # Path to your CA certificate
             },
         },
     }
 }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
