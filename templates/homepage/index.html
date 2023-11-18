@@ -4,7 +4,37 @@
 
  
 	{% block head %}
+<!-- EXTRAS START -->
+   <!-- Font Imports -->
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Source+Sans+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+ 
+   <!-- Core Style -->
+   <link rel="stylesheet" href="{% static 'extras/style.css' %}">
+ 
+   <!-- Font Icons -->
+   <link rel="stylesheet" href="{% static 'extras/css/font-icons.css' %}">
+ 
+   <!-- Plugins/Components CSS -->
+   <link rel="stylesheet" href="{% static 'extras/css/swiper.css' %}">
+ 
+   <!-- Niche Demos -->
+   <link rel="stylesheet" href="{% static 'extras/demos/construction/construction.css' %}">
+ 
+   <!-- Custom CSS -->
+   <link rel="stylesheet" href="{% static 'extras/css/custom.css' %}">
+   <!-- EXTRAS END -->
 
+
+  <style>
+    .swiper-slide-bg{
+      background-image: url("{% static 'extras/demos/construction/images/hero.jpg' %}"); 
+      background-position: center bottom;
+    
+
+    }
+  </style>
 
 {% endblock %}
 
@@ -13,7 +43,91 @@
 
 {% block body %}
 
+<section id="slider" class="slider-element slider-parallax swiper_wrapper min-vh-75" data-loop="true">
 
+  <div class="swiper-container swiper-parent">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide">
+        <div class="container">
+          <div class="slider-caption">
+            <div>
+              <h2>Welcome to HealthConnect</h2>
+              <p class="d-none d-sm-block">Our platform provides a direct channel for
+                patients to engage with healthcare professionals.
+                Users can seek advice,  &amp;share concerns, and receive
+                timely responses from doctors. </p>
+            </div>
+          </div>
+        </div>
+        <div class="swiper-slide-bg" ></div>
+      </div>
+      
+    </div>
+    
+  </div>
+
+</section>
+<!-- Content
+============================================= -->
+<section id="content">
+  <div class="content-wrap">
+
+    <div class="promo promo-light promo-full promo-uppercase p-5 mb-6 header-stick">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-12 col-lg">
+            <h3 style="letter-spacing: 2px;">Start Interacting for your health with verified doctors</h3>
+            <span>We have created a platform of inclusivity with health information at your fingertips</span>
+          </div>
+          <div class="col-12 col-lg-auto mt-4 mt-lg-0">
+            <a href="#" class="button button-large button-circle button-black m-0">Start Now</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div class="row justify-content-center col-mb-50">
+        <div class="col-sm-6 col-lg-4">
+          <div class="feature-box media-box">
+            <div class="fbox-media">
+              <img class="rounded" src="{% static 'extras/demos/construction/images/doc1.jpg' %}" alt="Why choose Us?">
+            </div>
+            <div class="fbox-content px-0">
+              <h3>Dr.Nell Atkinson(Cardiothoracic Surgeon)<span class="subtitle">Precision in Practice: Mastering Surgical Skills</span></h3>
+              <p>Join us as we explore the world of skilled medical professionals in our latest blog. Discover the artistry behind surgical precision as doctors share their insights into the techniques and expertise that ensure your health is in good hands. From intricate procedures to delicate maneuvers, learn how these medical artisans excel in their craft, leaving no room for error.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-6 col-lg-4">
+          <div class="feature-box media-box">
+            <div class="fbox-media">
+              <img class="rounded" src="{% static 'extras/demos/construction/images/doc2.jpg' %}" alt="Effective Planning">
+            </div>
+            <div class="fbox-content px-0">
+              <h3>Dr Michell Brown(Medical doctor)<span class="subtitle">Healing Harmonies: The Symphony of Effective Patient Care</span></h3>
+              <p>Take a deep dive into the orchestration of effective patient care with our insightful blog. Medical doctors provide a behind-the-scenes look at how they organize and plan each aspect of patient treatment. From diagnosis to recovery, explore how meticulous planning and coordination contribute to a harmonious and successful healthcare journey.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-6 col-lg-4">
+          <div class="feature-box media-box">
+            <div class="fbox-media">
+              <img class="rounded" src="{% static 'extras/demos/construction/images/doc3.jpg' %}" alt="Why choose Us?">
+            </div>
+            <div class="fbox-content px-0">
+              <h3>Dr. Angel Lizberg(Dentist)<span class="subtitle">Preserving Well-being: A Prescription for Effective Risk Management</span></h3>
+              <p>In our latest blog, we address the crucial role of risk management in the field of medicine. Join medical doctors as they assure you that they've got you covered when it comes to your health. Explore the strategies and measures employed to manage and mitigate risks, ensuring a safe and secure healthcare experience for every patient.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
     
 <div class="jumbotron">
     <h1 class="display-4">Welcome to HealthConnect</h1>
@@ -254,7 +368,13 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-  
+     <!-- Go To Top (EXTRAS)
+    ============================================= -->
+    <div id="gotoTop" class="uil uil-angle-up"></div>
+
+    <!-- JavaScripts
+    ============================================= -->
+    <script src="{% static 'extras/js/functions.js' %}"></script>
     
 
 
