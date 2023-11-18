@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'homepage/bootstrap/css/bootstrap.min.css' %}">
     
-   <title>predico</title>
+   <title>HealthConnect</title>
    
    <!-- EXTRAS START -->
    <!-- Font Imports -->
@@ -74,10 +74,10 @@
 						<ul id="top-social">
 							<li><a href="#" class="h-bg-facebook"><span class="ts-icon"><i class="fa-brands fa-facebook-f"></i></span><span class="ts-text">Facebook</span></a></li>
 							<li><a href="#" class="h-bg-twitter"><span class="ts-icon"><i class="fa-brands fa-twitter"></i></span><span class="ts-text">Twitter</span></a></li>
-							<li><a href="#" class="h-bg-dribbble"><span class="ts-icon"><i class="fa-brands fa-dribbble"></i></span><span class="ts-text">Dribbble</span></a></li>
-							<li><a href="#" class="h-bg-github"><span class="ts-icon"><i class="fa-brands fa-github"></i></span><span class="ts-text">Github</span></a></li>
-							<li><a href="#" class="h-bg-pinterest"><span class="ts-icon"><i class="fa-brands fa-pinterest-p"></i></span><span class="ts-text">Pinterest</span></a></li>
 							<li><a href="#" class="h-bg-instagram"><span class="ts-icon"><i class="fa-brands fa-instagram"></i></span><span class="ts-text">Instagram</span></a></li>
+							<li><a href="#" class="h-bg-gmail"><span class="ts-icon"><i class="fa-regular fa-envelope"></i></span><span class="ts-text">Email</span></a></li>
+							<li><a href="#" style="margin-top: 10%;padding-left: 10px;"><div class="he-text"><span>(+27) 011 546 7890</span></div></a></li>
+							
 						</ul><!-- #top-social end -->
 
 					</div>
@@ -110,54 +110,15 @@
     	<!-- Header
 		============================================= -->
 		<header id="header" class="header-size-sm" data-sticky-shrink="false">
-			<div class="container">
-				<div class="header-row">
-
-					<!-- Logo
+		<!-- Logo
 					============================================= -->
-					<div id="logo" class="ms-auto ms-lg-0 me-lg-auto">
-						<a href="demo-construction.html">
-              <ul class ="list-unstyled ">
-                <li><img class ="default-logo" src="{% static 'extras/demos/construction/images/logo.png' %}" width="30%" height="30%" float="left" alt="Canvas Logo">	 </li>
-                <li><p img class ="default-logo">HealthConnect</p></li>
-               
-              </ul>
-						</a>
-					</div><!-- #logo end -->
-
-					<div class="header-misc d-none d-lg-flex">
-
-						<ul class="header-extras">
-							<li>
-								<i class="i-plain bi-telephone m-0"></i>
-								<div class="he-text">
-									Call Us
-									<span>(+27) 011 542 9821</span>
-								</div>
-							</li>
-							<li>
-								<i class="i-plain bi-envelope m-0"></i>
-								<div class="he-text">
-									Email Us
-									<span>info@healthconnect.com</span>
-								</div>
-							</li>
-							<li>
-								<i class="i-plain bi-clock m-0"></i>
-								<div class="he-text">
-									We'are Open
-									<span>24/7</span>
-								</div>
-							</li>
-						</ul>
-
-					</div>
-
-				</div>
-			</div>
+			
+			</div><!-- #logo end -->
 
 			<div id="header-wrap">
-				<div class="container">
+			 <div class="container">
+				
+					
 					<div class="header-row justify-content-between flex-row-reverse flex-lg-row justify-content-lg-center">
 
 						<div class="header-misc">
@@ -181,11 +142,16 @@
 						<nav class="primary-menu with-arrows">
 
 							<ul class="menu-container">
+								<ul class ="list-unstyled " style="position: relative; right:40%; display: flex; float: left;" >
+									<li><img  src="{% static 'extras/demos/construction/images/logo.png' %}" width="50px" height="50px"  alt="Canvas Logo">	 </li>
+									<li><p style="font-size: medium; color: rgb(71, 71, 71); font-weight: 600; color:lightskyblue; margin-bottom:-10%;margin-top:12%;">HealthConnect</p></li>
+								</ul>
+
 								<li class="menu-item current"><a class="menu-link" href="{% url 'home' %}"><div>Home</div></a></li>
 								<li class="menu-item"><a class="menu-link" href="{% url 'home' %}"><div>What we do</div></a>
 									<ul class="sub-menu-container">
 										<li class="menu-item"><a class="menu-link" href="{% url 'home' %}"><div>Professional Medical insights</div></a></li>
-										<li class="menu-item"><a class="menu-link" href="{% url 'home' %}"><div>View Posts</div></a></li>
+										<li class="menu-item"><a class="menu-link" href="{% url 'posts' %}"><div>View Posts</div></a></li>
 										<li class="menu-item"><a class="menu-link" href="{% url 'home' %}"><div>Blogs</div></a></li>
 										<li class="menu-item"><a class="menu-link" href="{% url 'home' %}"><div>Schedule Video Consultation</div></a></li>
 					
@@ -210,39 +176,18 @@
 		</header><!-- #header end -->
 
 
-      <div class="container-fluid">
-
-          <div class="page-header mt-1 mb-1 ml-1 ">
-         <!--<h1>HealthConnect</h1> -->   
-       
-        </div>
-      
-      
-          <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: whitesmoke;">
-              <a class="navbar-brand" href="{% url 'home' %}">He24 </a>
-              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
-          <span class="navbar-toggler-icon"></span>
-              </button>
-              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+ 
+          <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: white;">
+              
                   <ul class="navbar-nav ml-auto">
-                      <li class="nav-item">
-                          <a class="nav-link" href="{% url 'home' %}">Home</a>
-                      </li>
-                      <li class="nav-item">
-                          <a class="nav-link" href="{% url 'home' %}">About</a>
-                      </li>
-                      <li class="nav-item">
-                          <a class="nav-link" href="{% url 'home' %}">Contact</a>
-                      </li>
-                      
-      
+                    
       
                     {% if user.is_authenticated %}
                       
                       {% if user.patient %}
       
                       <li class="nav-item ml-2">
-                      <li class="nav-link" href="{% url 'patient_ui' %}" style="color: rgb(91, 252, 50);">Hello, {{user.patient.name}}</li>
+                      <li class="nav-link" href="{% url 'patient_ui' %}" style="color: black; text-transform: uppercase; font-size: 13px;">Hello, {{user.patient.name}} <hr style="color:grey"></li>
                       </li>
                       <li class="nav-item ml-2">
                           <a class="nav-link" href="{% url 'patient_ui' %}">Profile</a>
@@ -253,7 +198,7 @@
                       {% if user.doctor  %}
       
                       <li class="nav-item ml-2">
-                        <li class="nav-link" href="{% url 'doctor_ui' %}" style="color: rgb(91, 252, 50);">Hello, Dr. {{user.doctor.name}}</li>
+                        <li class="nav-link" href="{% url 'doctor_ui' %}" style="color: black; text-transform: uppercase;font-size: 13px;">Hello, Dr. {{user.doctor.name}} <hr style="color:grey"></li>
                         </li>
                         <li class="nav-item ml-2">
                             <a class="nav-link" href="{% url 'doctor_ui' %}">Profile</a>
@@ -265,7 +210,7 @@
                       {% if user.is_superuser  %}
       
                       <li class="nav-item ml-2">
-                        <li class="nav-link" href="{% url 'admin_ui' %}" style="color: rgb(91, 252, 50);">Admin: {{user.username}}</li>
+                        <li class="nav-link" href="{% url 'admin_ui' %}" style="color: black;text-transform: uppercase;font-size: 13px;">Admin: {{user.username}} <hr style="color:grey"></li>
                         </li>
                         <li class="nav-item ml-2">
                             <a class="nav-link" href="{% url 'admin_ui' %}">Profile</a>
@@ -275,7 +220,7 @@
                       {% endif %}
       
                       <li class="nav-item ml-2">
-      <button class="btn btn-danger btn-xs" data-toggle="modal" data-target="#logout-modal" style="color: rgb(247, 190, 188);">Log out</button>
+      <button class="btn btn-primary" data-toggle="modal" data-target="#logout-modal" >Log out</button>
                         
                       </li>
       
@@ -296,17 +241,12 @@
                       
                       {% else %}
                       
-                      <li class="nav-item ml-2">
-                          <a class="nav-link" data-toggle="modal" data-target=".bd-example-modal-lg2">Signup</a>
-                      </li>
-                      <li class="nav-item ml-">
-                          <a class="nav-link" data-toggle="modal" data-target=".bd-example-modal-lg">Signin</a>
-                      </li>
+                    
                       
                       {% endif %}
       
                   </ul>
-              </div>
+           
           </nav>
       
 
@@ -320,7 +260,7 @@
       <div class="modal-content">
      
   <center>
-    <h1>Sign-In  As</h1>
+    <h1>Sign in As</h1>
     </center>
   <br><br>
   
@@ -360,18 +300,9 @@
 
   {% endblock %}
 
-
-
-
 </div>
 
 
-
-   <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-   
-    <script src="https://code.jquery.com/jquery-3.4.1.js"integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="crossorigin="anonymous"></script> 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   
     <!-- Go To Top (EXTRAS)
