@@ -66,4 +66,4 @@ jobs:
         with:
           app-name: 'healthconnectApp'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_3FD29B44206D489A8D63B6829CEE1F7A }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_2D802FAE79E843CAB8380FAEA2C2664A }}
