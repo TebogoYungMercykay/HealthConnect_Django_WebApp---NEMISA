@@ -91,6 +91,16 @@
 
 
 </div>
-
+<form action="whatsapp" method="post">
+    {% csrf_token %}
+    <br>
+    <div class="container">
+      <label for="body"><b>Message</b></label>
+      <input type="text" placeholder="Enter Body" name="body" required>
+      <label for="mobile"><b>Mobile</b></label>
+      <input type="text" placeholder="Enter Mobile" name="mobile" required>
+      <button type="submit">Send to Whatsapp</button>
+    </div>
+  </form>
 
 {% endblock %}
