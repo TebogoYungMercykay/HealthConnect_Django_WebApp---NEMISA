@@ -5,8 +5,9 @@ from datetime import date
 
 from django.contrib import messages
 from django.contrib.auth.models import User , auth
-from .models import patient , doctor , diseaseinfo , consultation ,rating_review
+from .models import patient , doctor , diseaseinfo , consultation ,rating_review, public_post
 from chats.models import Chat,Feedback
+
 
 # Create your views here.
 
@@ -491,3 +492,25 @@ def chat_messages(request):
 #-----------------------------chatting system ---------------------------------------------------
 
 
+#----------------------------Blog---------------------------------------------------------------
+#Retrieve any public posts
+def retrieve_public_post(request):
+   print("The request method .........................................." , request)
+   if request.method == 'GET':
+      #retrieving the public posts
+      all_posts = public_post.objects.all()
+      return render(request , 'blog/blog.html', {'all_posts': all_posts})
+
+def load_public_post(request):
+     if request.method == 'POST':
+        # Get data from the form
+        public_user_name = request.POST.get('username',None)
+        public_post_text = request.POST.get('posttext',None)
+        print("##",public_user_name,public_post_text)
+        # Create a new post instance
+        new_post = public_post(post_header=public_user_name, post_text=public_post_text)
+        new_post.save()
+
+         # Redirect to the retrieve_public_post view using GET
+        return JsonResponse({ 'msg': "Done" })
+    
