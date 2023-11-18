@@ -3,10 +3,32 @@ from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from .models import Chat , Feedback
 from main_app.views import patient_ui, doctor_ui
 from main_app.models import patient , doctor
+from twilio.rest import Client
 
 # Create your views here.
 
+def whatsapp(request):
+   if request.method == 'POST':
+      body =  request.POST.get('body')
+      mobile =  request.POST.get('mobile')
 
+      # if mobile.find('+27') == -1:
+      #    mobile = '+27' + mobile
+
+      account_sid = 'tt'
+      auth_token = 'tt2'
+      client = Client(account_sid, auth_token)
+
+      message = client.messages.create(
+        from_='whatsapp:+14155238886',
+        body = str(body),
+        to = 'whatsapp:' + str(mobile)
+      )
+
+      print(message.sid)
+
+      # Redirecting
+      return redirect('admin_ui')
 
 def post_feedback(request):
     
