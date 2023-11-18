@@ -80,14 +80,14 @@ WSGI_APPLICATION = 'disease_prediction.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME':config(${{ secrets.SERVERNAME }}),
-        'USER':config(${{ secrets.USER }}),
-        'PASSWORD': config(${{ secrets.PASSWORD }}),
-        'HOST':config(${{ secrets.HOST }}),
-        'PORT':config(${{ secrets.PORT }}),
+        'NAME': os.environ.get('SERVERNAME'),
+        'USER': os.environ.get('secrets.USER'),
+        'PASSWORD': os.environ.get('secrets.PASSWORD'),
+        'HOST': os.environ.get('secrets.HOST'),
+        'PORT': os.environ.get('secrets.PORT'),
         'OPTIONS': {
             'ssl': {
-                'ca': config('SSLPATH'),  # Path to your CA certificate
+                'ca': os.environ.get('SSLPATH'),  # Path to your CA certificate
             },
         },
     }
