@@ -63,7 +63,7 @@ class doctor(models.Model):
 
 class diseaseinfo(models.Model):
 
-    patient = models.ForeignKey(patient , null=True, on_delete=models.SET_NULL)
+    patient = models.ForeignKey(patient , null=True, on_delete=models.SET_NULL,db_column="patient")
 
     diseasename = models.CharField(max_length = 200)
     no_of_symp = models.IntegerField()
@@ -75,8 +75,8 @@ class diseaseinfo(models.Model):
 
 class consultation(models.Model):
 
-    patient = models.ForeignKey(patient ,null=True, on_delete=models.SET_NULL)
-    doctor = models.ForeignKey(doctor ,null=True, on_delete=models.SET_NULL)
+    patient = models.ForeignKey(patient ,null=True, on_delete=models.SET_NULL,db_column="patient")
+    doctor = models.ForeignKey(doctor ,null=True, on_delete=models.SET_NULL,db_column="doctor")
     diseaseinfo = models.OneToOneField(diseaseinfo, null=True, on_delete=models.SET_NULL)
     consultation_date = models.DateField()
     status = models.CharField(max_length = 20)
@@ -84,7 +84,7 @@ class consultation(models.Model):
 
 class public_post(models.Model):
     post_id = models.AutoField(primary_key=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE,default=1)
+    user = models.ForeignKey(User, on_delete=models.CASCADE,default=1,db_column="user")
     post_header = models.CharField(max_length=250)
     post_text = models.TextField()
     created_at = models.DateTimeField(default=datetime.datetime.now)
@@ -93,15 +93,15 @@ class public_post(models.Model):
     
 
 class Reply(models.Model):
-    user = models.ForeignKey(doctor, on_delete=models.CASCADE)
-    post = models.ForeignKey(public_post, on_delete=models.CASCADE, related_name='replies')
+    user = models.ForeignKey(doctor, on_delete=models.CASCADE,db_column="user")
+    post = models.ForeignKey(public_post, on_delete=models.CASCADE,db_column="post", related_name='replies')
     content = models.TextField()
     created_at = models.DateTimeField(default=datetime.datetime.now)
 
 class rating_review(models.Model):
 
-    patient = models.ForeignKey(patient ,null=True, on_delete=models.SET_NULL)
-    doctor = models.ForeignKey(doctor ,null=True, on_delete=models.SET_NULL)
+    patient = models.ForeignKey(patient ,null=True, on_delete=models.SET_NULL,db_column="patient")
+    doctor = models.ForeignKey(doctor ,null=True, on_delete=models.SET_NULL,db_column="doctor")
     
     rating = models.IntegerField(default=0)
     review = models.TextField( blank=True ) 

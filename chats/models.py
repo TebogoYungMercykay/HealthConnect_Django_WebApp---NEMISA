@@ -6,8 +6,8 @@ from main_app.models import consultation
 
 class Chat(models.Model):
     created = models.DateTimeField(auto_now_add=True)
-    consultation_id =  models.ForeignKey(consultation, on_delete=models.CASCADE)
-    sender = models.ForeignKey(User, on_delete=models.CASCADE)
+    consultation_id =  models.ForeignKey(consultation, on_delete=models.CASCADE,db_column="consultation_id")
+    sender = models.ForeignKey(User, on_delete=models.CASCADE,db_column="sender")
     message = models.TextField()
 
     def __unicode__(self):
@@ -18,7 +18,7 @@ class Chat(models.Model):
 
 class Feedback(models.Model):
     created = models.DateTimeField(auto_now_add=True)
-    sender = models.ForeignKey(User, on_delete=models.CASCADE)
+    sender = models.ForeignKey(User, on_delete=models.CASCADE,db_column="sender")
     feedback = models.TextField()
 
     def __unicode__(self):
