@@ -272,11 +272,11 @@ img{ max-width:100%;}
           <h4 class="card-title">Predicted disease : {{consultation.diseaseinfo.diseasename}}</h4>
           <p class="card-text">list of symptoms - 
 
-              <ul class="list-group" >
-                {% for i in consultation.diseaseinfo.symptomsname %}
-                <li class="list-group-item" style="background-color:aliceblue">{{i}}</li>
-                {% endfor %}
-              </ul>
+              <param class="list-group" >
+           
+                <p class="list-group-item" style="background-color:aliceblue">{{consultation.diseaseinfo.symptomsname}}</li>
+                
+          </p>
         
 
           </p>
@@ -342,7 +342,7 @@ img{ max-width:100%;}
              
                                 <div id="chat-body" class="panel panel-default">
                                     <center> <div class="panel-heading">Chat Box 
-                                             </div>  </center>
+                                        <a href="{% url 'meeting' %}" target="_blank">  <img style="position: relative;width:64px;height: 35px;" src="{% static 'extras\demos\construction\images\videoicon.png' %}"> </a>  </div>  </center>
 
                                     <div id="msg-list-div" class="panel-body">
                                                 <ul id="msg-list" class="list-group">
