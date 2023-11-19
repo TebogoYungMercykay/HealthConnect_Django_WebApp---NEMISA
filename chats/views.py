@@ -62,6 +62,8 @@ def get_feedback(request):
       return redirect(request, 'consultation/chat_body.html',{"obj":obj})
 
 
+def videocall(request):
+    return render(request, 'consultation/videocall.html', {'name': request.user.first_name + " " + request.user.last_name})
 
 
 
