@@ -16,7 +16,7 @@ def whatsapp(request):
       #    mobile = '+27' + mobile
 
       account_sid = 'tt'
-      auth_token = 'tt2'
+      auth_token = 'tt'
       client = Client(account_sid, auth_token)
 
       message = client.messages.create(
@@ -62,6 +62,8 @@ def get_feedback(request):
       return redirect(request, 'consultation/chat_body.html',{"obj":obj})
 
 
+def videocall(request):
+    return render(request, 'consultation/videocall.html', {'name': request.user.first_name + " " + request.user.last_name})
 
 
 
