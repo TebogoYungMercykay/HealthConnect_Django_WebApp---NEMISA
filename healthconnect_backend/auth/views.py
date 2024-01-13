@@ -8,56 +8,8 @@ import logging
 import os
 
 MESSAGE = "Some Error Occured, Please Try Again."
-JSON_DATA = 'application/json'
 FORM_DATA = 'application/x-www-form-urlencoded'
-
-
-def login_admin(request):
-
-    if request.method == 'POST':
-        try:
-            temp_form = LoginForm(request.POST)
-            
-            if temp_form.is_valid():
-                request_data = {
-                    'username': temp_form.cleaned_data['username'],
-                    'password': temp_form.cleaned_data['password'],
-                }
-
-                api_url = os.getenv("API_ENDPOINT") + '/auth/login?type=admin'
-                
-                headers = {
-                    'Content-Type': FORM_DATA,
-                }
-                
-                response = requests.post(api_url, data=request_data, headers=headers)
-                response.raise_for_status()
-
-                if response.status_code == 200:
-                    api_response = response.json()
-                    if api_response.get('status') == "success":
-                                            
-                        request.session['user_id'] = api_response.get('id')
-                        request.session['access_token'] = api_response['data']['access_token']
-                        request.session['token_type'] = api_response['data']['token_type']
-                        request.session['name'] = api_response.get('name')
-                        request.session['is_authenticated'] = True
-                        
-                        return redirect(reverse('admin_ui'))
-        
-                    else:
-                        messages.info(request, api_response.get('data'))
-                        return redirect(reverse('login_admin'))
-                        
-            messages.info(request, MESSAGE)
-            return redirect(reverse('login_admin'))
-        
-        except requests.RequestException as e:
-            logging.error(f"Error Occured During Login Request: {e}: Admin")
-            return redirect(reverse('home'))
-
-    else:
-        return render(request,'admin/signin/signin.html')
+JSON_DATA = 'application/json'
 
 
 def login_patient(request):
@@ -156,6 +108,54 @@ def login_doctor(request):
         return render(request,'doctor/signin_page/index.html')
 
 
+def login_admin(request):
+
+    if request.method == 'POST':
+        try:
+            temp_form = LoginForm(request.POST)
+            
+            if temp_form.is_valid():
+                request_data = {
+                    'username': temp_form.cleaned_data['username'],
+                    'password': temp_form.cleaned_data['password'],
+                }
+
+                api_url = os.getenv("API_ENDPOINT") + '/auth/login?type=admin'
+                
+                headers = {
+                    'Content-Type': FORM_DATA,
+                }
+                
+                response = requests.post(api_url, data=request_data, headers=headers)
+                response.raise_for_status()
+
+                if response.status_code == 200:
+                    api_response = response.json()
+                    if api_response.get('status') == "success":
+                                            
+                        request.session['user_id'] = api_response.get('id')
+                        request.session['access_token'] = api_response['data']['access_token']
+                        request.session['token_type'] = api_response['data']['token_type']
+                        request.session['name'] = api_response.get('name')
+                        request.session['is_authenticated'] = True
+                        
+                        return redirect(reverse('admin_ui'))
+        
+                    else:
+                        messages.info(request, api_response.get('data'))
+                        return redirect(reverse('login_admin'))
+                        
+            messages.info(request, MESSAGE)
+            return redirect(reverse('login_admin'))
+        
+        except requests.RequestException as e:
+            logging.error(f"Error Occured During Login Request: {e}: Admin")
+            return redirect(reverse('home'))
+
+    else:
+        return render(request,'admin/signin/signin.html')
+
+
 def logout(request):
 
     if request.method == 'POST':
@@ -201,4 +201,5 @@ def logout(request):
             return redirect(reverse('home'))
 
     else:
-        return redirect(reverse('home')) 
+        return redirect(reverse('home'))
+    
