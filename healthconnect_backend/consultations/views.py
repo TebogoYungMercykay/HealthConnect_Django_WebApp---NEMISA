@@ -1,126 +1,476 @@
-# views.py
-
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.shortcuts import render, redirect
+from django.urls import reverse
+from django.core.exceptions import PermissionDenied
+from django.contrib import messages
+import requests
+import logging
+import os
+
+MESSAGE = "Some Error Occured, Please Try Again."
+USER_MESSAGE = "Incorrect User Id Used, Please Try Again."
+POSTS_TEMPLATE = 'blog/posts.html'
+JSON_DATA = 'application/json'
+METHOD_ERROR = "Incorrect Method Used, Please Try Again."
+
 
 def all_consultations(request, id):
-    return HttpResponse('view')
+
+    if request.method == 'POST' or request.method == 'GET':
+        
+        try:
+            user_id = request.session.get('user_id')
+            
+            if user_id != None and user_id == id:
+                
+                jwt_token = request.session.get('access_token')
+                token_type = request.session.get('token_type')
+
+                api_url = os.getenv("API_ENDPOINT") + f'/consultations/all_consultations/{user_id}'
+                
+                headers = {
+                    "Content-Type": JSON_DATA,
+                    "Authorization": f"{token_type} {jwt_token}",
+                }
+
+                response = requests.post(api_url, headers=headers)
+                response.raise_for_status()
+                
+                if response.status_code == 200:
+                    api_response = response.json()
+                    if api_response.get('status') == "success":
+
+                        return api_response.get('data')
+                
+                logging.error(f"Error Occured When Requesting Consultations: {e}, User Id: {user_id}")
+                return None
+            
+            else:
+                raise PermissionDenied(USER_MESSAGE)
+      
+        except requests.RequestException as e:
+            logging.error(f"Error Occured When Requesting Consultations: {e}, User Id: {user_id}")
+            return None
+
+    else:
+        messages.error(request, METHOD_ERROR)
+        return None
+
 
 def make_consultation(request):
 
     if request.method == 'POST':
+        
+        if not (request.POST['doctor_id'] and request.POST['diseaseinfo_id'] and request.POST['consultation_date'] and request.POST['status']):
+            
+            messages.error(request, METHOD_ERROR)
+            return None
+        
+        try:
+            user_id = request.session.get('user_id')
+            
+            if user_id != None:
+                
+                jwt_token = request.session.get('access_token')
+                token_type = request.session.get('token_type')
 
-        patientusername = request.session['patientusername']
-        puser = User.objects.get(username=patientusername)
-        patient_obj = puser.patient
+                api_url = os.getenv("API_ENDPOINT") + '/consultations/make_consultation'
 
-        # doctorusername = request.session['doctorusername']
-        duser = User.objects.get(username=doctorusername)
-        doctor_obj = duser.doctor
-        request.session['doctorusername'] = doctorusername
+                post_data = {
+                    "doctor_id": request.POST['doctor_id'],
+                    "diseaseinfo_id": request.POST['diseaseinfo_id'],
+                    "consultation_date": request.POST['consultation_date'],
+                    "status": request.POST['status']
+                }
+                
+                headers = {
+                    "Content-Type": JSON_DATA,
+                    "Authorization": f"{token_type} {jwt_token}",
+                }
 
-        diseaseinfo_id = request.session['diseaseinfo_id']
-        diseaseinfo_obj = diseaseinfo.objects.get(id=diseaseinfo_id)
+                response = requests.post(api_url, data=post_data, headers=headers)
+                response.raise_for_status()
+                
+                if response.status_code == 200:
+                    api_response = response.json()
+                    if api_response.get('status') == "success":
 
-        consultation_date = date.today()
-        status = "active"
+                        title = request.session.get('token_type')[:2]
+                        if title == 'dr':
+                            return redirect('consultation_view_patient', api_response['data']['id'])
+                        else:
+                            return redirect('consultation_view_doctor', api_response['data']['id'])
+                
+                logging.error(f"Error Occured When Requesting Consultations: {e}, User Id: {user_id}")
+                return redirect(reverse('home'))
+            
+            else:
+                raise PermissionDenied(USER_MESSAGE)
+      
+        except requests.RequestException as e:
+            logging.error(f"Error Occured When Requesting Consultations: {e}, User Id: {user_id}")
+            return redirect(reverse('home'))
 
-        consultation_new = consultation(patient=patient_obj, doctor=doctor_obj,
-                                        diseaseinfo=diseaseinfo_obj, consultation_date=consultation_date, status=status)
-        consultation_new.save()
-
-        request.session['consultation_id'] = consultation_new.id
-
-        print("consultation record is saved sucessfully.............................")
-
-        return redirect('consultationview', consultation_new.id)
+    else:
+        messages.error(request, METHOD_ERROR)
+        return redirect(reverse('home'))
 
 
 def consultation_view_patient(request, consultation_id):
 
-    if request.method == 'GET':
+    if request.method == 'POST' or request.method == 'GET':
+        
+        try:
+            user_id = request.session.get('user_id')
+            
+            if user_id != None and user_id == id:
+                
+                jwt_token = request.session.get('access_token')
+                token_type = request.session.get('token_type')
 
-        request.session['consultation_id'] = consultation_id
-        consultation_obj = consultation.objects.get(id=consultation_id)
+                api_url = os.getenv("API_ENDPOINT") + f'/consultations/consultation_view_patient/{consultation_id}'
+                
+                headers = {
+                    "Content-Type": JSON_DATA,
+                    "Authorization": f"{token_type} {jwt_token}",
+                }
 
-        return render(request, 'consultation/consultation.html', {"consultation": consultation_obj})
+                response = requests.post(api_url, headers=headers)
+                response.raise_for_status()
+                
+                if response.status_code == 200:
+                    api_response = response.json()
+                    if api_response.get('status') == "success":
 
-     #  if request.method == 'POST':
-     #    return render(request,'consultation/consultation.html' )
+                        return render(request, 'consultation/consultation.html', {"consultation": api_response.get('data')})
+                
+                logging.error(f"Error Occured When Consultation View: {e}, User Id: {user_id}")
+                return redirect(reverse('home'))
+            
+            else:
+                raise PermissionDenied(USER_MESSAGE)
+      
+        except requests.RequestException as e:
+            logging.error(f"Error Occured When Consultation View: {e}, User Id: {user_id}")
+            return redirect(reverse('home'))
+
+    else:
+        messages.error(request, METHOD_ERROR)
+        return redirect(reverse('home'))
      
 
 def consultation_view_doctor(request, consultation_id):
 
-    if request.method == 'GET':
+    if request.method == 'POST' or request.method == 'GET':
+        
+        try:
+            user_id = request.session.get('user_id')
+            
+            if user_id != None and user_id == id:
+                
+                jwt_token = request.session.get('access_token')
+                token_type = request.session.get('token_type')
 
-        request.session['consultation_id'] = consultation_id
-        consultation_obj = consultation.objects.get(id=consultation_id)
+                api_url = os.getenv("API_ENDPOINT") + f'/consultations/consultation_view_doctor/{consultation_id}'
+                
+                headers = {
+                    "Content-Type": JSON_DATA,
+                    "Authorization": f"{token_type} {jwt_token}",
+                }
 
-        return render(request, 'consultation/consultation.html', {"consultation": consultation_obj})
+                response = requests.post(api_url, headers=headers)
+                response.raise_for_status()
+                
+                if response.status_code == 200:
+                    api_response = response.json()
+                    if api_response.get('status') == "success":
+                        
+                        render(request, 'consultation/consultation.html', {"consultation": api_response.get('data')})
+                
+                logging.error(f"Error Occured When Consultation View: {e}, User Id: {user_id}")
+                return redirect(reverse('home'))
+            
+            else:
+                raise PermissionDenied(USER_MESSAGE)
+      
+        except requests.RequestException as e:
+            logging.error(f"Error Occured When Consultation View: {e}, User Id: {user_id}")
+            return redirect(reverse('home'))
 
-     #  if request.method == 'POST':
-     #    return render(request,'consultation/consultation.html' )
+    else:
+        messages.error(request, METHOD_ERROR)
+        return redirect(reverse('home'))
 
 
 def consultation_history_patient(request):
 
-    if request.method == 'GET':
+    if request.method == 'POST' or request.method == 'GET':
+        
+        try:
+            user_id = request.session.get('user_id')
+            
+            if user_id != None and user_id == id:
+                
+                jwt_token = request.session.get('access_token')
+                token_type = request.session.get('token_type')
 
-        patientusername = request.session['patientusername']
-        puser = User.objects.get(username=patientusername)
-        patient_obj = puser.patient
+                api_url = os.getenv("API_ENDPOINT") + '/consultations/consultation_history_patient'
+                
+                headers = {
+                    "Content-Type": JSON_DATA,
+                    "Authorization": f"{token_type} {jwt_token}",
+                }
 
-        consultationnew = consultation.objects.filter(patient=patient_obj)
+                response = requests.post(api_url, headers=headers)
+                response.raise_for_status()
+                
+                if response.status_code == 200:
+                    api_response = response.json()
+                    if api_response.get('status') == "success":
+                        
+                        return render(request, 'patient/consultation_history/consultation_history.html', {"consultation": api_response.get('data')})
+                
+                logging.error(f"Error Occured When Consultation History: {e}, User Id: {user_id}")
+                return redirect(reverse('home'))
+            
+            else:
+                raise PermissionDenied(USER_MESSAGE)
+      
+        except requests.RequestException as e:
+            logging.error(f"Error Occured When Consultation History: {e}, User Id: {user_id}")
+            return redirect(reverse('home'))
 
-        return render(request, 'patient/consultation_history/consultation_history.html', {"consultation": consultationnew})
-
+    else:
+        messages.error(request, METHOD_ERROR)
+        return redirect(reverse('home'))
 
 
 def consultation_history_doctor(request):
 
-    if request.method == 'GET':
+    if request.method == 'POST' or request.method == 'GET':
+        
+        try:
+            user_id = request.session.get('user_id')
+            
+            if user_id != None and user_id == id:
+                
+                jwt_token = request.session.get('access_token')
+                token_type = request.session.get('token_type')
 
-        doctorusername = request.session['doctorusername']
-        duser = User.objects.get(username=doctorusername)
-        doctor_obj = duser.doctor
+                api_url = os.getenv("API_ENDPOINT") + '/consultations/consultation_history_doctor'
+                
+                headers = {
+                    "Content-Type": JSON_DATA,
+                    "Authorization": f"{token_type} {jwt_token}",
+                }
 
-        consultationnew = consultation.objects.filter(doctor=doctor_obj)
+                response = requests.post(api_url, headers=headers)
+                response.raise_for_status()
+                
+                if response.status_code == 200:
+                    api_response = response.json()
+                    if api_response.get('status') == "success":
+                        
+                        return render(request, 'doctor/consultation_history/consultation_history.html', {"consultation": api_response.get('data')})
+                
+                logging.error(f"Error Occured When Consultation History: {e}, User Id: {user_id}")
+                return redirect(reverse('home'))
+            
+            else:
+                raise PermissionDenied(USER_MESSAGE)
+      
+        except requests.RequestException as e:
+            logging.error(f"Error Occured When Consultation History: {e}, User Id: {user_id}")
+            return redirect(reverse('home'))
 
-        return render(request, 'doctor/consultation_history/consultation_history.html', {"consultation": consultationnew})
-
+    else:
+        messages.error(request, METHOD_ERROR)
+        return redirect(reverse('home'))
 
 
 def close_consultation(request, consultation_id):
-    if request.method == "POST":
+    
+    if request.method == 'POST' or request.method == 'GET':
+        
+        try:
+            user_id = request.session.get('user_id')
+            
+            if user_id != None and user_id == id:
+                
+                jwt_token = request.session.get('access_token')
+                token_type = request.session.get('token_type')
 
-        consultation.objects.filter(pk=consultation_id).update(status="closed")
+                api_url = os.getenv("API_ENDPOINT") + f'/consultations/close_consultation/{consultation_id}'
+                
+                headers = {
+                    "Content-Type": JSON_DATA,
+                    "Authorization": f"{token_type} {jwt_token}",
+                }
 
-        return redirect('home')
+                response = requests.post(api_url, headers=headers)
+                response.raise_for_status()
+                
+                if response.status_code == 200:
+                    api_response = response.json()
+                    if api_response.get('status') == "success":
+                        
+                        return redirect(reverse('home'))
+                
+                logging.error(f"Error Occured When Consultation History: {e}, User Id: {user_id}")
+                return redirect(reverse('home'))
+            
+            else:
+                raise PermissionDenied(USER_MESSAGE)
+      
+        except requests.RequestException as e:
+            logging.error(f"Error Occured When Consultation History: {e}, User Id: {user_id}")
+            return redirect(reverse('home'))
+
+    else:
+        messages.error(request, METHOD_ERROR)
+        return redirect(reverse('home'))
 
 
 def create_review(request, doctor_id):
-    if request.method == "POST":
+    
+    if request.method == 'POST':
+        
+        if not (request.POST['rating'] and request.POST['review'] and request.POST['doctor_id']):
+            
+            messages.error(request, METHOD_ERROR)
+            return None
+        
+        try:
+            user_id = request.session.get('user_id')
+            
+            if user_id != None:
+                
+                jwt_token = request.session.get('access_token')
+                token_type = request.session.get('token_type')
 
-        consultation_obj = consultation.objects.get(id=consultation_id)
-        patient = consultation_obj.patient
-        doctor1 = consultation_obj.doctor
-        rating = request.POST.get('rating')
-        review = request.POST.get('review')
+                api_url = os.getenv("API_ENDPOINT") + f'/consultations/create_review/{doctor_id}'
 
-        rating_obj = rating_review(
-            patient=patient, doctor=doctor1, rating=rating, review=review)
-        rating_obj.save()
+                post_data = {
+                    "rating": request.POST['rating'],
+                    "review": request.POST['review'],
+                    "doctor_id": request.POST['doctor_id']
+                }
+                
+                headers = {
+                    "Content-Type": JSON_DATA,
+                    "Authorization": f"{token_type} {jwt_token}",
+                }
 
-        rate = int(rating_obj.rating_is)
-        doctor.objects.filter(pk=doctor1).update(rating=rate)
+                response = requests.post(api_url, data=post_data, headers=headers)
+                response.raise_for_status()
+                
+                if response.status_code == 200:
+                    api_response = response.json()
+                    if api_response.get('status') == "success":
 
-        return redirect('consultationview', consultation_id)
+                        title = request.session.get('token_type')[:2]
+                        if title == 'dr':
+                            return redirect('consultation_view_patient', api_response['data']['id'])
+                        else:
+                            return redirect('consultation_view_doctor', api_response['data']['id'])
+                
+                logging.error(f"Error Occured When Creating Reviews: {e}, User Id: {user_id}")
+                return redirect(reverse('home'))
+            
+            else:
+                raise PermissionDenied(USER_MESSAGE)
+      
+        except requests.RequestException as e:
+            logging.error(f"Error Occured When Creating Reviews: {e}, User Id: {user_id}")
+            return redirect(reverse('home'))
+
+    else:
+        messages.error(request, METHOD_ERROR)
+        return redirect(reverse('home'))
 
 
 def get_reviews_id(request, doctor_id):
-    return HttpResponse('view')
+    
+    if request.method == 'POST':
+        
+        try:
+            user_id = request.session.get('user_id')
+            
+            if user_id != None:
+                
+                jwt_token = request.session.get('access_token')
+                token_type = request.session.get('token_type')
+
+                api_url = os.getenv("API_ENDPOINT") + f'/consultations/get_reviews/{doctor_id}'
+                
+                headers = {
+                    "Content-Type": JSON_DATA,
+                    "Authorization": f"{token_type} {jwt_token}",
+                }
+
+                response = requests.post(api_url, headers=headers)
+                response.raise_for_status()
+                
+                if response.status_code == 200:
+                    api_response = response.json()
+                    if api_response.get('status') == "success":
+
+                        return api_response['data']
+                
+                logging.error(f"Error Occured When Requesting Reviews: {e}, User Id: {user_id}")
+                return redirect(reverse('home'))
+            
+            else:
+                raise PermissionDenied(USER_MESSAGE)
+      
+        except requests.RequestException as e:
+            logging.error(f"Error Occured When Requesting Reviews: {e}, User Id: {user_id}")
+            return redirect(reverse('home'))
+
+    else:
+        messages.error(request, METHOD_ERROR)
+        return redirect(reverse('home'))
 
 
 def get_reviews(request):
-    return HttpResponse('view')
+    
+    if request.method == 'POST':
+        
+        try:
+            user_id = request.session.get('user_id')
+            
+            if user_id != None:
+                
+                jwt_token = request.session.get('access_token')
+                token_type = request.session.get('token_type')
+
+                api_url = os.getenv("API_ENDPOINT") + '/consultations/get_reviews'
+                
+                headers = {
+                    "Content-Type": JSON_DATA,
+                    "Authorization": f"{token_type} {jwt_token}",
+                }
+
+                response = requests.post(api_url, headers=headers)
+                response.raise_for_status()
+                
+                if response.status_code == 200:
+                    api_response = response.json()
+                    if api_response.get('status') == "success":
+
+                        return api_response['data']
+                
+                logging.error(f"Error Occured When Requesting Reviews: {e}, User Id: {user_id}")
+                return redirect(reverse('home'))
+            
+            else:
+                raise PermissionDenied(USER_MESSAGE)
+      
+        except requests.RequestException as e:
+            logging.error(f"Error Occured When Requesting Reviews: {e}, User Id: {user_id}")
+            return redirect(reverse('home'))
+
+    else:
+        messages.error(request, METHOD_ERROR)
+        return redirect(reverse('home'))
 
