@@ -1,5 +1,3 @@
-from django.shortcuts import render
-from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.core.exceptions import PermissionDenied
@@ -18,6 +16,7 @@ METHOD_ERROR = "Incorrect Method Used, Please Try Again."
 def get_posts(request):
     
     if request.method == 'GET' or request.method == 'POST':
+        
         try:
             user_id = request.session.get('user_id')
             
@@ -42,14 +41,14 @@ def get_posts(request):
 
                         return api_response.get('data')
                 
-                logging.error(f"Error Occured When Requesting Posts Data: {e}: User_id: {user_id}")
+                logging.error(f"Error Occured When Requesting Posts Data: {e}: User Id: {user_id}")
                 return None
             
             else:
                 raise PermissionDenied(USER_MESSAGE)
       
         except requests.RequestException as e:
-            logging.error(f"Error Occured When Requesting Posts Data: {e}: User_id: {user_id}")
+            logging.error(f"Error Occured When Requesting Posts Data: {e}: User Id: {user_id}")
             return None
 
     else:
@@ -60,6 +59,7 @@ def get_posts(request):
 def all_posts(request):
     
     if request.method == 'GET' or request.method == 'POST':
+        
         try:
             user_id = request.session.get('user_id')
             
@@ -84,14 +84,14 @@ def all_posts(request):
 
                         return render(request, POSTS_TEMPLATE, {'all_posts': api_response.get('data')})
                 
-                logging.error(f"Error Occured When Requesting Posts Data: {e}: User_id: {user_id}")
+                logging.error(f"Error Occured When Requesting Posts Data: {e}: User Id: {user_id}")
                 return None
             
             else:
                 raise PermissionDenied(USER_MESSAGE)
       
         except requests.RequestException as e:
-            logging.error(f"Error Occured When Requesting Posts Data: {e}: User_id: {user_id}")
+            logging.error(f"Error Occured When Requesting Posts Data: {e}: User Id: {user_id}")
             return None
 
     else:
@@ -135,14 +135,14 @@ def create_post(request):
                             messages.info(request, "Successfully Created a Post")
                             return api_response.get('data')
                     
-                    logging.error(f"Error Occured When Creating Post: {e}: User_id: {user_id}")
+                    logging.error(f"Error Occured When Creating Post: {e}: User Id: {user_id}")
                     return None
                 
                 else:
                     raise PermissionDenied(USER_MESSAGE)
         
             except requests.RequestException as e:
-                logging.error(f"Error Occured When Creating Post: {e}: User_id: {user_id}")
+                logging.error(f"Error Occured When Creating Post: {e}: User Id: {user_id}")
                 return None
 
         else:
@@ -157,6 +157,7 @@ def create_post(request):
 def get_post(request, post_id):
     
     if request.method == 'GET' or request.method == 'POST':
+        
         try:
             user_id = request.session.get('user_id')
             
@@ -165,7 +166,7 @@ def get_post(request, post_id):
                 jwt_token = request.session.get('access_token')
                 token_type = request.session.get('token_type')
 
-                api_url = os.getenv("API_ENDPOINT") + '/posts/{post_id}'
+                api_url = os.getenv("API_ENDPOINT") + f'/posts/{post_id}'
 
                 headers = {
                     "Content-Type": JSON_DATA,
@@ -210,7 +211,7 @@ def update_post(request, post_id):
                     jwt_token = request.session.get('access_token')
                     token_type = request.session.get('token_type')
 
-                    api_url = os.getenv("API_ENDPOINT") + '/posts/{post_id}'
+                    api_url = os.getenv("API_ENDPOINT") + f'/posts/{post_id}'
 
                     post_data = {
                         "title": request.POST['title'],
@@ -254,6 +255,7 @@ def update_post(request, post_id):
 def delete_post(request, post_id):
     
     if request.method == 'GET' or request.method == 'POST':
+        
         try:
             user_id = request.session.get('user_id')
             
@@ -262,7 +264,7 @@ def delete_post(request, post_id):
                 jwt_token = request.session.get('access_token')
                 token_type = request.session.get('token_type')
 
-                api_url = os.getenv("API_ENDPOINT") + '/posts/{post_id}'
+                api_url = os.getenv("API_ENDPOINT") + f'/posts/{post_id}'
 
                 headers = {
                     "Content-Type": JSON_DATA,
@@ -385,14 +387,14 @@ def vote(request):
                             messages.info(request, "Successfully Created a Reply")
                             return api_response.get('data')
                     
-                    logging.error(f"Error Occured When Creating Reply: {e}: User_id: {user_id}")
+                    logging.error(f"Error Occured When Creating Reply: {e}: User Id: {user_id}")
                     return None
                 
                 else:
                     raise PermissionDenied(USER_MESSAGE)
         
             except requests.RequestException as e:
-                logging.error(f"Error Occured When Creating Reply: {e}: User_id: {user_id}")
+                logging.error(f"Error Occured When Creating Reply: {e}: User Id: {user_id}")
                 return None
 
         else:

@@ -14,7 +14,9 @@ JSON_DATA = 'application/json'
 
 
 def signup_patient(request):
+    
     if request.method == 'POST':
+        
         try:
             if request.POST['username'] and request.POST['email'] and request.POST['name'] and request.POST['dob'] and request.POST['gender'] and request.POST['address'] and request.POST['mobile'] and request.POST['password'] and request.POST['password1'] :
                 
@@ -73,7 +75,9 @@ def signup_patient(request):
 
 
 def signup_doctor(request):
+    
     if request.method == 'POST':
+        
         try:
             if request.POST['username'] and request.POST['email'] and request.POST['name'] and request.POST['dob'] and request.POST['gender'] and request.POST['address'] and request.POST['mobile'] and request.POST['password'] and request.POST['password1']  and request.POST['registration_no'] and request.POST['year_of_registration'] and request.POST['qualification'] and request.POST['State_Medical_Council'] and request.POST['specialization']:
                 
@@ -139,6 +143,7 @@ def signup_doctor(request):
 def get_doctors(request):
 
     if request.method == 'GET':
+        
         try:
             user_id = request.session.get('user_id')
             jwt_token = request.session.get('access_token')
@@ -163,11 +168,11 @@ def get_doctors(request):
                     doctors_obj = api_response.get('data')
                     return render(request, CONSULTATION_TEMPLATE, {"dobj": doctors_obj})
             
-            logging.error(f"Error Occured When Requesting for Doctors Data: {e}: User_id: {user_id}")
+            logging.error(f"Error Occured When Requesting for Doctors Data: {e}: User Id: {user_id}")
             return render(request, CONSULTATION_TEMPLATE, {"dobj": None})
                     
         except requests.RequestException as e:
-            logging.error(f"Error Occured When Requesting for Doctors Data: {e}: User_id: {user_id}")
+            logging.error(f"Error Occured When Requesting for Doctors Data: {e}: User Id: {user_id}")
             return redirect(reverse('home'))
 
     else:
@@ -177,6 +182,7 @@ def get_doctors(request):
 def get_user(request, user_id):
 
     if request.method == 'GET' or request.method == 'POST':
+        
         try:
             param_id = user_id
             user_id = request.session.get('user_id')
@@ -186,7 +192,7 @@ def get_user(request, user_id):
                 jwt_token = request.session.get('access_token')
                 token_type = request.session.get('token_type')
 
-                api_url = os.getenv("API_ENDPOINT") + '/users/{user_id}'
+                api_url = os.getenv("API_ENDPOINT") + f'/users/{user_id}'
 
                 headers = {
                     "Content-Type": JSON_DATA,
@@ -202,14 +208,14 @@ def get_user(request, user_id):
 
                         return api_response.get('data')
                 
-                logging.error(f"Error Occured When Requesting for Doctors Data: {e}: User_id: {user_id}")
+                logging.error(f"Error Occured When Requesting for Doctors Data: {e}: User Id: {user_id}")
                 return None
             
             else:
                 raise PermissionDenied("Incorrect User Id used.")
       
         except requests.RequestException as e:
-            logging.error(f"Error Occured When Requesting User Data: {e}: User_id: {user_id}")
+            logging.error(f"Error Occured When Requesting User Data: {e}: User Id: {user_id}")
             return None
 
     else:
@@ -219,6 +225,7 @@ def get_user(request, user_id):
 def savedata(request, user_id):
     
     if request.method == 'POST':
+        
         try:
             param_id = user_id
             user_id = request.session.get('user_id')
@@ -262,7 +269,7 @@ def savedata(request, user_id):
                 raise PermissionDenied("Incorrect User Id used.")
 
         except requests.RequestException as e:
-            logging.error(f"Error Occured When Updating User Data: {e}: User_id: {user_id}")
+            logging.error(f"Error Occured When Updating User Data: {e}: User Id: {user_id}")
             return None
         
     else:

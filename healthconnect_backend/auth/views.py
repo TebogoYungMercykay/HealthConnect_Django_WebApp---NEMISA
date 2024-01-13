@@ -15,6 +15,7 @@ JSON_DATA = 'application/json'
 def login_patient(request):
     
     if request.method == 'POST':
+        
         try:
             temp_form = LoginForm(request.POST)
 
@@ -63,6 +64,7 @@ def login_patient(request):
 def login_doctor(request):
     
     if request.method == 'POST':
+        
         try:
             temp_form = LoginForm(request.POST)
             
@@ -111,6 +113,7 @@ def login_doctor(request):
 def login_admin(request):
 
     if request.method == 'POST':
+        
         try:
             temp_form = LoginForm(request.POST)
             
@@ -166,15 +169,11 @@ def logout(request):
             token_type = request.session.get('token_type')
 
             headers = {
-                "Content-Type": "application/json",
+                "Content-Type": JSON_DATA,
                 "Authorization": f"{token_type} {jwt_token}",
             }
             
-            api_url = os.getenv("API_ENDPOINT") + f'/auth/logout/{id}'
-            
-            headers = {
-                'Content-Type': JSON_DATA,
-            }
+            api_url = os.getenv("API_ENDPOINT") + f'/auth/logout/{user_id}'
             
             response = requests.post(api_url, headers=headers)
             response.raise_for_status()
@@ -196,7 +195,7 @@ def logout(request):
             return redirect(reverse('home'))
             
         except requests.RequestException as e:
-            logging.error(f"Error Occured During Logout Request: {e}: User_id: {user_id}")
+            logging.error(f"Error Occured During Logout Request: {e}: User Id: {user_id}")
             request.session.clear()
             return redirect(reverse('home'))
 
