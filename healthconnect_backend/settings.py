@@ -135,7 +135,7 @@ LOGGING = {
         },
         'file': {
             'class': 'logging.FileHandler',
-            'filename': '/path/to/your/logfile.log',
+            'filename': BASE_DIR + '/server_healthconnect.log',
         },
     },
     'loggers': {

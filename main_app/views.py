@@ -7,7 +7,7 @@ HOME_TEMPLATE = 'patient/patient_ui/profile.html'
 def home(request):
     if request.method == 'GET':
 
-        if request.user.is_authenticated:
+        if request.session.get('is_authenticated') != None and request.session.get('is_authenticated') == True:
             return render(request, 'blog/posts.html')
 
         else:
@@ -20,7 +20,7 @@ def admin_ui(request):
 
     if request.method == 'GET':
 
-        if request.user.is_authenticated:
+        if request.session.get('is_authenticated'):
 
             auser = request.user
             Feedbackobj = Feedback.objects.all()
@@ -39,7 +39,7 @@ def patient_ui(request):
 
     if request.method == 'GET':
 
-        if request.user.is_authenticated:
+        if request.session.get('is_authenticated'):
 
             patient_id = request.session['patient_id']
             puser = User.objects.get(username=patient_id)
