@@ -1,0 +1,240 @@
+/* ----------------------------------------------------------------
+	Canvas: Construction
+-----------------------------------------------------------------*/
+
+:root {
+	--cnvs-themecolor: #5FA9E0;
+	--cnvs-themecolor-rgb: 241, 128, 82;
+
+	--cnvs-body-font: 'Roboto', sans-serif;
+	--cnvs-primary-font: 'Source Sans Pro', sans-serif;
+}
+
+#header {
+	background-color: #F9F9F9;
+	--cnvs-primary-menu-font-size: 0.8125rem;
+	--cnvs-primary-menu-submenu-font-size: .75rem;
+	--cnvs-primary-menu-submenu-font-weight: 600;
+	--cnvs-primary-menu-submenu-color: var(--cnvs-contrast-700);
+	--cnvs-primary-menu-ls: 1px;
+	--cnvs-primary-menu-tt: uppercase;
+	--cnvs-primary-menu-font-weight: 700;
+}
+
+#top-bar {
+	--cnvs-topbar-font-transform: uppercase;
+	--cnvs-topbar-font-size: 0.75rem;
+	--cnvs-topbar-bg: #FFF;
+	--cnvs-topbar-font-weight: 400;
+}
+
+.header-extras li {
+	margin-left: 30px;
+	padding-left: 30px;
+	border-left: 1px solid #EEE;
+}
+
+.header-extras li:first-child {
+	margin-left: 0;
+	padding-left: 0;
+	border-left: 0;
+}
+
+.header-extras li i {
+	margin-top: 0 !important;
+	font-size: 26px !important;
+}
+
+.header-extras li .he-text {
+	padding-left: 15px;
+	font-weight: 300;
+	font-size: 12px;
+	line-height: 16px;
+	color: #888;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+}
+
+.header-extras li .he-text span {
+	font-weight: 500;
+	text-transform: none;
+	font-size: 13px;
+	line-height: 18px;
+	letter-spacing: 0;
+}
+
+.feature-box {
+    --cnvs-featured-box-font-size: ;
+    --cnvs-featured-box-font-weight: 600;
+    --cnvs-featured-box-font-tt: uppercase;
+}
+
+#header-wrap { --cnvs-header-bg: #FFF; }
+
+.carousel-widget {
+	--cnvs-owl-nav-bg: #FFF;
+}
+
+.device-md .primary-menu i.icon-angle-down,
+.device-sm .primary-menu i.icon-angle-down,
+.device-xs .primary-menu i.icon-angle-down { display: none !important; }
+
+.slider-caption {
+	max-width: 450px;
+}
+
+.slider-caption > div {
+	background-color: rgba(255,255,255,0.9);
+	border-radius: 2px;
+	padding: 40px;
+}
+
+.slider-caption h2 {
+	font-size: 24px;
+	margin-bottom: 20px;
+}
+
+.slider-caption p {
+	margin-bottom: 0;
+	font-size: 18px;
+}
+
+.dark .slider-caption { background-color: rgba(0,0,0,0.75) }
+
+.testi-meta span { color: rgba(255,255,255,0.65); }
+
+.iconlist.iconlist-large { font-size: 17px !important; }
+
+.iconlist.iconlist-large li { margin: 8px 0 !important; }
+
+.iconlist.iconlist-large li i { top: 0; }
+
+.testi-content p {
+	font-style: normal;
+	font-family: var(--cnvs-primary-font) !important;
+	font-weight: 300;
+	font-size: 30px;
+	letter-spacing: 1px;
+	line-height: 1.6 !important;
+	margin-bottom: 40px;
+}
+
+.footer-big-contacts {
+	color: #333;
+	font-size: 24px;
+	font-weight: bold;
+	letter-spacing: 1px;
+}
+
+.footer-big-contacts span {
+	display: block;
+	font-size: 11px;
+	font-weight: 400;
+	text-transform: uppercase;
+	color: #888;
+	letter-spacing: 2px;
+}
+
+.dark .footer-big-contacts { color: rgba(255,255,255,0.8); }
+
+
+.team-title span {
+	font-size: 13px;
+	font-weight: normal;
+	font-style: normal;
+	margin-top: 2px;
+}
+
+.small-thumbs .entry-title h2 a {
+	text-transform: none;
+	letter-spacing: 0;
+	font-size: 22px;
+	line-height: 25px;
+	font-weight: 600;
+	-webkit-transition: color .6s ease;
+	-o-transition: color .6s ease;
+	transition: color .6s ease;
+}
+
+/* ----------------------------------------------------------------------------
+	Services Grid
+---------------------------------------------------------------------------- */
+
+.grid-border {
+	overflow: inherit;
+	--cnvs-grid-border-width: 1px;
+	--cnvs-grid-border-color: var(--cnvs-contrast-200);
+	--cnvs-grid-border-opacity: 1;
+}
+
+.grid-border [class^=col-] {
+	margin: calc(-1 * var(--cnvs-grid-border-width)) 0 0 calc(-1 * var(--cnvs-grid-border-width));
+	padding: 30px;
+	border: var(--cnvs-grid-border-width) solid var(--cnvs-grid-border-color);
+}
+
+.grid-border [class^=col-]::before,
+.grid-border [class^=col-]::after {
+	display: none;
+}
+
+.grid-border [class^=col-]:hover {
+	--cnvs-grid-border-color: var(--cnvs-themecolor);
+	background-color: rgba(var(--cnvs-themecolor-rgb),0.1);
+	z-index: 1;
+}
+
+
+/* ----------------------------------------------------------------------------
+	Helper CSS Classes
+---------------------------------------------------------------------------- */
+
+.t300 { font-weight: 300 !important; }
+
+.t400 { font-weight: 400 !important; }
+
+.t500 { font-weight: 500 !important; }
+
+.t600 { font-weight: 600 !important; }
+
+.t700 { font-weight: 700 !important; }
+
+
+/* ----------------------------------------------------------------
+	CSS Specific to the Construction Demo - RTL Support
+-----------------------------------------------------------------*/
+
+.rtl .header-extras li {
+	margin-right: 30px;
+	margin-left: 0;
+	padding-right: 30px;
+	padding-left: 0;
+	border-right: 1px solid #EEE;
+	border-left: 0;
+}
+
+.rtl .header-extras li:first-child {
+	margin-right: 0;
+	padding-right: 0;
+	border-right: 0;
+}
+
+.rtl .header-extras li .he-text {
+	padding-right: 15px;
+	padding-left: 0;
+}
+
+.rtl .slider-caption {
+	right: -25px;
+	left: auto;
+}
+
+.rtl .slider-caption.slider-caption-right {
+	right: auto;
+	left: -25px;
+}
+
+/* Services Grid
+---------------------------------------------------------------------------- */
+
+.rtl .grid-border [class^=col-] { margin: -1px 0 0 -1px; }
