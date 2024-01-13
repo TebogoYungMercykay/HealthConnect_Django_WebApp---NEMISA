@@ -1,0 +1,581 @@
+﻿
+{% extends "basic.html" %}
+{% load static %}
+
+ 
+	{% block head %}
+<!-- EXTRAS START -->
+   <!-- Font Imports -->
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Source+Sans+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+ 
+   <!-- Core Style -->
+   <link rel="stylesheet" href="{% static 'extras/style.css' %}">
+ 
+   <!-- Font Icons -->
+   <link rel="stylesheet" href="{% static 'extras/css/font-icons.css' %}">
+ 
+   <!-- Plugins/Components CSS -->
+   <link rel="stylesheet" href="{% static 'extras/css/swiper.css' %}">
+ 
+   <!-- Niche Demos -->
+   <link rel="stylesheet" href="{% static 'extras/demos/construction/construction.css' %}">
+ 
+   <!-- Custom CSS -->
+   <link rel="stylesheet" href="{% static 'extras/css/custom.css' %}">
+   <!-- EXTRAS END -->
+
+
+  <style>
+    .swiper-slide-bg{
+      background-image: url("{% static 'extras/demos/construction/images/hero.jpg' %}"); 
+      background-position: center bottom;
+    
+
+    }
+  </style>
+
+{% endblock %}
+
+
+
+
+{% block body %}
+
+<section id="slider" class="slider-element slider-parallax swiper_wrapper min-vh-75" data-loop="true">
+
+  <div class="swiper-container swiper-parent">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide">
+        <div class="container">
+          <div class="slider-caption">
+            <div>
+              <h2>Welcome to HealthConnect</h2>
+              <p class="d-none d-sm-block">Our platform provides a direct channel for
+                patients to engage with healthcare professionals.
+                Users can seek advice,  &amp;share concerns, and receive
+                timely responses from health care professionals. </p>
+            </div>
+          </div>
+        </div>
+        <div class="swiper-slide-bg" ></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- BLOGS ============================================= -->
+
+<section id="content">
+  <div class="content-wrap">
+
+    <div class="promo promo-light promo-full promo-uppercase p-5 mb-6 header-stick">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-12 col-lg">
+            <h3 style="letter-spacing: 2px;">Start Interacting for your health with verified healthcare professionals</h3>
+            <span>We have created a platform of inclusivity with health information at your fingertips</span>
+          </div>
+          <div class="col-12 col-lg-auto mt-4 mt-lg-0">
+            <a href="#" class="button button-large button-circle button-black m-0">Start Now</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div class="row justify-content-center col-mb-50">
+        <div class="col-sm-6 col-lg-4">
+          <div class="feature-box media-box">
+            <div class="fbox-media">
+              <img class="rounded" src="{% static 'extras/demos/construction/images/doc1.jpg' %}" alt="Why choose Us?">
+            </div>
+            <div class="fbox-content px-0">
+              <h3>Dr.Nell Atkinson(Cardiothoracic Surgeon)<span class="subtitle">Precision in Practice: Mastering Surgical Skills</span></h3>
+              <p>Join us as we explore the world of skilled medical professionals in our latest blog. Discover the artistry behind surgical precision as doctors share their insights into the techniques and expertise that ensure your health is in good hands. From intricate procedures to delicate maneuvers, learn how these medical artisans excel in their craft, leaving no room for error.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-6 col-lg-4">
+          <div class="feature-box media-box">
+            <div class="fbox-media">
+              <img class="rounded" src="{% static 'extras/demos/construction/images/doc2.jpg' %}" alt="Effective Planning">
+            </div>
+            <div class="fbox-content px-0">
+              <h3>Dr Michael Brown(Medical doctor)<span class="subtitle">Healing Harmonies: The Symphony of Effective Patient Care</span></h3>
+              <p>Take a deep dive into the orchestration of effective patient care with our insightful blog. Medical doctors provide a behind-the-scenes look at how they organize and plan each aspect of patient treatment. From diagnosis to recovery, explore how meticulous planning and coordination contribute to a harmonious and successful healthcare journey.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-6 col-lg-4">
+          <div class="feature-box media-box">
+            <div class="fbox-media">
+              <img class="rounded" src="{% static 'extras/demos/construction/images/doc3.jpg' %}" alt="Why choose Us?">
+            </div>
+            <div class="fbox-content px-0">
+              <h3>Dr. Angel Lizberg(Dentist)<span class="subtitle">Preserving Well-being: A Prescription for Effective Risk Management</span></h3>
+              <p>In our latest blog, we address the crucial role of risk management in the field of medicine. Join medical doctors as they assure you that they've got you covered when it comes to your health. Explore the strategies and measures employed to manage and mitigate risks, ensuring a safe and secure healthcare experience for every patient.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+      
+    </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+	<div class="container">
+
+      <div class="row">
+        <div class="col-sm-12">
+          <div id="customers-testimonials" class="owl-carousel">
+
+            <!--TESTIMONIAL 1 -->
+            <div class="item">
+              <div class="shadow-effect">
+                <img class="img-circle" src="http://themes.audemedia.com/html/goodgrowth/images/testimonial3.jpg" alt="">
+                <p>Dramatically maintain clicks-and-mortar solutions without functional solutions. Completely synergize resource taxing relationships via premier niche markets. Professionally cultivate.</p>
+              </div>
+              <div class="testimonial-name">EMILIANO AQUILANI</div>
+            </div>
+            <!--END OF TESTIMONIAL 1 -->
+            <!--TESTIMONIAL 2 -->
+            <div class="item">
+              <div class="shadow-effect">
+                <img class="img-circle" src="http://themes.audemedia.com/html/goodgrowth/images/testimonial3.jpg" alt="">
+                <p>Dramatically maintain clicks-and-mortar solutions without functional solutions. Completely synergize resource taxing relationships via premier niche markets. Professionally cultivate.</p>
+              </div>
+              <div class="testimonial-name">ANNA ITURBE</div>
+            </div>
+            <!--END OF TESTIMONIAL 2 -->
+            <!--TESTIMONIAL 3 -->
+            <div class="item">
+              <div class="shadow-effect">
+                <img class="img-circle" src="http://themes.audemedia.com/html/goodgrowth/images/testimonial3.jpg" alt="">
+                <p>Dramatically maintain clicks-and-mortar solutions without functional solutions. Completely synergize resource taxing relationships via premier niche markets. Professionally cultivate.</p>
+              </div>
+              <div class="testimonial-name">LARA ATKINSON</div>
+            </div>
+            <!--END OF TESTIMONIAL 3 -->
+            <!--TESTIMONIAL 4 -->
+            <div class="item">
+              <div class="shadow-effect">
+                <img class="img-circle" src="http://themes.audemedia.com/html/goodgrowth/images/testimonial3.jpg" alt="">
+                <p>Dramatically maintain clicks-and-mortar solutions without functional solutions. Completely synergize resource taxing relationships via premier niche markets. Professionally cultivate.</p>
+              </div>
+              <div class="testimonial-name">IAN OWEN</div>
+            </div>
+            <!--END OF TESTIMONIAL 4 -->
+            <!--TESTIMONIAL 5 -->
+            <div class="item">
+              <div class="shadow-effect">
+                <img class="img-circle" src="http://themes.audemedia.com/html/goodgrowth/images/testimonial3.jpg" alt="">
+                <p>Dramatically maintain clicks-and-mortar solutions without functional solutions. Completely synergize resource taxing relationships via premier niche markets. Professionally cultivate.</p>
+              </div>
+              <div class="testimonial-name">MICHAEL TEDDY</div>
+            </div>
+            <!--END OF TESTIMONIAL 5 -->
+          </div>
+        </div>
+      </div>
+      </div>
+  </section>
+  <!-- END OF TESTIMONIALS -->
+
+
+<!---SERVICES-->
+<div class="container" style="background-color: #f7ebe6;width: 100%;border-radius: 4px; padding-bottom:40px;">
+
+  <div class="row align-items-stretch col-mb-50"> 
+     <h3 style="text-align: center;padding: 30px;">Our Services</h3>
+    <div class="col-lg-4 col-md-6">
+    
+      <div class="feature-box fbox-plain">
+        <div class="fbox-icon">
+          <a href="#"><img src="demos/construction/images/icons/building.png" alt="Concrete Developments"></a>
+        </div>
+        <div class="fbox-content">
+          <h3>Telemedicine ConsultationsChat with Healthcare Professionals</h3>
+          <p>Real-time messaging or chat support with healthcare professionals, enabling users to ask questions, seek advice, and get timely responses.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-6">
+      <div class="feature-box fbox-plain">
+        <div class="fbox-icon">
+          <a href="#"><img src="demos/construction/images/icons/bank.png" alt="Finance Assistance"></a>
+        </div>
+        <div class="fbox-content">
+          <h3>Appointment Scheduling</h3>
+          <p>Online booking of appointments with doctors, specialists, or other healthcare providers. Connecting with highly rated healthcare professionals. Affording the opportunity to consult with best professionals.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-6">
+      <div class="feature-box fbox-plain">
+        <div class="fbox-icon">
+          <a href="#"><img src="demos/construction/images/icons/drawer.png" alt="Interiorly Designed"></a>
+        </div>
+        <div class="fbox-content">
+          <h3>Health Monitoring and Tracking</h3>
+          <p>Features for users to track future health complications, thus offers advice for better living.</p>
+        </div>
+      </div>
+    </div>
+    <!--
+    <div class="col-lg-4 col-md-6">
+      <div class="feature-box fbox-plain">
+        <div class="fbox-icon">
+          <a href="#"><img src="demos/construction/images/icons/paper-money.png" alt="Cost Effective Solutions"></a>
+        </div>
+        <div class="fbox-content">
+          <h3>Free Access to healthcare professionals</h3>
+          <p>Offering a platform for posts to be seen by professionals and receive rated responses from health care professionals.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-6">
+      <div class="feature-box fbox-plain">
+        <div class="fbox-icon">
+          <a href="#"><img src="demos/construction/images/icons/traffic-cone.png" alt="Smart Builders"></a>
+        </div>
+        <div class="fbox-content">
+          <h3>Telemedicine Consultations(Premium)</h3>
+          <p>Video or audio consultations with healthcare professionals, allowing users to discuss symptoms, receive diagnoses, and get medical advice remotely.Convenient access to medical expertise, especially for non-emergency issues.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-6">
+      <div class="feature-box fbox-plain">
+        <div class="fbox-icon">
+          <a href="#"><img src="demos/construction/images/icons/paint-brush.png" alt="Quality Infrastructure"></a>
+        </div>
+        <div class="fbox-content">
+          <h3>Second Opinion Services</h3>
+          <p>Facilitation of second opinions from specialists on diagnoses or treatment plans.Enhanced confidence and assurance for users in complex medical situations.</p>
+        </div>
+      </div>
+    </div>
+-->
+  </div>
+</div>
+
+
+ <!-- Footer
+		============================================= -->
+		<footer id="footer" class="dark">
+			<div class="container">
+
+				<!-- Footer Widgets
+				============================================= -->
+				<div class="footer-widgets-wrap">
+
+					<div class="row">
+						<div class="col-lg-9">
+							<div class="widget">
+
+								<img src="images/footer-widget-logo.png" alt="Image" class="alignleft" style="margin-top: 8px; padding-right: 18px; border-right: 1px solid #4A4A4A;">
+
+								<p>We believe in <strong>Simple</strong>, <strong>Creative</strong> &amp; <strong>Flexible</strong> Design Standards with a Retina &amp; Responsive Approach. Browse the amazing Features this template offers.</p>
+
+								<div class="line" style="margin: 30px 0;"></div>
+
+								<div class="row col-mb-30">
+									<div class="col-lg-3 col-6 widget_links">
+										<ul>
+											<li><a href="#">Home</a></li>
+											<li><a href="#">About</a></li>
+											<li><a href="#">FAQs</a></li>
+											<li><a href="#">Support</a></li>
+											<li><a href="#">Contact</a></li>
+										</ul>
+									</div>
+
+									<div class="col-lg-3 col-6 widget_links">
+										<ul>
+											<li><a href="#">Shop</a></li>
+											<li><a href="#">Portfolio</a></li>
+											<li><a href="#">Blog</a></li>
+											<li><a href="#">Events</a></li>
+											<li><a href="#">Forums</a></li>
+										</ul>
+									</div>
+
+									<div class="col-lg-3 col-6 widget_links">
+										<ul>
+											<li><a href="#">Corporate</a></li>
+											<li><a href="#">Agency</a></li>
+											<li><a href="#">eCommerce</a></li>
+											<li><a href="#">Personal</a></li>
+											<li><a href="#">One Page</a></li>
+										</ul>
+									</div>
+
+									<div class="col-lg-3 col-6 widget_links">
+										<ul>
+											<li><a href="#">Restaurant</a></li>
+											<li><a href="#">Wedding</a></li>
+											<li><a href="#">App Showcase</a></li>
+											<li><a href="#">Magazine</a></li>
+											<li><a href="#">Landing Page</a></li>
+										</ul>
+									</div>
+								</div>
+
+							</div>
+						</div>
+
+						<div class="col-lg-3 mt-5 mt-lg-0">
+							<div class="widget">
+
+								<div class="row col-mb-30">
+									<div class="col-12">
+										<div class="footer-big-contacts">
+											<span>Call Us:</span>
+											(1) 22 55412474
+										</div>
+									</div>
+
+									<div class="col-12">
+										<div class="footer-big-contacts">
+											<span>Send an Email:</span>
+											info@healthconnect.com
+										</div>
+									</div>
+								</div>
+
+							</div>
+
+							<div class="widget subscribe-widget">
+
+								<div class="row col-mb-30">
+									<div class="col-12 col-sm-6">
+										<a href="#" class="social-icon bg-dark h-bg-facebook mb-0 me-3">
+											<i class="fa-brands fa-facebook-f"></i>
+											<i class="fa-brands fa-facebook-f"></i>
+										</a>
+										<a href="#"><small class="d-block"><strong>Like us</strong><br>on Facebook</small></a>
+									</div>
+									<div class="col-12 col-sm-6">
+										<a href="#" class="social-icon bg-dark h-bg-rss mb-0 me-3">
+											<i class="fa-solid fa-rss"></i>
+											<i class="fa-solid fa-rss"></i>
+										</a>
+										<a href="#"><small class="d-block"><strong>Subscribe</strong><br>to RSS Feeds</small></a>
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+
+				</div><!-- .footer-widgets-wrap end -->
+			</div>
+
+			<!-- Copyrights
+			============================================= -->
+			<div id="copyrights">
+				<div class="container">
+
+					<div class="row justify-content-between col-mb-30">
+						<div class="col-12 col-md-auto text-center text-md-start">
+							Copyrights &copy; 2023 All Rights Reserved by HealthConnect Inc.<br>
+							<div class="copyright-links"><a href="#">Terms of Use</a> / <a href="#">Privacy Policy</a></div>
+						</div>
+
+						<div class="col-12 col-md-auto text-center text-md-end">
+							<div class="copyrights-menu copyright-links">
+								<a href="#">Home</a>/<a href="#">About Us</a>/<a href="#">Team</a>/<a href="#">Clients</a>/<a href="#">FAQs</a>/<a href="#">Contact</a>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div><!-- #copyrights end -->
+      
+		</footer><!-- #footer end -->
+
+  
+  
+ 
+  {% endblock %}
+
+  
+ <!-- Footer
+		============================================= -->
+		<footer id="footer" class="dark">
+			<div class="container">
+
+				<!-- Footer Widgets
+				============================================= -->
+				<div class="footer-widgets-wrap">
+
+					<div class="row">
+						<div class="col-lg-9">
+							<div class="widget">
+
+								<img src="images/footer-widget-logo.png" alt="Image" class="alignleft" style="margin-top: 8px; padding-right: 18px; border-right: 1px solid #4A4A4A;">
+
+								<p>We believe in <strong>Simple</strong>, <strong>Creative</strong> &amp; <strong>Flexible</strong> Design Standards with a Retina &amp; Responsive Approach. Browse the amazing Features this template offers.</p>
+
+								<div class="line" style="margin: 30px 0;"></div>
+
+								<div class="row col-mb-30">
+									<div class="col-lg-3 col-6 widget_links">
+										<ul>
+											<li><a href="#">Home</a></li>
+											<li><a href="#">About</a></li>
+											<li><a href="#">FAQs</a></li>
+											<li><a href="#">Support</a></li>
+											<li><a href="#">Contact</a></li>
+										</ul>
+									</div>
+
+									<div class="col-lg-3 col-6 widget_links">
+										<ul>
+											
+											<li><a href="#">Portfolio</a></li>
+											<li><a href="#">Blogs</a></li>
+											<li><a href="#">Events</a></li>
+											<li><a href="#">Forums</a></li>
+										</ul>
+									</div>
+
+									<div class="col-lg-3 col-6 widget_links">
+										<ul>
+											<li><a href="#">Corporate</a></li>
+											<li><a href="#">Agency</a></li>
+											<li><a href="#">eCommerce</a></li>
+											<li><a href="#">Personal</a></li>
+										
+										</ul>
+									</div>
+
+									<div class="col-lg-3 col-6 widget_links">
+										<ul>
+											<li><a href="#">Restaurant</a></li>
+											<li><a href="#">Wedding</a></li>
+											<li><a href="#">App Showcase</a></li>
+											<li><a href="#">Magazine</a></li>
+											<li><a href="#">Landing Page</a></li>
+										</ul>
+									</div>
+								</div>
+
+							</div>
+						</div>
+
+						<div class="col-lg-3 mt-5 mt-lg-0">
+							<div class="widget">
+
+								<div class="row col-mb-30">
+									<div class="col-12">
+										<div class="footer-big-contacts">
+											<span>Call Us:</span>
+											(+27) 011 546 7890
+										</div>
+									</div>
+
+									<div class="col-12">
+										<div class="footer-big-contacts">
+											<span>Send an Email:</span>
+											info@canvas.com
+										</div>
+									</div>
+								</div>
+
+							</div>
+
+							<div class="widget subscribe-widget">
+
+								<div class="row col-mb-30">
+									<div class="col-12 col-sm-6">
+										<a href="#" class="social-icon bg-dark h-bg-facebook mb-0 me-3">
+											<i class="fa-brands fa-facebook-f"></i>
+											<i class="fa-brands fa-facebook-f"></i>
+										</a>
+										<a href="#"><small class="d-block"><strong>Like us</strong><br>on Facebook</small></a>
+									</div>
+									<div class="col-12 col-sm-6">
+										<a href="#" class="social-icon bg-dark h-bg-rss mb-0 me-3">
+											<i class="fa-solid fa-rss"></i>
+											<i class="fa-solid fa-rss"></i>
+										</a>
+										<a href="#"><small class="d-block"><strong>Subscribe</strong><br>to RSS Feeds</small></a>
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+
+				</div><!-- .footer-widgets-wrap end -->
+			</div>
+
+			<!-- Copyrights
+			============================================= -->
+			<div id="copyrights">
+				<div class="container">
+
+					<div class="row justify-content-between col-mb-30">
+						<div class="col-12 col-md-auto text-center text-md-start">
+							Copyrights &copy; 2023 All Rights Reserved by Canvas Inc.<br>
+							<div class="copyright-links"><a href="#">Terms of Use</a> / <a href="#">Privacy Policy</a></div>
+						</div>
+
+						<div class="col-12 col-md-auto text-center text-md-end">
+							<div class="copyrights-menu copyright-links">
+								<a href="#">Home</a>/<a href="#">About Us</a>/<a href="#">Team</a>/<a href="#">Clients</a>/<a href="#">FAQs</a>/<a href="#">Contact</a>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div><!-- #copyrights end -->
+      
+		</footer><!-- #footer end -->
+
+  
+  
+  <!-- Go To Top (EXTRAS)
+    ============================================= -->
+    <div id="gotoTop" class="uil uil-angle-up"></div>
+
+    <!-- JavaScripts
+    ============================================= -->
+    <script src="{% static 'extras/js/functions.js' %}"></script>
+    <script>
+      jQuery(document).ready(function($) {
+        		"use strict";
+        		//  TESTIMONIALS CAROUSEL HOOK
+		        $('#customers-testimonials').owlCarousel({
+		            loop: true,
+		            center: true,
+		            items: 3,
+		            margin: 0,
+		            autoplay: true,
+		            dots:true,
+		            autoplayTimeout: 8500,
+		            smartSpeed: 450,
+		            responsive: {
+		              0: {
+		                items: 1
+		              },
+		              768: {
+		                items: 2
+		              },
+		              1170: {
+		                items: 3
+		              }
+		            }
+		        });
+        	});
+    </script>
+   
