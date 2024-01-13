@@ -10,6 +10,7 @@ class PatientCreateForm(forms.Form):
     mobile_no = forms.CharField(max_length=15)
     gender = forms.CharField(max_length=10)
 
+
 class DoctorCreateForm(forms.Form):
     email = forms.EmailField()
     password = forms.CharField(widget=forms.PasswordInput)

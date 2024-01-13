@@ -217,7 +217,7 @@ def get_user(request, user_id):
         return None
 
 
-def saveddata(request, user_id):
+def savedata(request, user_id):
     
     if request.method == 'POST':
         try:
