@@ -16,6 +16,7 @@ METHOD_ERROR = "Incorrect Method Used, Please Try Again."
 
 
 def get_posts(request):
+    
     if request.method == 'GET' or request.method == 'POST':
         try:
             user_id = request.session.get('user_id')
@@ -57,6 +58,7 @@ def get_posts(request):
 
 
 def all_posts(request):
+    
     if request.method == 'GET' or request.method == 'POST':
         try:
             user_id = request.session.get('user_id')
@@ -98,6 +100,7 @@ def all_posts(request):
 
 
 def create_post(request):
+    
     if request.method == 'POST':
         
         if request.POST['title'] and request.POST['content']:
@@ -152,6 +155,7 @@ def create_post(request):
 
 
 def get_post(request, post_id):
+    
     if request.method == 'GET' or request.method == 'POST':
         try:
             user_id = request.session.get('user_id')
@@ -193,6 +197,7 @@ def get_post(request, post_id):
 
 
 def update_post(request, post_id):
+    
     if request.method == 'GET' or request.method == 'POST':
         
         if request.POST['title'] and request.POST['content']:
@@ -247,6 +252,7 @@ def update_post(request, post_id):
 
 
 def delete_post(request, post_id):
+    
     if request.method == 'GET' or request.method == 'POST':
         try:
             user_id = request.session.get('user_id')
@@ -289,6 +295,7 @@ def delete_post(request, post_id):
 
 
 def create_reply(request, post_id):
+    
     if request.method == 'POST':
         
         if request.POST['title'] and request.POST['content']:
@@ -343,6 +350,7 @@ def create_reply(request, post_id):
 
 
 def vote(request):
+    
     if request.method == 'POST':
         
         if request.POST['post_id']: # and request.POST['dir']:
