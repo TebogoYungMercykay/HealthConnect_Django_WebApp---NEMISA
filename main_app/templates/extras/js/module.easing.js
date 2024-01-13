@@ -1,0 +1,1 @@
+export default function(e){const n=SEMICOLON.Core;n.loadJS({file:"plugins.easing.js",id:"canvas-easing-js",jsFolder:!0}),n.isFuncTrue(()=>"undefined"!=typeof jQuery&&void 0!==jQuery.easing.easeOutQuad).then(e=>!!e&&void SEMICOLON.Core.initFunction({class:"has-plugin-easing",event:"pluginEasingReady"}))}
