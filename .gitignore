@@ -1,5 +1,7 @@
 # .gitignore for Django projects
 
+random_app_data/
+
 # Python-related
 *.pyc
 __pycache__/
