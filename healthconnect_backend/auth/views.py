@@ -7,6 +7,8 @@ import requests
 import logging
 import os
 
+from django.http import JsonResponse
+
 MESSAGE = "Some Error Occured, Please Try Again."
 FORM_DATA = 'application/x-www-form-urlencoded'
 JSON_DATA = 'application/json'
@@ -44,7 +46,9 @@ def login_patient(request):
                         request.session['name'] = api_response.get('name')
                         request.session['is_authenticated'] = True
                         
+                        # return JsonResponse({"status": "success"}) # Temporary for Testing
                         return redirect(reverse('patient_ui'))
+                        
         
                     else:
                         messages.info(request, api_response.get('data'))
@@ -93,6 +97,7 @@ def login_doctor(request):
                         request.session['name'] = api_response.get('name')
                         request.session['is_authenticated'] = True
                         
+                        # return JsonResponse({"status": "success"}) # Temporary for Testing
                         return redirect(reverse('doctor_ui'))
         
                     else:
@@ -142,6 +147,7 @@ def login_admin(request):
                         request.session['name'] = api_response.get('name')
                         request.session['is_authenticated'] = True
                         
+                        # return JsonResponse({"status": "success"}) # Temporary for Testing
                         return redirect(reverse('admin_ui'))
         
                     else:
@@ -189,6 +195,7 @@ def logout(request):
                     request.session.pop('is_authenticated', None)
                     request.session.pop('name', None)
             
+                    # return JsonResponse({"status": "success"}) # Temporary for Testing
                     return redirect(reverse('home'))
             
             request.session.clear()
