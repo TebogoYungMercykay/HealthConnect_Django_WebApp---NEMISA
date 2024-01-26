@@ -20,7 +20,7 @@ env/
 
 # Django-specific
 *.log
-db.sqlite3
+# db.sqlite3
 media/
 
 # Ignore secret key
@@ -55,7 +55,7 @@ Pipfile.lock
 *.pyo
 *.pyd
 *.db
-*.sqlite3
+# *.sqlite3
 *.h5
 *.hdf5
 *.log
