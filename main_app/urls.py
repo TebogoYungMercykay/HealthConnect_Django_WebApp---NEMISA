@@ -3,9 +3,21 @@ from . import views
 
 urlpatterns = [
     path("", views.home, name="home"),
-    path('admin_ui', views.admin_ui, name='admin_ui'),
-    path('patient_ui', views.patient_ui, name='patient_ui'),
-    path('doctor_ui', views.doctor_ui, name='doctor_ui'),
-    path('patient_profile/<int:patient_id>', views.patient_profile, name='patient_profile'),
-    path('doctor_profile/<int:doctor_id>', views.doctor_profile, name='doctor_profile')
+    # Temporary Routes for Testing Purpose Only
+    path('login', views.login, name="login"),
+    path('register', views.register, name="register"),
+    path('contact', views.contact, name="contact"),
+    path('blogs', views.blogs, name="blogs"),
+    path('blog_details', views.blog_details, name="blog_details"),
+    path('user_profile', views.user_profile, name="user_profile"),
+    path('sendmail', views.sendmail, name="sendmail"),
+    path('consultation', views.consultation, name="consultation"),
+    path('consultation_chats', views.consultation_chats, name="consultation_chats"),
+    path('admin_page', views.admin_page, name="admin_page"),
+    path('calendar', views.calendar , name='calendar'),
+    # Ends Here
+    path('help', views.help, name="help"),
+    path('home_id/<str:fragment>/', views.home_id, name="home_id"),
+    
+    path('login_temp', views.login_temp, name="login_temp"),
 ]

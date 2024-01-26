@@ -8,4 +8,5 @@ urlpatterns = [
     path('create_chat/<int:user_id>', views.create_chat, name='create_chat'),
     path('whatsapp', views.whatsapp, name='whatsapp'),
     path('meeting',views.meeting, name='meeting'),
+
 ]

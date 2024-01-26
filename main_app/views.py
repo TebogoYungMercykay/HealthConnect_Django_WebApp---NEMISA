@@ -1,84 +1,155 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
+from django.urls import reverse
 
 
-HOME_TEMPLATE = 'patient/patient_ui/profile.html'
+MESSAGE = "Some Error Occured, Please Try Again."
+FORM_DATA = 'application/x-www-form-urlencoded'
+JSON_DATA = 'application/json'
+HOME_TEMPLATE = 'index.html'
+
 
 def home(request):
     if request.method == 'GET':
-
-        if request.session.get('is_authenticated') != None and request.session.get('is_authenticated') == True:
-            return render(request, 'blog/posts.html')
-
+        if request.session.get('is_authenticated') is not None and request.session.get('is_authenticated') == True and request.session.get('user_type') is not None and request.session.get('name') is not None:
+            if request.session.get('user_type') == 'Admin User' and request.session.get('name') == 'Admin User':
+                return redirect('admin-dashboard.html')
+            else:
+                return render(request, 'posts.html')
         else:
-            return render(request, 'homepage/index.html')
-
+            return render(request, 'index.html')
     else:
         return redirect('')
-        
-def admin_ui(request):
+
+
+def home_id(request, fragment):
+    if request.method == 'GET':
+        url = reverse('home') + f'#{fragment}'
+        return redirect(url)
+    else:
+        return redirect('')
+
+
+#--------------------------------------------#
+# TEMPORARY ROUTES FOR TESTING PURPOSES ONLY
+#--------------------------------------------#
+
+def sendmail(request):
+
+    return home_id(request, 'contact')
+
+
+def user_profile(request):
 
     if request.method == 'GET':
 
-        if request.session.get('is_authenticated'):
+        return render(request, 'users-profile.html')
+    
+    else:
+        return redirect('home')
+ 
 
-            auser = request.user
-            Feedbackobj = Feedback.objects.all()
+def calendar(request):
 
-            return render(request, 'admin/admin_ui/admin_ui.html', {"auser": auser, "Feedback": Feedbackobj})
+    if request.method == 'GET':
+    
+            return render(request, 'schedule.html')
 
-        else:
-            return redirect('home')
-
-    if request.method == 'POST':
-
-        return render(request, HOME_TEMPLATE)
+    else:
+        return redirect('home')
 
 
-def patient_ui(request):
+def help(request):
 
     if request.method == 'GET':
 
-        if request.session.get('is_authenticated'):
+        return render(request, 'help.html')
 
-            patient_id = request.session['patient_id']
-            puser = User.objects.get(username=patient_id)
+    else:
+        return redirect('home')
 
-            return render(request, HOME_TEMPLATE, {"puser": puser})
-
-        else:
-            return redirect('home')
-
-    if request.method == 'POST':
-
-        return render(request, HOME_TEMPLATE)
-
-
-def patient_profile(request, patient_id):
+    
+def contact(request):
 
     if request.method == 'GET':
 
-        puser = User.objects.get(username=patient_id)
+        return render(request, 'contact.html')
 
-        return render(request, 'patient/view_profile/view_profile.html', {"puser": puser})
-
-
-def doctor_ui(request):
-
-    if request.method == 'GET':
-
-        doctor_id = request.session['doctor_id']
-        duser = User.objects.get(username=doctor_id)
-
-        return render(request, 'doctor/doctor_ui/profile.html', {"duser": duser})
-
-
-def doctor_profile(request, doctor_id):
+    else:
+        return redirect('home')
+    
+    
+def admin_page(request):
 
     if request.method == 'GET':
 
-        duser = User.objects.get(username=doctor_id)
-        r = rating_review.objects.filter(doctor=duser.doctor)
+        return render(request, 'admin-dashboard.html')
 
-        return render(request, 'doctor/view_profile/view_profile.html', {"duser": duser, "rate": r})
+    else:
+        return redirect('home')
+   
+    
+def consultation(request):
 
+    if request.method == 'GET':
+
+        return render(request, 'consultation.html')
+
+    else:
+        return redirect('home')
+    
+    
+def consultation_chats(request):
+
+    if request.method == 'GET':
+
+        return render(request, 'consultation-chats.html')
+
+    else:
+        return redirect('home')
+   
+ 
+def register(request):
+
+    if request.method == 'GET':
+
+        return render(request, 'pages-register.html')
+
+    else:
+        return redirect('home')
+    
+    
+def login(request):
+
+    if request.method == 'GET':
+
+        return render(request, 'pages-login.html')
+
+    else:
+        return redirect('home')
+    
+    
+def blogs(request):
+
+    if request.method == 'GET':
+
+        return render(request, 'blog.html')
+
+    else:
+        return redirect('home')
+    
+
+def blog_details(request):
+
+    if request.method == 'GET':
+
+        return render(request, 'blog-details.html')
+
+    else:
+        return redirect('home')
+    
+    
+def login_temp(request):
+
+    print("Form Submists Successfully")
+    return redirect('home')

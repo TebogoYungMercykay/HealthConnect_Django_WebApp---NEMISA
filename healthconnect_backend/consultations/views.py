@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.core.exceptions import PermissionDenied
@@ -142,7 +142,7 @@ def consultation_view_patient(request, consultation_id):
                     api_response = response.json()
                     if api_response.get('status') == "success":
 
-                        return render(request, 'consultation/consultation.html', {"consultation": api_response.get('data')})
+                        return render(request, 'consultation/consultation.html', {"consultation": api_response})
                 
                 logging.error(f"Error Occured When Consultation View: {e}, User Id: {user_id}")
                 return redirect(reverse('home'))
@@ -418,18 +418,18 @@ def get_reviews_id(request, doctor_id):
                         return api_response['data']
                 
                 logging.error(f"Error Occured When Requesting Reviews: {e}, User Id: {user_id}")
-                return redirect(reverse('home'))
+                return JsonResponse({"average_rating": 0, "Ratings": []})
             
             else:
                 raise PermissionDenied(USER_MESSAGE)
       
         except requests.RequestException as e:
             logging.error(f"Error Occured When Requesting Reviews: {e}, User Id: {user_id}")
-            return redirect(reverse('home'))
+            return JsonResponse({"average_rating": 0, "Ratings": []})
 
     else:
         messages.error(request, METHOD_ERROR)
-        return redirect(reverse('home'))
+        return JsonResponse({"average_rating": 0, "Ratings": []})
 
 
 def get_reviews(request):
@@ -461,16 +461,16 @@ def get_reviews(request):
                         return api_response['data']
                 
                 logging.error(f"Error Occured When Requesting Reviews: {e}, User Id: {user_id}")
-                return redirect(reverse('home'))
+                return JsonResponse({"average_rating": 0, "Ratings": []})
             
             else:
                 raise PermissionDenied(USER_MESSAGE)
       
         except requests.RequestException as e:
             logging.error(f"Error Occured When Requesting Reviews: {e}, User Id: {user_id}")
-            return redirect(reverse('home'))
+            return JsonResponse({"average_rating": 0, "Ratings": []})
 
     else:
         messages.error(request, METHOD_ERROR)
-        return redirect(reverse('home'))
+        return JsonResponse({"average_rating": 0, "Ratings": []})
 

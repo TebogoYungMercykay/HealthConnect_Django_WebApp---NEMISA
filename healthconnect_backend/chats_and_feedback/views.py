@@ -1,5 +1,4 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.core.exceptions import PermissionDenied
@@ -98,18 +97,18 @@ def user_feedback(request, user_id):
                         return api_response.get('data')
                 
                 logging.error(f"Error Occured When Requesting FeedBack Data: {e}: User Id: {user_id}")
-                return None
+                return JsonResponse({'status': 'error', 'message': MESSAGE})
             
             else:
                 raise PermissionDenied(USER_MESSAGE)
       
         except requests.RequestException as e:
             logging.error(f"Error Occured When Requesting FeedBack Data: {e}: User Id: {user_id}")
-            return None
+            return JsonResponse({'status': 'error', 'message': MESSAGE})
 
     else:
         messages.error(request, METHOD_ERROR)
-        return None
+        return JsonResponse({'status': 'error', 'message': MESSAGE})
 
 
 def chat_messages(request, user_id):

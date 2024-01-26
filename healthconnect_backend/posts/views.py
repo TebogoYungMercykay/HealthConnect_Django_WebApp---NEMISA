@@ -133,17 +133,19 @@ def create_post(request):
                         if api_response.get('status') == "success":
 
                             messages.info(request, "Successfully Created a Post")
-                            return api_response.get('data')
+                            return redirect('all_posts')
                     
                     logging.error(f"Error Occured When Creating Post: {e}: User Id: {user_id}")
-                    return None
+                    messages.error(request, "Failed to Create a Post")
                 
                 else:
                     raise PermissionDenied(USER_MESSAGE)
         
             except requests.RequestException as e:
                 logging.error(f"Error Occured When Creating Post: {e}: User Id: {user_id}")
-                return None
+                messages.error(request, "Error Occurred While Creating a Post")
+                
+            redirect(reverse('all_posts'))
 
         else:
             messages.error(request, MESSAGE)
@@ -151,7 +153,9 @@ def create_post(request):
 
     else:
         messages.error(request, METHOD_ERROR)
-        return None
+        messages.error(request, "Failed to Create a Post")
+        
+    redirect(reverse('all_posts'))
 
 
 def get_post(request, post_id):
