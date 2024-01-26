@@ -32,6 +32,9 @@ DEBUG = True
 
 # Time in seconds
 SESSION_COOKIE_AGE = 21600
+# settings.py
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+
 
 ALLOWED_HOSTS = ['*']
 # ALLOWED_HOSTS = ['healthconnect.com']
@@ -74,6 +77,7 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                'django.template.context_processors.request',
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
@@ -93,23 +97,18 @@ WSGI_APPLICATION = 'healthconnect_backend.wsgi.application'
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.mysql',
-#         'NAME':config('SERVERNAME'),
-#         'USER':config('USER'),
-#         'PASSWORD': config('PASSWORD'),
-#         'HOST':config('HOST'),
-#         'PORT':config('PORT'),
-#         'OPTIONS': {
-#             'ssl': {
-#                 'ca': config('SSLPATH'),  # Path to your CA certificate
-#             },
-#         },
+#         'NAME': os.environ.get('DATABASE_NAME'),
+#         'USER': os.environ.get('DATABASE_USERNAME'),
+#         'PASSWORD': os.environ.get('DATABASE_PASSWORD'),
+#         'HOST': os.environ.get('DATABASE_HOSTNAME'),
+#         'PORT': os.environ.get('DATABASE_PORT'),
 #     }
 # }
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR + "db.sqlite3",
+        'NAME': os.path.join(BASE_DIR, "mydatabase.sqlite3"),
     }
 }
 
@@ -170,5 +169,6 @@ USE_L10N = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_TEMPLATE = os.path.join(BASE_DIR, 'main_app/templates')
-STATICFILES_DIRS = [ STATIC_TEMPLATE ]
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'main_app/static'),
+]

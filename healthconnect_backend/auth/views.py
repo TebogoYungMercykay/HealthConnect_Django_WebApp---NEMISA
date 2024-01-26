@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from .form import LoginForm
 from django.contrib import messages
 import requests
+import json
 import logging
 import os
 
@@ -15,7 +16,6 @@ JSON_DATA = 'application/json'
 
 
 def login_patient(request):
-    
     if request.method == 'POST':
         
         try:
@@ -39,34 +39,34 @@ def login_patient(request):
                 if response.status_code == 200:
                     api_response = response.json()
                     if api_response.get('status') == "success":
-                                            
+                        request.session.clear()
                         request.session['user_id'] = api_response.get('id')
                         request.session['access_token'] = api_response['data']['access_token']
                         request.session['token_type'] = api_response['data']['token_type']
                         request.session['name'] = api_response.get('name')
                         request.session['is_authenticated'] = True
+                        request.session['is_patient'] = True
+                        request.session['is_doctor'] = False
+                        request.session['is_admin'] = False
+
+                        return render(request, 'pages-login.html')
                         
-                        # return JsonResponse({"status": "success"}) # Temporary for Testing
-                        return redirect(reverse('patient_ui'))
-                        
-        
                     else:
                         messages.info(request, api_response.get('data'))
-                        return redirect(reverse('login_patient'))
+                        return redirect(reverse('login'))
                         
             messages.info(request, MESSAGE)
-            return redirect(reverse('login_patient'))
+            return redirect(reverse('login'))
 
         except requests.RequestException as e:
             logging.error(f"Error Occured During Login Request: {e}: Patient")
-            return redirect(reverse('home'))
+            return redirect(reverse('login'))
         
     else:
-        return render(request,'patient/signin_page/index.html')
+        return render(request,'index.html')
 
 
 def login_doctor(request):
-    
     if request.method == 'POST':
         
         try:
@@ -90,33 +90,34 @@ def login_doctor(request):
                 if response.status_code == 200:
                     api_response = response.json()
                     if api_response.get('status') == "success":
-                                            
+                        request.session.clear()
                         request.session['user_id'] = api_response.get('id')
                         request.session['access_token'] = api_response['data']['access_token']
                         request.session['token_type'] = api_response['data']['token_type']
                         request.session['name'] = api_response.get('name')
                         request.session['is_authenticated'] = True
+                        request.session['is_patient'] = False
+                        request.session['is_doctor'] = True
+                        request.session['is_admin'] = False
                         
-                        # return JsonResponse({"status": "success"}) # Temporary for Testing
-                        return redirect(reverse('doctor_ui'))
+                        return render(request, 'pages-login.html')
         
                     else:
                         messages.info(request, api_response.get('data'))
-                        return redirect(reverse('login_doctor'))
+                        return redirect(reverse('login'))
                         
             messages.info(request, MESSAGE)
-            return redirect(reverse('login_doctor'))
+            return redirect(reverse('login'))
 
         except requests.RequestException as e:
             logging.error(f"Error Occured During Login Request: {e}: Doctor")
-            return redirect(reverse('home'))
+            return redirect(reverse('login'))
 
     else:
-        return render(request,'doctor/signin_page/index.html')
+        return render(request,'pages-login.html')
 
 
 def login_admin(request):
-
     if request.method == 'POST':
         
         try:
@@ -140,29 +141,31 @@ def login_admin(request):
                 if response.status_code == 200:
                     api_response = response.json()
                     if api_response.get('status') == "success":
-                                            
+                        request.session.clear()
                         request.session['user_id'] = api_response.get('id')
                         request.session['access_token'] = api_response['data']['access_token']
                         request.session['token_type'] = api_response['data']['token_type']
                         request.session['name'] = api_response.get('name')
                         request.session['is_authenticated'] = True
+                        request.session['is_patient'] = False
+                        request.session['is_doctor'] = False
+                        request.session['is_admin'] = True
                         
-                        # return JsonResponse({"status": "success"}) # Temporary for Testing
-                        return redirect(reverse('admin_ui'))
+                        return render(request, 'pages-login.html')
         
                     else:
                         messages.info(request, api_response.get('data'))
-                        return redirect(reverse('login_admin'))
+                        return redirect(reverse('login'))
                         
             messages.info(request, MESSAGE)
-            return redirect(reverse('login_admin'))
+            return redirect(reverse('login'))
         
         except requests.RequestException as e:
             logging.error(f"Error Occured During Login Request: {e}: Admin")
-            return redirect(reverse('home'))
+            return redirect(reverse('login'))
 
     else:
-        return render(request,'admin/signin/signin.html')
+        return render(request,'pages-login.html')
 
 
 def logout(request):
@@ -170,9 +173,10 @@ def logout(request):
     if request.method == 'POST':
         
         try:
-            user_id = request.session.get('user_id')
-            jwt_token = request.session.get('access_token')
-            token_type = request.session.get('token_type')
+            user_data_cookie = json.loads(request.COOKIES.get('user_data_cookie', '{}'))
+            user_id = user_data_cookie.get('user_id', None)
+            jwt_token = user_data_cookie.get('access_token', None)
+            token_type = user_data_cookie.get('token_type', None)
 
             headers = {
                 "Content-Type": JSON_DATA,
@@ -188,13 +192,15 @@ def logout(request):
                 api_response = response.json()
                 
                 if api_response.get('status') == "success":
-                    
                     request.session.pop('user_id', None)
                     request.session.pop('access_token', None)
                     request.session.pop('token_type', None)
-                    request.session.pop('is_authenticated', None)
                     request.session.pop('name', None)
-            
+                    request.session.pop('is_authenticated', None)
+                    request.session.pop('is_patient', None)
+                    request.session.pop('is_doctor', None)
+                    request.session.pop('is_admin', None)
+
                     # return JsonResponse({"status": "success"}) # Temporary for Testing
                     return redirect(reverse('home'))
             
@@ -207,5 +213,6 @@ def logout(request):
             return redirect(reverse('home'))
 
     else:
+        request.session.clear()
         return redirect(reverse('home'))
     

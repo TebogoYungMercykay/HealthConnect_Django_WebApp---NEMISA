@@ -1,10 +1,12 @@
-from django.shortcuts import render
+from datetime import datetime, time
 from django.shortcuts import render, redirect
+from django.http import HttpResponse, JsonResponse
 from django.urls import reverse
 from django.core.exceptions import PermissionDenied
 from django.contrib import messages
 from .form import PatientCreateForm, DoctorCreateForm
 import requests
+import json
 import logging
 import os
 
@@ -18,60 +20,47 @@ def signup_patient(request):
     if request.method == 'POST':
         
         try:
-            if request.POST['username'] and request.POST['email'] and request.POST['name'] and request.POST['dob'] and request.POST['gender'] and request.POST['address'] and request.POST['mobile'] and request.POST['password'] and request.POST['password1'] :
-                
-                if request.POST.get('password') == request.POST.get('password1'):
-                    
-                    temp_form = PatientCreateForm(request.POST)
-                    
-                    if temp_form.is_valid():
-                        request_data = {
-                            'email': temp_form.cleaned_data['email'],
-                            'password': temp_form.cleaned_data['password'],
-                            'name': temp_form.cleaned_data['name'],
-                            'surname': temp_form.cleaned_data['surname'],
-                            'dob': temp_form.cleaned_data['dob'],
-                            'address': temp_form.cleaned_data['address'],
-                            'mobile_no': temp_form.cleaned_data['mobile_no'],
-                            'gender': temp_form.cleaned_data['gender'],
-                        }
-                        
-                        api_url = os.getenv("API_ENDPOINT") + '/users/signup_patient'
-                        
-                        headers = {
-                            'Content-Type': JSON_DATA,
-                        }
-                        
-                        response = requests.post(api_url, data=request_data, headers=headers)
-                        response.raise_for_status()
-                        
-                        if response.status_code == 200:
-                            api_response = response.json()
-                            if api_response.get('status') == "success":
-                                messages.info(request, "Account created Successfully")
-                                return redirect(reverse('login_patient'))
-                            
-                            else:
-                                messages.info(request, api_response.get('data'))
-                                return redirect(reverse('signup_patient'))
-                    
-                    messages.info(request, MESSAGE)
-                    return redirect(reverse('signup_patient'))
-
-                else:
-                    messages.info(request,'Password not Matching, Please Try Again')
-                    return redirect(reverse('signup_patient'))
-
-            else :
-                messages.info(request,'Please Make Sure All Required Fields are Filled Out Correctly')
-                return redirect(reverse('signup_patient'))
+            temp_form = PatientCreateForm(request.POST)
             
+            if temp_form.is_valid():
+                request_data = {
+                    'email': temp_form.cleaned_data['email'],
+                    'password': temp_form.cleaned_data['password'],
+                    'name': temp_form.cleaned_data['name'],
+                    'surname': temp_form.cleaned_data['surname'],
+                    'dob': datetime.combine(temp_form.cleaned_data['dob'], time(10, 0)).strftime('%Y-%m-%dT%H:%M'),
+                    'address': temp_form.cleaned_data['address'],
+                    'mobile_no': temp_form.clean_mobile_no(),
+                    'gender': temp_form.cleaned_data['gender'],
+                }
+                
+                request_data = json.dumps(request_data, indent=4, ensure_ascii=False)
+                headers = { 'Content-Type': JSON_DATA, }
+                
+                api_url = os.getenv("API_ENDPOINT") + '/users/signup_patient'
+                response = requests.post(api_url, data=request_data, headers=headers)
+                response.raise_for_status()
+                
+                if response.status_code == 201:
+                    api_response = response.json()
+                    if api_response.get('status') == "success":
+                        messages.info(request, "Account created Successfully")
+                        return redirect(reverse('login'))
+                    
+                    else:
+                        messages.info(request, api_response.get('data'))
+                        return redirect(reverse('register'))
+            
+            messages.info(request, MESSAGE)
+            return redirect(reverse('register'))
+    
         except requests.RequestException as e:
+            messages.info(request, "Please Make Sure All Required Fields are Filled Out Correctly")
             logging.error(f"Error Occured During Sign Up Request: {e}: Patient")
-            return redirect(reverse('signup_patient'))
+            return redirect(reverse('register'))
 
     else:
-        return render(request,'patient/signup_Form/signup.html')
+        return render(request,'pages-register.html')
 
 
 def signup_doctor(request):
@@ -79,65 +68,55 @@ def signup_doctor(request):
     if request.method == 'POST':
         
         try:
-            if request.POST['username'] and request.POST['email'] and request.POST['name'] and request.POST['dob'] and request.POST['gender'] and request.POST['address'] and request.POST['mobile'] and request.POST['password'] and request.POST['password1']  and request.POST['registration_no'] and request.POST['year_of_registration'] and request.POST['qualification'] and request.POST['State_Medical_Council'] and request.POST['specialization']:
+            temp_form = DoctorCreateForm(request.POST)
+            
+            if temp_form.is_valid():
+                request_data = {
+                    'email': temp_form.cleaned_data['email'],
+                    'password': temp_form.cleaned_data['password'],
+                    'name': temp_form.cleaned_data['name'],
+                    'surname': temp_form.cleaned_data['surname'],
+                    'dob': datetime.combine(temp_form.cleaned_data['dob'], time(10, 0)).strftime('%Y-%m-%dT%H:%M'),
+                    'address': temp_form.cleaned_data['address'],
+                    'mobile_no': temp_form.clean_mobile_no(),
+                    'gender': temp_form.cleaned_data['gender'],
+                    'qualification': temp_form.cleaned_data['qualification'],
+                    'registration_no': temp_form.cleaned_data['registration_no'],
+                    'year_of_registration': datetime.combine(temp_form.cleaned_data['year_of_registration'], time(10, 0)).strftime('%Y-%m-%dT%H:%M'),
+                    'state_medical_council': temp_form.cleaned_data['state_medical_council'],
+                    'specialization': temp_form.cleaned_data['specialization'],
+                }
                 
-                if request.POST.get('password') == request.POST.get('password1'):
+                api_url = os.getenv("API_ENDPOINT") + '/users/signup_doctor'
+                
+                request_data = json.dumps(request_data, indent=4, ensure_ascii=False)
+                headers = {
+                    'Content-Type': JSON_DATA,
+                }
+                
+                response = requests.post(api_url, data=request_data, headers=headers)
+                response.raise_for_status()
+                
+                if response.status_code == 201:
+                    api_response = response.json()
+                    if api_response.get('status') == "success":
+                        messages.info(request, "Account created Successfully")
+                        return redirect(reverse('login'))
                     
-                    temp_form = DoctorCreateForm(request.POST)
-                    
-                    if temp_form.is_valid():
-                        request_data = {
-                            'email': temp_form.cleaned_data['email'],
-                            'password': temp_form.cleaned_data['password'],
-                            'name': temp_form.cleaned_data['name'],
-                            'surname': temp_form.cleaned_data['surname'],
-                            'dob': temp_form.cleaned_data['dob'],
-                            'address': temp_form.cleaned_data['address'],
-                            'mobile_no': temp_form.cleaned_data['mobile_no'],
-                            'gender': temp_form.cleaned_data['gender'],
-                            'qualification': temp_form.cleaned_data['qualification'],
-                            'registration_no': temp_form.cleaned_data['registration_no'],
-                            'year_of_registration': temp_form.cleaned_data['year_of_registration'],
-                            'state_medical_council': temp_form.cleaned_data['state_medical_council'],
-                            'specialization': temp_form.cleaned_data['specialization'],
-                        }
-                        
-                        api_url = os.getenv("API_ENDPOINT") + '/users/signup_doctor'
-                        
-                        headers = {
-                            'Content-Type': JSON_DATA,
-                        }
-                        
-                        response = requests.post(api_url, data=request_data, headers=headers)
-                        response.raise_for_status()
-                        
-                        if response.status_code == 200:
-                            api_response = response.json()
-                            if api_response.get('status') == "success":
-                                messages.info(request, "Account created Successfully")
-                                return redirect(reverse('login_patient'))
-                            
-                            else:
-                                messages.info(request, api_response.get('data'))
-                                return redirect(reverse('signup_doctor'))
-                    
-                    messages.info(request, MESSAGE)
-                    return redirect(reverse('signup_doctor'))
-
-                else:
-                    messages.info(request,'Password not Matching, Please Try Again')
-                    return redirect(reverse('signup_doctor'))
-
-            else :
-                messages.info(request,'Please Make Sure All Required Fields are Filled Out Correctly')
-                return redirect(reverse('signup_doctor'))
+                    else:
+                        messages.info(request, api_response.get('data'))
+                        return redirect(reverse('register'))
+            
+            messages.info(request, MESSAGE)
+            return redirect(reverse('register'))
             
         except requests.RequestException as e:
+            messages.info(request, "Please Make Sure All Required Fields are Filled Out Correctly")
             logging.error(f"Error Occured During Sign Up Request: {e}: Doctor")
-            return redirect(reverse('signup_patient'))
+            return redirect(reverse('register'))
         
     else:
-        return render(request,'doctor/signup_Form/signup.html')
+        return render(request,'pages-register.html')
 
 
 def get_doctors(request):
@@ -209,17 +188,53 @@ def get_user(request, user_id):
                         return api_response.get('data')
                 
                 logging.error(f"Error Occured When Requesting for Doctors Data: {e}: User Id: {user_id}")
-                return None
+                return JsonResponse({
+                    "user": {
+                        "id": 33,
+                        "email": "john@gmail.com",
+                        "created_at": "2024-01-10T22:43:02.431645Z"
+                    },
+                    "details": {
+                        "name": "Johnfafa",
+                        "surname": "Doe",
+                        "address": "Centurion, Gauteng",
+                        "mobile_no": 897777777
+                    }
+                })
             
             else:
                 raise PermissionDenied("Incorrect User Id used.")
       
         except requests.RequestException as e:
             logging.error(f"Error Occured When Requesting User Data: {e}: User Id: {user_id}")
-            return None
+            return JsonResponse({
+                "user": {
+                    "id": 33,
+                    "email": "john@gmail.com",
+                    "created_at": "2024-01-10T22:43:02.431645Z"
+                },
+                "details": {
+                    "name": "Johnfafa",
+                    "surname": "Doe",
+                    "address": "Centurion, Gauteng",
+                    "mobile_no": 897777777
+                }
+            })
 
     else:
-        return None
+        return JsonResponse({
+            "user": {
+                "id": 33,
+                "email": "john@gmail.com",
+                "created_at": "2024-01-10T22:43:02.431645Z"
+            },
+            "details": {
+                "name": "Johnfafa",
+                "surname": "Doe",
+                "address": "Centurion, Gauteng",
+                "mobile_no": 897777777
+            }
+        })
 
 
 def savedata(request, user_id):
