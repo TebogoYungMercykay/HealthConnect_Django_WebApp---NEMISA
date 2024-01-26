@@ -1,0 +1,194 @@
+.word-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.word-list-item {
+    background-color: #f0f0f0;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.word-list-item:hover {
+    background-color: #bfbfbf;
+}
+
+.scrollable-list {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.predict-button {
+    min-width: 200px;
+    padding: 10px;
+    font-weight: 900;
+    background-color: rgb(73, 122, 67);
+    color: white;
+    border: 2px solid grey;
+}
+
+.predict-button:hover {
+    background-color: rgb(50, 73, 46);
+    color: white;
+}
+
+#check_disease {
+    background: rgb(255, 255, 255);
+}
+
+#symptoms_lists {
+    padding-bottom: 20px;
+    font-weight: 300;
+}
+
+.search-input {
+    margin-bottom: 10px;
+}
+
+/* PEN STYLES */
+
+.blog-card {
+    display: flex;
+    flex-direction: column;
+    margin: 2rem auto;
+    box-shadow: 0 6px 14px -1px rgba(#000, 0.1);
+    margin-bottom: 3.2%;
+    background: #fff;
+    line-height: 2.8;
+    font-family: sans-serif;
+    border-radius: 10px;
+    overflow: hidden;
+    z-index: 0;
+
+    &:hover {
+        .photo {
+            transform: scale(2.6) rotate(3deg);
+        }
+    }
+
+    .meta {
+        position: relative;
+        z-index: 0;
+        height: 400px;
+    }
+
+    .photo {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-size: cover;
+        background-position: center;
+        transition: transform 0.4s;
+    }
+
+    .description {
+        padding: 2rem;
+        background: #fff;
+        position: relative;
+        z-index: 1;
+
+        h1,
+        h2 {
+            font-family: Poppins, sans-serif;
+        }
+
+        h1 {
+            line-height: 2;
+            margin: 0;
+            font-size: 3.4rem;
+        }
+
+        h4 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: #a2a2a2;
+            margin-top: 10px;
+        }
+
+        #predicted,
+        #confidence {
+            margin: 0;
+        }
+
+        #predicted {
+            margin-top: 1.5rem;
+        }
+
+        #confidence {
+            margin-bottom: 2rem;
+        }
+    }
+
+    p {
+        position: relative;
+        margin: 2rem 0 0;
+
+        &:first-of-type {
+            margin-top: 2.5rem;
+
+            &:before {
+                content: "";
+                position: absolute;
+                height: 10px;
+                background: #5ad67d;
+                width: 70px;
+                top: -1.5rem;
+                border-radius: 6px;
+            }
+        }
+    }
+
+    &:hover {
+        .details {
+            left: 0%;
+        }
+    }
+
+    @media (min-width: 640px) {
+        flex-direction: row;
+        max-width: 1400px;
+
+        .meta {
+            flex-basis: 800px;
+            height: auto;
+        }
+
+        .description {
+            flex-basis: 1200px;
+
+            &:before {
+                transform: skewX(-3deg);
+                content: "";
+                background: #fff;
+                width: 60px;
+                position: absolute;
+                left: -20px;
+                top: 0;
+                bottom: 0;
+                z-index: -1;
+            }
+        }
+
+        &.alt {
+            flex-direction: row-reverse;
+
+            .description {
+                &:before {
+                    left: inherit;
+                    right: -20px;
+                    transform: skew(3deg);
+                }
+            }
+
+            .details {
+                padding-left: 50px;
+            }
+        }
+    }
+}
