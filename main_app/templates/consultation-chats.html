@@ -1,0 +1,545 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    {% if not request.session.user_id or not request.session.is_authenticated %}
+        <script type="text/javascript">
+            window.location.href = "{% url 'login' %}";
+        </script>
+    {% endif %}
+    <head>
+        <meta charset="utf-8">
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <title>Consultations</title>
+        <meta content="" name="description">
+        <meta content="" name="keywords">
+        <!-- Favicons -->
+        <link href="{% static 'img/logo.png' %}" rel="icon">
+        <link href="{% static 'img/logo.png' %}" rel="apple-touch-icon">
+        <!-- Google Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Source+Sans+Pro:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&display=swap" rel="stylesheet">
+        <!-- Vendor CSS Files -->
+        <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet">
+        <link href="{% static 'vendor/animate.css/animate.min.css' %}" rel="stylesheet">
+        <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+        <link href="{% static 'vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+        <link href="{% static 'vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+        <link href="{% static 'vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+        <link href="{% static 'vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+        <link href="{% static 'vendor/quill/quill.snow.css' %}" rel="stylesheet">
+        <link href="{% static 'vendor/quill/quill.bubble.css' %}" rel="stylesheet">
+        <link href="{% static 'vendor/remixicon/remixicon.css' %}" rel="stylesheet">
+        <link href="{% static 'vendor/simple-datatables/style.css' %}" rel="stylesheet">
+        <!-- Variables CSS Files. Uncomment your preferred color scheme -->
+        <link href="{% static 'css/chat.css' %}" rel="stylesheet">
+        <link href="{% static 'css/variables.css' %}" rel="stylesheet">
+        <link href="{% static 'css/page-styles.css' %}" rel="stylesheet">
+        <link href="{% static 'css/style.css' %}" rel="stylesheet">
+        <link href="{% static 'css/main.css' %}" rel="stylesheet">
+    </head>
+    <body>
+        <div id="topbar" class="d-flex align-items-center fixed-top">
+            <div class="container d-flex justify-content-between">
+                <div class="contact-info d-flex align-items-center">
+                    <i class="bi bi-envelope"></i>
+                    <a href="mailto:healthconnect@nemisa.com">healthconnect@nemisa.com</a>
+                    <i class="bi bi-phone"></i> +27 11 111 1111
+                </div>
+                <nav class="header-nav ms-auto">
+                    <ul class="d-flex align-items-center">
+                        <!-- Notification Nav -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+                                <i class="bi bi-bell"></i>
+                                <span class="badge bg-primary badge-number">4</span>
+                            </a>
+                            <!-- Notification Dropdown Items -->
+                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
+                                <li class="dropdown-header"> You have 4 new notifications <a href="#">
+                                        <span class="badge rounded-pill bg-primary p-2 ms-2">View all</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <!-- Notification about a post reply -->
+                                <li class="notification-item">
+                                    <i class="bi bi-reply text-info"></i>
+                                    <div>
+                                        <h4>Post Reply</h4>
+                                        <p>Someone replied to your post on health tips</p>
+                                        <p>30 min. ago</p>
+                                    </div>
+                                </li>
+                                <!-- End Notification about a post reply -->
+
+                                <!-- Notification about an open consultation -->
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li class="notification-item">
+                                    <i class="bi bi-calendar-plus text-success"></i>
+                                    <div>
+                                        <h4>New Consultation</h4>
+                                        <p>A new consultation is open for scheduling</p>
+                                        <p>1 hr. ago</p>
+                                    </div>
+                                </li>
+                                <!-- End Notification about an open consultation -->
+
+                                <!-- Notification about a closed consultation -->
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li class="notification-item">
+                                    <i class="bi bi-calendar-check text-danger"></i>
+                                    <div>
+                                        <h4>Closed Consultation</h4>
+                                        <p>Your recent consultation has been closed</p>
+                                        <p>2 hrs. ago</p>
+                                    </div>
+                                </li>
+                                <!-- End Notification about a closed consultation -->
+
+                                <!-- Notification about a post reply -->
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li class="notification-item">
+                                    <i class="bi bi-reply text-info"></i>
+                                    <div>
+                                        <h4>Post Reply</h4>
+                                        <p>Someone replied to your post on healthy recipes</p>
+                                        <p>4 hrs. ago</p>
+                                    </div>
+                                </li>
+                                <!-- End Notification about a post reply -->
+
+                                <!-- Show all notifications link -->
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li class="dropdown-footer">
+                                    <a href="#">Show all notifications</a>
+                                </li>
+                            </ul>
+                            <!-- End Notification Dropdown Items -->
+                        </li>
+                        <!-- End Notification Nav -->
+
+                        <!-- Messages Icon -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+                                <i class="bi bi-chat-left-text"></i>
+                                <span class="badge bg-success badge-number">3</span>
+                            </a>
+                            <!-- Messages Dropdown Items -->
+                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
+                                <li class="dropdown-header"> You have 3 new messages <a href="#">
+                                        <span class="badge rounded-pill bg-primary p-2 ms-2">View all</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <!-- Message about feedback on a consultation -->
+                                <li class="message-item">
+                                    <a href="#">
+                                        <img src="{% static 'img/messages-1.jpg' %}" alt="Image Loading.." class="rounded-circle">
+                                        <div>
+                                            <h4>Maria Hudson</h4>
+                                            <p>Provided feedback on your recent consultation</p>
+                                            <p>4 hrs. ago</p>
+                                        </div>
+                                    </a>
+                                </li>
+                                <!-- End Message about feedback on a consultation -->
+
+                                <!-- Message about feedback on a consultation -->
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li class="message-item">
+                                    <a href="#">
+                                        <img src="{% static 'img/messages-2.jpg' %}" alt="Image Loading.." class="rounded-circle">
+                                        <div>
+                                            <h4>Anna Nelson</h4>
+                                            <p>Asked for clarification on your recent consultation</p>
+                                            <p>6 hrs. ago</p>
+                                        </div>
+                                    </a>
+                                </li>
+                                <!-- End Message about feedback on a consultation -->
+
+                                <!-- Message about feedback on a consultation -->
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li class="message-item">
+                                    <a href="#">
+                                        <img src="{% static 'img/messages-3.jpg' %}" alt="Image Loading.." class="rounded-circle">
+                                        <div>
+                                            <h4>David Muldon</h4>
+                                            <p>Thanked you for your advice in the last consultation</p>
+                                            <p>8 hrs. ago</p>
+                                        </div>
+                                    </a>
+                                </li>
+                                <!-- End Message about feedback on a consultation -->
+
+                                <!-- Show all messages link -->
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li class="dropdown-footer">
+                                    <a href="#">Show all messages</a>
+                                </li>
+                            </ul>
+                            <!-- End Messages Dropdown Items -->
+                        </li>
+                        <!-- End Messages Nav -->
+                        <li class="nav-item dropdown pe-3">
+                            <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+                                <img src="{% static 'img/profile-img.jpg' %}" alt="Profile" class="rounded-circle">
+                                <span class="d-none d-md-block dropdown-toggle ps-2">{{ request.session.name }}</span>
+                            </a>
+                            <!-- End Profile Iamge Icon -->
+                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+                                <li class="dropdown-header">
+                                    <h6>{{ request.session.name }}</h6>
+                                    <span>General User</span>
+                                </li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-center" href="{% url 'user_profile' %}">
+                                        <i class="bi bi-person"></i>
+                                        <span>My Profile</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-center" href="{% url 'user_profile' %}">
+                                        <i class="bi bi-gear"></i>
+                                        <span>Account Settings</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-center" href="{% url 'help' %}">
+                                        <i class="bi bi-question-circle"></i>
+                                        <span>Need Help?</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-center" href="{% url 'home' %}">
+                                        <i class="bi bi-box-arrow-right"></i>
+                                        <span>Sign Out</span>
+                                    </a>
+                                </li>
+                            </ul>
+                            <!-- End Profile Dropdown Items -->
+                        </li>
+                        <!-- End Profile Nav -->
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <header id="header" class="header fixed-top bg-white">
+            <div class="container d-flex align-items-center">
+                <h1 class="logo me-auto">
+                    <a href="#" class="logo me-auto">
+                        <img src="{% static 'img/logo.png' %}" alt="" class="img-fluid">
+                    </a>HealthConnect
+                </h1>
+                <nav id="navbar" class="navbar order-last order-lg-0">
+                    <ul>
+                        <li>
+                            <a class="nav-link scrollto" href="{% url 'blogs' %}">Blogs</a>
+                        </li>
+                        <li>
+                            <a class="nav-link scrollto active" href="{% url 'consultation' %}">Consultations</a>
+                        </li>
+                        <li>
+                            <a class="nav-link scrollto" href="{% url 'calendar' %}">Schedule</a>
+                        </li>
+                        <li>
+                            <a class="nav-link scrollto" href="{% url 'contact' %}">Contact</a>
+                        </li>
+                    </ul>
+                    <i class="bi bi-list mobile-nav-toggle"></i>
+                </nav>
+                <a href="{% url 'logout' %}" class="appointment-btn scrollto">Logout</a>
+            </div>
+        </header>
+        <main id="main" class="main">
+            <div class="pagetitle">
+                <h1>Consultation</h1>
+                <nav>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="{% url 'consultation' %}">
+                                <i class="ri-home-line"></i>
+                            </a>
+                        </li>
+                        <li class="breadcrumb-item active">Chats</li>
+                    </ol>
+                </nav>
+            </div>
+            <section id="services" class="services">
+                <div class="container">
+                    <div class="section-title">
+                        <h2>Consultation Details</h2>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4 col-md-6 d-flex mt-4 mt-lg-0">
+                            <div class="icon-box">
+                                <div class="icon">
+                                    <i class="fas fa-hospital-user"></i>
+                                </div>
+                                <h4>
+                                    <a href="">Patient</a>
+                                </h4>
+                                <p>Some Information: Will be Displayed Here</p>
+                                <p>Some Information: Will be Displayed Here</p>
+                                <p>Some Information: Will be Displayed Here</p>
+                                <p>Some Information: Will be Displayed Here</p>
+                                <p>Some Information: Will be Displayed Here</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6 d-flex mt-4 mt-lg-0">
+                            <div class="icon-box">
+                                <div class="icon">
+                                    <i class="fas fa-notes-medical"></i>
+                                </div>
+                                <h4>
+                                    <a href="">Disease Info</a>
+                                </h4>
+                                <p>Some Information: Will be Displayed Here</p>
+                                <p>Some Information: Will be Displayed Here</p>
+                                <p>Some Information: Will be Displayed Here</p>
+                                <p>Some Information: Will be Displayed Here</p>
+                                <p>Some Information: Will be Displayed Here</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6 d-flex mt-4 mt-lg-0">
+                            <div class="icon-box">
+                                <div class="icon">
+                                    <i class="fas fa-hospital-user"></i>
+                                </div>
+                                <h4>
+                                    <a href="">Doctor</a>
+                                </h4>
+                                <p>Some Information: Will be Displayed Here</p>
+                                <p>Some Information: Will be Displayed Here</p>
+                                <p>Some Information: Will be Displayed Here</p>
+                                <p>Some Information: Will be Displayed Here</p>
+                                <p>Some Information: Will be Displayed Here</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <div class="container">
+                    <div class="section-title">
+                        <h2>Consultation Chats</h2>
+                    </div>
+                </div>
+                <!-- Chat Here -->
+                <div class="container-fluid h-100">
+                    <div class="row justify-content-center h-100">
+                        <div class="col-md-8 col-xl-8 chat">
+                            <div class="card">
+                                <div class="card-header msg_head">
+                                    <div class="d-flex bd-highlight">
+                                        <div class="img_cont">
+                                            <img src="{% static 'img/testimonials/testimonials-4.jpg' %}" class="rounded-circle user_img" alt="Profile Picture">
+                                            <span class="online_icon"></span>
+                                        </div>
+                                        <div class="user_info">
+                                            <span>khalid Charif</span>
+                                            <p>1767 Messages</p>
+                                        </div>
+                                        <div class="ms-auto">
+                                            <div class="video_cam" id="action_menu_btn">
+                                                <span>
+                                                    <i class="fas fa-video"></i>
+                                                </span>
+                                                <span class="star-icon" onclick="openRatingModal()">
+                                                    <i class="fas fa-star"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body msg_card_body pt-4">
+                                    <div class="d-flex justify-content-start mb-4">
+                                        <div class="img_cont_msg">
+                                            <img src="{% static 'img/testimonials/testimonials-4.jpg' %}" class="rounded-circle user_img" alt="Profile Picture">
+                                        </div>
+                                        <div class="msg_cotainer"> Hi, how are you samim? <span class="msg_time">8:40 AM, Today</span>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-end mb-4">
+                                        <div class="msg_cotainer_send"> Hi Khalid i am good tnx how about you? <span class="msg_time_send">8:55 AM, Today</span>
+                                        </div>
+                                        <div class="img_cont_msg">
+                                            <img src="{% static 'img/doctors/doctors-3.jpg' %}" class="rounded-circle user_img" alt="Profile Picture">
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-start mb-4">
+                                        <div class="img_cont_msg">
+                                            <img src="{% static 'img/testimonials/testimonials-4.jpg' %}" class="rounded-circle user_img" alt="Profile Picture">
+                                        </div>
+                                        <div class="msg_cotainer"> I am good too, thank you for your chat template <span class="msg_time">9:00 AM, Today</span>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-end mb-4">
+                                        <div class="msg_cotainer_send"> You are welcome <span class="msg_time_send">9:05 AM, Today</span>
+                                        </div>
+                                        <div class="img_cont_msg">
+                                            <img src="{% static 'img/doctors/doctors-3.jpg' %}" class="rounded-circle user_img" alt="Profile Picture">
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-start mb-4">
+                                        <div class="img_cont_msg">
+                                            <img src="{% static 'img/testimonials/testimonials-4.jpg' %}" class="rounded-circle user_img" alt="Profile Picture">
+                                        </div>
+                                        <div class="msg_cotainer"> I am looking for your next templates <span class="msg_time">9:07 AM, Today</span>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-end mb-4">
+                                        <div class="msg_cotainer_send"> Ok, thank you have a good day <span class="msg_time_send">9:10 AM, Today</span>
+                                        </div>
+                                        <div class="img_cont_msg">
+                                            <img src="{% static 'img/doctors/doctors-3.jpg' %}" class="rounded-circle user_img" alt="Profile Picture">
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-start mb-4">
+                                        <div class="img_cont_msg">
+                                            <img src="{% static 'img/testimonials/testimonials-4.jpg' %}" class="rounded-circle user_img" alt="Profile Picture">
+                                        </div>
+                                        <div class="msg_cotainer"> Bye, see you <span class="msg_time">9:12 AM, Today</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <div class="input-group">
+                                        <textarea name="" class="form-control type_msg" placeholder="Type your message..."></textarea>
+                                        <div class="input-group-append">
+                                            <span class="input-group-text send_btn" id="send_btn">
+                                                <i class="fas fa-location-arrow"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a href="#" class="close-button">Close Consultation</a>
+            </section>
+            <!-- Modal -->
+            <div class="modal fade" id="ratingModal" tabindex="-1" role="dialog" aria-labelledby="ratingModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="ratingModalLabel">Rate and Provide Feedback</h5>
+                        </div>
+                        <div class="modal-body">
+                            <div class="text-center">
+                                <span class="fa fa-star fa-2x" id="star1"></span>
+                                <span class="fa fa-star fa-2x" id="star2"></span>
+                                <span class="fa fa-star fa-2x" id="star3"></span>
+                                <span class="fa fa-star fa-2x" id="star4"></span>
+                                <span class="fa fa-star fa-2x" id="star5"></span>
+                            </div>
+                            <div class="form-group mt-3">
+                                <label for="rating">Rating:</label>
+                                <select class="form-control" id="rating" name="rating">
+                                    <option value="" disabled selected>Select a rating</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="feedback">Feedback:</label>
+                                <textarea class="form-control" id="feedback" name="feedback" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeBtn">Close</button>
+                            <button type="button" class="btn btn-primary" id="submitBtn">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer id="footer" class="footer">
+            <div class="copyright"> &copy; Copyright <strong>
+                    <span>HealthConnect</span>
+                </strong>. All Rights Reserved </div>
+        </footer>
+        <!-- End Footer -->
+        <a href="#" class="scroll-top d-flex align-items-center justify-content-center">
+            <i class="bi bi-arrow-up-short"></i>
+        </a>
+        {% comment %} <div id="preloader"></div> {% endcomment %}
+        <!-- Vendor JS Files -->
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+        <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+        <script src="{% static 'vendor/glightbox/js/glightbox.min.js' %}"></script>
+        <script src="{% static 'vendor/swiper/swiper-bundle.min.js' %}"></script>
+        <script src="{% static 'vendor/php-email-form/validate.js' %}"></script>
+        <!-- Template Main JS File -->
+        <script type="text/javascript" src="{% static 'js/main.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/chat.js' %}"></script>
+        <script>
+            function openRatingModal() {
+                $('#ratingModal').modal('show');
+            }
+            $(document).ready(function() {
+                $('#submitBtn').click(function() {
+                    var rating = $('#rating').val();
+                    var feedback = $('#feedback').val();
+                    console.log('Rating:', rating, ' - Feedback: ', feedback);
+                    $.ajax({
+                        url: 'api/feedback',
+                        type: 'POST',
+                        data: {
+                            rating: rating,
+                            feedback: feedback
+                        },
+                        success: function(response) {
+                            console.log('Feedback submitted successfully:', response);
+                        },
+                        error: function(error) {
+                            console.error('Error submitting feedback:', error);
+                        }
+                    });
+                    $('#ratingModal').modal('hide');
+                });
+                $('#closeBtn').click(function() {
+                    $('#ratingModal').modal('hide');
+                });
+            });
+        </script>
+        <!-- JQuery -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    </body>
+</html>
