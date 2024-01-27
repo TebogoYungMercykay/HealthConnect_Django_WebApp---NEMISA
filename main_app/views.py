@@ -127,27 +127,7 @@ def login(request):
 
     else:
         return redirect('home')
-    
-    
-def blogs(request):
 
-    if request.method == 'GET':
-
-        return render(request, 'blog.html')
-
-    else:
-        return redirect('home')
-    
-
-def blog_details(request):
-
-    if request.method == 'GET':
-
-        return render(request, 'blog-details.html')
-
-    else:
-        return redirect('home')
-    
     
 def login_temp(request):
 
