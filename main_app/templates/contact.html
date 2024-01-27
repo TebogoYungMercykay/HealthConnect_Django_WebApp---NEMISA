@@ -447,12 +447,7 @@
                 </div>
             </div>
         </footer>
-        {% comment %} <!-- End Footer --> {% endcomment %}
-        {% comment %} <div id="preloader"></div> {% endcomment %}
-
-        <a href="" class="back-to-top d-flex align-items-center justify-content-center">
-            <i class="bi bi-arrow-up-short"></i>
-        </a>
+        
         {% comment %} <!-- Vendor JS Files --> {% endcomment %}
         <script src="{% static 'vendor/purecounter/purecounter_vanilla.js' %}"></script>
         <script src="{% static 'vendor/glightbox/js/glightbox.min.js' %}"></script>
@@ -461,5 +456,19 @@
         <script src="{% static 'vendor/php-email-form/validate.js' %}"></script>
         {% comment %} <!-- Template Main JS File --> {% endcomment %}
         <script src="{% static 'js/main.js' %}"></script>
+
+        {% comment %} ChatBot {% endcomment %}
+        <script>
+            window.embeddedChatbotConfig = {
+                chatbotId: "{{ request.session.chatbot_id }}",
+                domain: "www.chatbase.co"
+            }
+        </script>
+        <script
+            src = "https://www.chatbase.co/embed.min.js"
+            chatbotId = "{{ request.session.chatbot_id }}"
+            domain = "www.chatbase.co"
+            defer>
+        </script>
     </body>
 </html>

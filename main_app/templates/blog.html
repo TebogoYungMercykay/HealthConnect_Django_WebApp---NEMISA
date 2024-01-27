@@ -552,5 +552,19 @@
         <script src="{% static 'vendor/php-email-form/validate.js' %}"></script>
         <!-- Template Main JS File -->
         <script src="{% static 'js/main.js' %}"></script>
+
+        {% comment %} ChatBot {% endcomment %}
+        <script>
+            window.embeddedChatbotConfig = {
+                chatbotId: "{{ request.session.chatbot_id }}",
+                domain: "www.chatbase.co"
+            }
+        </script>
+        <script
+            src = "https://www.chatbase.co/embed.min.js"
+            chatbotId = "{{ request.session.chatbot_id }}"
+            domain = "www.chatbase.co"
+            defer>
+        </script>
     </body>
 </html>

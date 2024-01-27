@@ -536,5 +536,19 @@
         <!-- JQuery -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+        {% comment %} ChatBot {% endcomment %}
+        <script>
+            window.embeddedChatbotConfig = {
+                chatbotId: "{{ request.session.chatbot_id }}",
+                domain: "www.chatbase.co"
+            }
+        </script>
+        <script
+            src = "https://www.chatbase.co/embed.min.js"
+            chatbotId = "{{ request.session.chatbot_id }}"
+            domain = "www.chatbase.co"
+            defer>
+        </script>
     </body>
 </html>
