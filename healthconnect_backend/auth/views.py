@@ -173,10 +173,9 @@ def logout(request):
     if request.method == 'POST':
         
         try:
-            user_data_cookie = json.loads(request.COOKIES.get('user_data_cookie', '{}'))
-            user_id = user_data_cookie.get('user_id', None)
-            jwt_token = user_data_cookie.get('access_token', None)
-            token_type = user_data_cookie.get('token_type', None)
+            user_id = request.session.get('user_id', None)
+            jwt_token = request.session.get('access_token', None)
+            token_type = request.session.get('token_type', None)
 
             headers = {
                 "Content-Type": JSON_DATA,
@@ -201,7 +200,6 @@ def logout(request):
                     request.session.pop('is_doctor', None)
                     request.session.pop('is_admin', None)
 
-                    # return JsonResponse({"status": "success"}) # Temporary for Testing
                     return redirect(reverse('home'))
             
             request.session.clear()
