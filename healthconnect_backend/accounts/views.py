@@ -5,6 +5,7 @@ from django.urls import reverse
 from django.core.exceptions import PermissionDenied
 from django.contrib import messages
 from .form import PatientCreateForm, DoctorCreateForm
+from ..utils import utils
 import requests
 import json
 import logging
@@ -158,83 +159,44 @@ def get_doctors(request):
         return render(request, CONSULTATION_TEMPLATE, {"dobj": None})
         
 
-def get_user(request, user_id):
+def get_user(request):
 
-    if request.method == 'GET' or request.method == 'POST':
+    if (request.method == 'GET' or request.method == 'POST') and not request.session.get('is_admin'):
         
         try:
-            param_id = user_id
             user_id = request.session.get('user_id')
+                
+            jwt_token = request.session.get('access_token')
+            token_type = request.session.get('token_type')
+
+            api_url = os.getenv("API_ENDPOINT") + f'/users/{user_id}'
+
+            headers = { "Content-Type": JSON_DATA, "Authorization": f"{token_type} {jwt_token}",}
+
+            response = requests.post(api_url, headers=headers)
+            response.raise_for_status()
             
-            if param_id == user_id:
-                
-                jwt_token = request.session.get('access_token')
-                token_type = request.session.get('token_type')
+            if response.status_code == 200:
+                api_response = response.json()
+                if api_response.get('status') == "success":
 
-                api_url = os.getenv("API_ENDPOINT") + f'/users/{user_id}'
+                    response_data = api_response.get('data')
+                    
+                    response_data["user"]["created_at"] = utils.format_date(response_data["user"]["created_at"])
+                    response_data["details"]["dob"] = utils.format_date(response_data["details"]["dob"])
+                    mobile = response_data["details"]["mobile_no"] 
+                    response_data["details"]["mobile_no"] = f'0{mobile}'
+                    
+                    return render(request, 'users-profile.html', { 'profile_data': response_data })
 
-                headers = {
-                    "Content-Type": JSON_DATA,
-                    "Authorization": f"{token_type} {jwt_token}",
-                }
-
-                response = requests.post(api_url, headers=headers)
-                response.raise_for_status()
-                
-                if response.status_code == 200:
-                    api_response = response.json()
-                    if api_response.get('status') == "success":
-
-                        return api_response.get('data')
-                
-                logging.error(f"Error Occured When Requesting for Doctors Data: {e}: User Id: {user_id}")
-                return JsonResponse({
-                    "user": {
-                        "id": 33,
-                        "email": "john@gmail.com",
-                        "created_at": "2024-01-10T22:43:02.431645Z"
-                    },
-                    "details": {
-                        "name": "Johnfafa",
-                        "surname": "Doe",
-                        "address": "Centurion, Gauteng",
-                        "mobile_no": 897777777
-                    }
-                })
             
-            else:
-                raise PermissionDenied("Incorrect User Id used.")
-      
+            logging.error(f"Error Occured When Requesting for Doctors Data: {e}: User Id: {user_id}")
+                
         except requests.RequestException as e:
             logging.error(f"Error Occured When Requesting User Data: {e}: User Id: {user_id}")
-            return JsonResponse({
-                "user": {
-                    "id": 33,
-                    "email": "john@gmail.com",
-                    "created_at": "2024-01-10T22:43:02.431645Z"
-                },
-                "details": {
-                    "name": "Johnfafa",
-                    "surname": "Doe",
-                    "address": "Centurion, Gauteng",
-                    "mobile_no": 897777777
-                }
-            })
 
-    else:
-        return JsonResponse({
-            "user": {
-                "id": 33,
-                "email": "john@gmail.com",
-                "created_at": "2024-01-10T22:43:02.431645Z"
-            },
-            "details": {
-                "name": "Johnfafa",
-                "surname": "Doe",
-                "address": "Centurion, Gauteng",
-                "mobile_no": 897777777
-            }
-        })
+    messages.error("Could not retrieve user information.")
+    return render(request, 'users-profile.html', { 'profile_data': utils.get_random_user() })
 
 
 def savedata(request, user_id):

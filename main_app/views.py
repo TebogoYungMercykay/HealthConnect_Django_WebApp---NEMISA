@@ -37,16 +37,6 @@ def home_id(request, fragment):
 def sendmail(request):
 
     return home_id(request, 'contact')
-
-
-def user_profile(request):
-
-    if request.method == 'GET':
-
-        return render(request, 'users-profile.html')
-    
-    else:
-        return redirect('home')
  
 
 def calendar(request):

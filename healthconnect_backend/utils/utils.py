@@ -36,22 +36,47 @@ def format_date(input_string):
         return formatted_date
     
     except ValueError:
-        return "Jan 1, 2024"
+        try:
+            input_date = datetime.strptime(input_string, "%Y-%m-%dT%H:%M:%S")
+            formatted_date = input_date.strftime("%b %d, %Y")
+            return formatted_date
+        
+        except ValueError:
+            return "Jan 1, 2024"
 
 
 def code_of_conduct():
-    return [[
-        "<strong>HealthConnect</strong> is an interactive platform designed to facilitate discussions and share information on various topics. We encourage a positive and respectful community where users can engage in meaningful conversations.",
-        "<strong>Respect and Sensitivity</strong>: Users are prohibited from publishing sensitive or private information about other users without their explicit consent. Avoid making any allegations based on the content of posts.",
-        "<strong>Non-Discrimination</strong>: Discrimination based on race, gender, religion, nationality, disability, sexual orientation, or any other factor is strictly prohibited. Users are encouraged to engage in inclusive and respectful discussions.",
-        "<strong>Identity Protection</strong>: Users must refrain from attempting to expose the identity of others. Do not share personal information that could lead to the identification of individuals, both on the platform and off.",
-        "<strong>Allergations</strong>: Making unsupported allegations against individuals or groups is not allowed. Users should provide factual and constructive contributions to discussions.",
-        "<strong>Legal and Ethical Standards</strong>: Users are expected to comply with all applicable laws and ethical standards. Any content that violates legal regulations or ethical norms will be removed."
-    ],
-    "User Conduct and Sensitive Information Disclaimer",
-    'img/blog/blog-inside-post.jpg',
-    'img/blog/about.jpg'
+    return [
+        [
+            "<strong>HealthConnect</strong> is an interactive platform designed to facilitate discussions and share information on various topics. We encourage a positive and respectful community where users can engage in meaningful conversations.",
+            "<strong>Respect and Sensitivity</strong>: Users are prohibited from publishing sensitive or private information about other users without their explicit consent. Avoid making any allegations based on the content of posts.",
+            "<strong>Non-Discrimination</strong>: Discrimination based on race, gender, religion, nationality, disability, sexual orientation, or any other factor is strictly prohibited. Users are encouraged to engage in inclusive and respectful discussions.",
+            "<strong>Identity Protection</strong>: Users must refrain from attempting to expose the identity of others. Do not share personal information that could lead to the identification of individuals, both on the platform and off.",
+            "<strong>Allergations</strong>: Making unsupported allegations against individuals or groups is not allowed. Users should provide factual and constructive contributions to discussions.",
+            "<strong>Legal and Ethical Standards</strong>: Users are expected to comply with all applicable laws and ethical standards. Any content that violates legal regulations or ethical norms will be removed."
+        ],
+        "User Conduct and Sensitive Information Disclaimer",
+        'img/blog/blog-inside-post.jpg',
+        'img/blog/about.jpg'
     ]
+
+
+def get_random_user():
+    return {
+        "user": {
+            "id": 123,
+            "email": "general@gmail.com",
+            "created_at": "2023-11-20T08:15:30.123456Z"
+        },
+        "details": {
+            "name": "General",
+            "surname": "User",
+            "address": "Lillian Ngoyi St, Pretoria Central, Pretoria, 0001",
+            "mobile_no": 15551234567,
+            "dob": "1900-01-01T10:00:00",
+            "gender": "Other"
+        }
+    }
 
 
 def get_posts_retrieval_error():

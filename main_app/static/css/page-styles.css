@@ -5,6 +5,17 @@
     margin-top: 125px;
     padding: 20px 40px;
     transition: all 0.3s;
+    height: 100%;
+}
+
+#profile_main {
+    margin-top: 125px;
+    padding: 20px 40px;
+    transition: all 0.3s;
+    height: 100%;
+    margin-bottom: 100px;
+    bottom: 100px;
+    position: relative;
 }
 
 @media (max-width: 1199px) {
