@@ -208,13 +208,19 @@
                             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                                 <li class="dropdown-header">
                                     <h6>{{ request.session.name }}</h6>
-                                    <span>General User</span>
+                                    {% if request.session.is_doctor %}
+                                        <span>HealthConnect Doctor</span>
+                                    {% elif request.session.is_patient %}
+                                        <span>HealthConnect Patient</span>
+                                    {% else %}
+                                        <span>HealthConnect Admin</span>
+                                    {% endif %}
                                 </li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
                                 <li>
-                                    <a class="dropdown-item d-flex align-items-center" href="{% url 'user_profile' %}">
+                                    <a class="dropdown-item d-flex align-items-center" href="{% url 'get_user' %}">
                                         <i class="bi bi-person"></i>
                                         <span>My Profile</span>
                                     </a>
@@ -223,7 +229,7 @@
                                     <hr class="dropdown-divider">
                                 </li>
                                 <li>
-                                    <a class="dropdown-item d-flex align-items-center" href="{% url 'user_profile' %}">
+                                    <a class="dropdown-item d-flex align-items-center" href="{% url 'get_user' %}">
                                         <i class="bi bi-gear"></i>
                                         <span>Account Settings</span>
                                     </a>
@@ -241,7 +247,7 @@
                                     <hr class="dropdown-divider">
                                 </li>
                                 <li>
-                                    <a class="dropdown-item d-flex align-items-center" href="{% url 'home' %}">
+                                    <a class="dropdown-item d-flex align-items-center" href="{% url 'logout' %}">
                                         <i class="bi bi-box-arrow-right"></i>
                                         <span>Sign Out</span>
                                     </a>

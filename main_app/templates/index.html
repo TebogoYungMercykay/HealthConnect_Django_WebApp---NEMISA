@@ -2,6 +2,18 @@
 
 <!DOCTYPE html>
 <html lang="en">
+    <script>
+        {% if request.session.user_id and request.session.is_authenticated %}
+            {% if request.session.is_admin %}
+                window.location.href = "{% url 'admin_page' %}";
+            {% elif request.session.is_doctor or request.session.is_patient %}
+                window.location.href = "{% url 'all_posts' %}";
+            {% else %}
+                console.log("Unknown role");
+            {% endif %}
+        {% endif %}
+    </script>
+
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
