@@ -7,7 +7,7 @@
             {% if request.session.is_admin %}
                 window.location.href = "{% url 'admin_page' %}";
             {% elif request.session.is_doctor or request.session.is_patient %}
-                window.location.href = "{% url 'blogs' %}";
+                window.location.href = "{% url 'all_posts' %}";
             {% else %}
                 console.log("Unknown role");
             {% endif %}
@@ -352,10 +352,6 @@
                     <span>HealthConnect</span>
                 </strong>. All Rights Reserved </div>
         </footer>
-        <!-- End Footer -->
-        <a href="#" class="back-to-top d-flex align-items-center justify-content-center">
-            <i class="bi bi-arrow-up-short"></i>
-        </a>
         <!-- Vendor JS Files -->
         <script src="{% static 'vendor/apexcharts/apexcharts.min.js' %}"></script>
         <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
