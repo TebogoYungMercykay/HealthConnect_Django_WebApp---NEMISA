@@ -116,7 +116,7 @@ def make_consultation(request):
         else:
             try:
                 user_id = request.session.get('user_id')
-                if user_id != None:
+                if user_id is not None:
                     
                     jwt_token = request.session.get('access_token')
                     token_type = request.session.get('token_type')
@@ -145,7 +145,7 @@ def make_consultation(request):
                             consultation_url = reverse('consultation_view', args=[consultation_info['consultation_id']])
                             return HttpResponseRedirect(consultation_url)
                     
-                    logging.error(f"Error Occured When Requesting Consultations: {e}, User Id: {user_id}")
+                    logging.error(f"Error Occured When Requesting Consultations, User Id: {user_id}")
                 
                 else:
                     messages.error(request, USER_MESSAGE)
@@ -161,78 +161,91 @@ def make_consultation(request):
 
 def consultation_view(request, consultation_id):
     
-    print("Consultation ID: ", consultation_id)
-    return render(request, CONSULTATION_CHATS_TEMPLATE)
+    request.session['prediction_successful'] = False
 
-    # request.session['prediction_successful'] = False
-
-    # if request.method == 'POST' or request.method == 'GET':
+    if request.method == 'POST' or request.method == 'GET':
         
-    #     try:
-    #         user_id = request.session.get('user_id')
+        try:
+            user_id = request.session.get('user_id')
             
-    #         if user_id != None and user_id == id:
+            if user_id is not None and consultation_id is not None:
                 
-    #             jwt_token = request.session.get('access_token')
-    #             token_type = request.session.get('token_type')
-
-    #             api_url = os.getenv("API_ENDPOINT") + f'/consultations/consultation_view_patient/{consultation_id}'
-    #             if request.session.get('is_patient'):
-    #                 api_url = os.getenv("API_ENDPOINT") + f'/consultations/consultation_view_doctor/{consultation_id}'
+                jwt_token = request.session.get('access_token')
+                token_type = request.session.get('token_type')
             
-    #             headers = { "Content-Type": JSON_DATA, "Authorization": f"{token_type} {jwt_token}",}
-
-    #             response = requests.post(api_url, headers=headers)
-    #             response.raise_for_status()
+                headers = { "Content-Type": JSON_DATA, "Authorization": f"{token_type} {jwt_token}",}
                 
-    #             if response.status_code == 200:
-    #                 api_response = response.json()
-    #                 if api_response.get('status') == "success":
-
-    #                     consultation_info = api_response.get('data')
-    #                     consultation_chats = [
-    #                         {
-    #                             "consultation_id": 0,
-    #                             "created_at": utils.format_date(api_response['data']['consultation_date']),
-    #                             "message": f"Welcome to our consultation chat. I'm Dr. {api_response['data']['doctor']['surname']} and I'm here to assist you. It's great to connect with you! When you have some questions, concerns, or if there's anything you'd like to discuss, feel free to let me know. Your health is my priority.",
-    #                             "sender_id": {api_response['data']['doctor']['doctor_id']}
-    #                         }
-    #                     ]
-                        
-    #                     return render(request, CONSULTATION_CHATS_TEMPLATE, { 'consultation_info': consultation_info, 'consultation_chats': consultation_chats })
+                api_url = os.getenv("API_ENDPOINT") + f'/consultations/consultation_view_patient/{consultation_id}'
+                if request.session.get('is_patient') is False:
+                    api_url = os.getenv("API_ENDPOINT") + f'/consultations/consultation_view_doctor/{consultation_id}'
+                    
+                response = requests.post(api_url, headers=headers)
+                response.raise_for_status()
                 
-    #             logging.error(f"Error Occured When Consultation View: {e}, User Id: {user_id}")
+                if response.status_code == 200:
+                    api_response = response.json()
+                    if api_response.get('status') == "success":
+
+                        consultation_info = api_response.get('data')
+
+                        if consultation_info is not None:
+                            
+                            # Formatting Consultation Info
+                            consultation_info['consultation_date'] = utils.format_date(consultation_info['consultation_date'])
+                            consultation_info['diseaseinfo']['confidence'] = round(consultation_info['diseaseinfo']['confidence'], 2)
+                            consultation_info['list_symptoms'] = ', '.join(map(str, consultation_info['diseaseinfo']['symptoms']))
+                            consultation_info['doctor']['year_of_registration'] = utils.format_date(consultation_info['doctor']['year_of_registration'])
+                            consultation_info['doctor']['rating'] = round(consultation_info['doctor']['rating'], 2)
+                            consultation_info['patient']['dob'] = utils.format_date(consultation_info['patient']['dob'])
+                            consultation_info['patient']['age'] = utils.calculate_age(consultation_info['patient']['dob'])
+                            consultation_info['days_elapsed_since'] = utils.days_elapsed_since(consultation_info['consultation_date'])
+                            
+                            # Formatting Chat Messages
+                            sender_id = consultation_info['patient']['patient_id']
+                            if request.session.get('is_patient') is True:
+                                sender_id = consultation_info['doctor']['doctor_id']
+                                
+                            consultation_chats = chat_messages(request, consultation_id, sender_id)
+                            if consultation_chats is not None:
+                                for chat in consultation_chats['chats']:
+                                    chat['created_at'] = utils.format_date(chat['created_at'])
+                            
+                            return render(request, CONSULTATION_CHATS_TEMPLATE, { 'consultation_info': consultation_info, 'consultation_chats': consultation_chats })
+                            
+                        else:
+                            messages.error(request, MESSAGE)
+
+                logging.error(f"Error Occured in Consultation View, User Id: {user_id}")
             
-    #         else:
-    #             messages.error(request, USER_MESSAGE)
+            else:
+                messages.error(request, USER_MESSAGE)
       
-    #     except requests.RequestException as e:
-    #         logging.error(f"Error Occured When Consultation View: {e}, User Id: {user_id}")
+        except requests.RequestException as e:
+            logging.error(f"Error Occured in Consultation View: {e}, User Id: {user_id}")
 
-    # else:
-    #     messages.error(request, METHOD_ERROR)
+    else:
+        messages.error(request, METHOD_ERROR)
         
-    # return redirect(reverse('consultation'))
+    return redirect(reverse('consultation'))
      
 
 def close_consultation(request, consultation_id):
+    
+    request.session['prediction_successful'] = False
     
     if request.method == 'POST' or request.method == 'GET':
         
         try:
             user_id = request.session.get('user_id')
             
-            if user_id != None and user_id == id:
+            if user_id is not None and user_id == id:
                 
                 jwt_token = request.session.get('access_token')
                 token_type = request.session.get('token_type')
 
                 api_url = os.getenv("API_ENDPOINT") + f'/consultations/close_consultation/{consultation_id}'
                 
-                headers = {
-                    "Content-Type": JSON_DATA,
-                    "Authorization": f"{token_type} {jwt_token}",
-                }
+                headers = { "Content-Type": JSON_DATA, "Authorization": f"{token_type} {jwt_token}", }
 
                 response = requests.post(api_url, headers=headers)
                 response.raise_for_status()
@@ -243,22 +256,23 @@ def close_consultation(request, consultation_id):
                         
                         return redirect(reverse('home'))
                 
-                logging.error(f"Error Occured When Consultation History: {e}, User Id: {user_id}")
-                return redirect(reverse('home'))
+                logging.error(f"Error Occured When Consultation History, User Id: {user_id}")
             
             else:
-                raise PermissionDenied(USER_MESSAGE)
+                messages.error(request, USER_MESSAGE)
       
         except requests.RequestException as e:
             logging.error(f"Error Occured When Consultation History: {e}, User Id: {user_id}")
-            return redirect(reverse('home'))
 
     else:
         messages.error(request, METHOD_ERROR)
-        return redirect(reverse('home'))
+        
+    return redirect(reverse('consultation_view'))
 
 
 def create_review(request, doctor_id):
+    
+    request.session['prediction_successful'] = False
     
     if request.method == 'POST':
         
@@ -270,7 +284,7 @@ def create_review(request, doctor_id):
         try:
             user_id = request.session.get('user_id')
             
-            if user_id != None:
+            if user_id is not None:
                 
                 jwt_token = request.session.get('access_token')
                 token_type = request.session.get('token_type')
@@ -301,19 +315,18 @@ def create_review(request, doctor_id):
                         else:
                             return redirect('consultation_view_doctor', api_response['data']['id'])
                 
-                logging.error(f"Error Occured When Creating Reviews: {e}, User Id: {user_id}")
-                return redirect(reverse('home'))
+                logging.error(f"Error Occured When Creating Reviews, User Id: {user_id}")
             
             else:
-                raise PermissionDenied(USER_MESSAGE)
+                messages.error(request, USER_MESSAGE)
       
         except requests.RequestException as e:
             logging.error(f"Error Occured When Creating Reviews: {e}, User Id: {user_id}")
-            return redirect(reverse('home'))
 
     else:
         messages.error(request, METHOD_ERROR)
-        return redirect(reverse('home'))
+        
+    return redirect(reverse('home'))
 
 
 def get_reviews_id(request, doctor_id):
@@ -323,7 +336,7 @@ def get_reviews_id(request, doctor_id):
         try:
             user_id = request.session.get('user_id')
             
-            if user_id != None:
+            if user_id is not None:
                 
                 jwt_token = request.session.get('access_token')
                 token_type = request.session.get('token_type')
@@ -344,19 +357,18 @@ def get_reviews_id(request, doctor_id):
 
                         return api_response['data']
                 
-                logging.error(f"Error Occured When Requesting Reviews: {e}, User Id: {user_id}")
-                return JsonResponse({"average_rating": 0, "Ratings": []})
+                logging.error(f"Error Occured When Requesting Reviews, User Id: {user_id}")
             
             else:
-                raise PermissionDenied(USER_MESSAGE)
+                messages.error(request, USER_MESSAGE)
       
         except requests.RequestException as e:
             logging.error(f"Error Occured When Requesting Reviews: {e}, User Id: {user_id}")
-            return JsonResponse({"average_rating": 0, "Ratings": []})
 
     else:
         messages.error(request, METHOD_ERROR)
-        return JsonResponse({"average_rating": 0, "Ratings": []})
+        
+    return JsonResponse({"average_rating": 0, "Ratings": []})
 
 
 def get_reviews(request):
@@ -366,7 +378,7 @@ def get_reviews(request):
         try:
             user_id = request.session.get('user_id')
             
-            if user_id != None:
+            if user_id is not None:
                 
                 jwt_token = request.session.get('access_token')
                 token_type = request.session.get('token_type')
@@ -387,17 +399,16 @@ def get_reviews(request):
 
                         return api_response['data']
                 
-                logging.error(f"Error Occured When Requesting Reviews: {e}, User Id: {user_id}")
-                return JsonResponse({"average_rating": 0, "Ratings": []})
+                logging.error(f"Error Occured When Requesting Reviews, User Id: {user_id}")
             
             else:
-                raise PermissionDenied(USER_MESSAGE)
+                messages.error(request, USER_MESSAGE)
       
         except requests.RequestException as e:
             logging.error(f"Error Occured When Requesting Reviews: {e}, User Id: {user_id}")
-            return JsonResponse({"average_rating": 0, "Ratings": []})
 
     else:
         messages.error(request, METHOD_ERROR)
-        return JsonResponse({"average_rating": 0, "Ratings": []})
+        
+    return JsonResponse({"average_rating": 0, "Ratings": []})
 
