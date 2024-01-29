@@ -16,6 +16,7 @@ METHOD_ERROR = "Incorrect Method Used, Please Try Again."
 def post_feedback(request, doctor_id, consultation_id):
     
     request.session['prediction_successful'] = False
+    request.session['message_successful'] = False
     
     if request.method == 'POST':
         
@@ -68,6 +69,7 @@ def post_feedback(request, doctor_id, consultation_id):
 def user_feedback(request, user_id):
     
     request.session['prediction_successful'] = False
+    request.session['message_successful'] = False
     
     if request.method == 'GET' or request.method == 'POST':
         
@@ -117,6 +119,7 @@ def user_feedback(request, user_id):
 def chat_messages(request, consultation_id, sender_id = None):
     
     request.session['prediction_successful'] = False
+    request.session['message_successful'] = request.session.get('message_successful')
     
     try:
         user_id = request.session.get('user_id')
@@ -150,6 +153,7 @@ def chat_messages(request, consultation_id, sender_id = None):
 def create_chat(request, consultation_id, message, sender_id = None):
     
     request.session['prediction_successful'] = False
+    request.session['message_successful'] = False
     
     try:
         user_id = request.session.get('user_id')
@@ -185,6 +189,7 @@ def create_chat(request, consultation_id, message, sender_id = None):
 def send_message(request, consultation_id):
     
     request.session['prediction_successful'] = False
+    request.session['message_successful'] = False
     
     if request.method == 'POST':
         
@@ -198,6 +203,7 @@ def send_message(request, consultation_id):
 
                     chat_messages = create_chat(request, consultation_id, message, user_id)
                     if chat_messages is not None:
+                        request.session['message_successful'] = True
                         messages.success(request, "Message Sent Successfully")
 
                     else:
