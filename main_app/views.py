@@ -77,27 +77,7 @@ def admin_page(request):
 
     else:
         return redirect('home')
-   
-    
-def consultation(request):
 
-    if request.method == 'GET':
-
-        return render(request, 'consultation.html')
-
-    else:
-        return redirect('home')
-    
-    
-def consultation_chats(request):
-
-    if request.method == 'GET':
-
-        return render(request, 'consultation-chats.html')
-
-    else:
-        return redirect('home')
-   
  
 def register(request):
 
