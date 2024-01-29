@@ -15,11 +15,6 @@
     position: relative;
 }
 
-.msg_card_body {
-    overflow-y: auto;
-    flex: 1;
-}
-
 .card-header {
     border-radius: 15px 15px 0 0;
     border-bottom: 0;
@@ -198,4 +193,13 @@
     .contacts_card {
         margin-bottom: 15px;
     }
+}
+
+.msg_card_body {
+    overflow-y: auto;
+    flex: 1;
+}
+
+.msg_card_body_with_scrollbar {
+    overflow-x: auto;
 }

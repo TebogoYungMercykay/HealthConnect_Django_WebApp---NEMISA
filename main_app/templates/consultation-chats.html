@@ -368,7 +368,7 @@
                 </div>
             </section>
             <section>
-                <div class="container">
+                <div class="container" id="consultation_chat">
                     <div class="section-title mt-4">
                         <h2>Consultation Chats</h2>
                     </div>
@@ -388,7 +388,7 @@
                                                 </div>
                                                 <div class="user_info">
                                                     <span>{{ consultation_info.patient.surname }} {{ consultation_info.patient.name }}</span>
-                                                    <p>{{ consultation_chats.chats.length }} Messages</p>
+                                                    <p>{{ consultation_chats.length }} Messages</p>
                                                 </div>
                                             {% else %}
                                                 <div class="img_cont">
@@ -397,7 +397,7 @@
                                                 </div>
                                                 <div class="user_info">
                                                     <span>Dr {{ consultation_info.doctor.surname }} {{ consultation_info.doctor.name }}</span>
-                                                    <p>{{ consultation_chats.chats.length }} Messages</p>
+                                                    <p>{{ consultation_chats.length }} Messages</p>
                                                 </div>
                                             {% endif %}
                                             <div class="ms-auto">
@@ -462,7 +462,7 @@
                                                 <div class="input-group">
                                                     <textarea name="message" class="form-control type_msg" placeholder="Type your message..."></textarea>
                                                     <div class="input-group-append">
-                                                        <button type="submit" class="input-group-text send_btn" id="send_btn">
+                                                        <button type="submit" class="input-group-text send_btn" id="send_btn" title="Send Message">
                                                             <i class="fas fa-location-arrow"></i>
                                                         </button>
                                                     </div>
@@ -572,6 +572,34 @@
                 $('#closeBtn').click(function() {
                     $('#ratingModal').modal('hide');
                 });
+            });
+
+            document.addEventListener('DOMContentLoaded', function () {
+                {% if request.session.message_successful %}
+                    var message_sent = true;
+                {% else %}
+                    var message_sent = false;
+                {% endif %}
+
+                if (message_sent) {
+                    var resultPredictionDiv = document.getElementById('consultation_chat');
+                    if (resultPredictionDiv) {
+                        var topOffset = resultPredictionDiv.offsetTop - 150;
+                        window.scrollTo({
+                            top: topOffset,
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            });
+
+            document.addEventListener('DOMContentLoaded', function () {
+                var msgCardBody = document.querySelector('.msg_card_body');
+                var hasHorizontalScrollbar = msgCardBody.scrollWidth > msgCardBody.clientWidth;
+        
+                if (hasHorizontalScrollbar) {
+                    msgCardBody.classList.add('msg_card_body_with_scrollbar');
+                }
             });
         </script>
         <!-- JQuery -->
