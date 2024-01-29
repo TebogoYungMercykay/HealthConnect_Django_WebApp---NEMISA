@@ -15,6 +15,7 @@ METHOD_ERROR = "Incorrect Method Used, Please Try Again."
 def all_posts(request):
     
     request.session['prediction_successful'] = False
+    request.session['message_successful'] = False
     
     if request.method == 'GET' or request.method == 'POST':
         
@@ -71,6 +72,7 @@ def all_posts(request):
 def create_post(request):
     
     request.session['prediction_successful'] = False
+    request.session['message_successful'] = False
     
     if request.method == 'POST':
         
@@ -125,6 +127,7 @@ def create_post(request):
 def get_post(request, post_id):
     
     request.session['prediction_successful'] = False
+    request.session['message_successful'] = False
     
     if request.method == 'GET' or request.method == 'POST':
         
@@ -192,6 +195,7 @@ def get_post(request, post_id):
 def update_post(request, post_id):
     
     request.session['prediction_successful'] = False
+    request.session['message_successful'] = False
     
     if request.method == 'GET' or request.method == 'POST':
         
@@ -247,6 +251,7 @@ def update_post(request, post_id):
 def delete_post(request, post_id):
     
     request.session['prediction_successful'] = False
+    request.session['message_successful'] = False
     
     if request.method == 'GET' or request.method == 'POST':
         
@@ -292,6 +297,7 @@ def delete_post(request, post_id):
 def create_reply(request):
     
     request.session['prediction_successful'] = False
+    request.session['message_successful'] = False
     post_id = 1
     
     if request.method == 'POST':
@@ -345,6 +351,7 @@ def create_reply(request):
 def vote(request):
     
     request.session['prediction_successful'] = False
+    request.session['message_successful'] = False
     
     if request.method == 'POST':
         

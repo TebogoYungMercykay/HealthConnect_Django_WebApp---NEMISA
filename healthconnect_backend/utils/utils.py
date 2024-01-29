@@ -1,5 +1,6 @@
 import random
 from datetime import datetime
+from dateutil import parser
 
 
 TEMP_EMAIL = "temp@gmail.com"
@@ -32,18 +33,12 @@ def shuffled_dr_images():
 
 def format_date(input_string):
     try:
-        input_date = datetime.strptime(input_string, "%Y-%m-%dT%H:%M:%S.%fZ")
+        input_date = parser.parse(input_string)
         formatted_date = input_date.strftime("%b %d, %Y")
         return formatted_date
-    
-    except ValueError:
-        try:
-            input_date = datetime.strptime(input_string, "%Y-%m-%dT%H:%M:%S")
-            formatted_date = input_date.strftime("%b %d, %Y")
-            return formatted_date
-        
-        except ValueError:
-            return "Jan 1, 2024"
+
+    except parser.ParserError:
+        return "Jan 1, 2024"
 
 
 def days_elapsed_since(start_date_str):

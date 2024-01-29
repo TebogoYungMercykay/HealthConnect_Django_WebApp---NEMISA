@@ -60,6 +60,7 @@ def get_disease(request, user_id):
 def check_disease(request, user_id, disease_id):
     
     request.session['prediction_successful'] = False
+    request.session['message_successful'] = False
     
     if request.method == 'GET' or request.method == 'POST':
         
@@ -106,6 +107,7 @@ def check_disease(request, user_id, disease_id):
 def create_disease(request):
     
     request.session['prediction_successful'] = False
+    request.session['message_successful'] = False
     
     if request.method == 'POST':
         
