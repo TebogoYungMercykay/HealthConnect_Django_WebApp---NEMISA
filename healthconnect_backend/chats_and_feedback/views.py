@@ -1,4 +1,4 @@
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.core.exceptions import PermissionDenied
@@ -13,30 +13,32 @@ JSON_DATA = 'application/json'
 METHOD_ERROR = "Incorrect Method Used, Please Try Again."
 
 
-def post_feedback(request, user_id):
+def post_feedback(request, doctor_id, consultation_id):
+    
+    request.session['prediction_successful'] = False
     
     if request.method == 'POST':
         
+        if not request.POST['feedback']:
+            messages.error(request, MESSAGE)
+            
+            redirect(reverse('home'))
+        
         try:
-            param = user_id
             user_id = request.session.get('user_id')
             
-            if user_id is not param and user_id is not None:
+            if user_id is not None:
                 
                 jwt_token = request.session.get('access_token')
                 token_type = request.session.get('token_type')
 
-                api_url = os.getenv("API_ENDPOINT") + f'/chats/post_feedback/{user_id}'
+                api_url = os.getenv("API_ENDPOINT") + f'/chats/post_feedback/{doctor_id}'
 
-                post_data = {
-                    "feedback": request.POST['feedback'],   
-                }
+                post_data = { "feedback": request.POST['feedback'], }
+                post_data = json.dumps(post_data, indent=4, ensure_ascii=False)
+
+                headers = { "Content-Type": JSON_DATA, "Authorization": f"{token_type} {jwt_token}", }
                 
-                headers = {
-                    "Content-Type": JSON_DATA,
-                    "Authorization": f"{token_type} {jwt_token}",
-                }
-
                 response = requests.post(api_url, data=post_data, headers=headers)
                 response.raise_for_status()
                 
@@ -44,7 +46,10 @@ def post_feedback(request, user_id):
                     api_response = response.json()
                     if api_response.get('status') == "success":
 
-                        return api_response.get('data')
+                        messages.success(request, "Feedback Posted Successfully")
+                    
+                        consultation_url = reverse('consultation_view', args=[consultation_id])
+                        return HttpResponseRedirect(consultation_url)
                 
                 logging.error(f"Error Occured When Requesting FeedBack Data, User Id: {user_id}")
             
@@ -57,10 +62,12 @@ def post_feedback(request, user_id):
     else:
         messages.error(request, METHOD_ERROR)
     
-    return None
+    redirect(reverse('home'))
 
 
 def user_feedback(request, user_id):
+    
+    request.session['prediction_successful'] = False
     
     if request.method == 'GET' or request.method == 'POST':
         
@@ -108,6 +115,9 @@ def user_feedback(request, user_id):
 
 
 def chat_messages(request, consultation_id, sender_id = None):
+    
+    request.session['prediction_successful'] = False
+    
     try:
         user_id = request.session.get('user_id')
 
@@ -126,7 +136,7 @@ def chat_messages(request, consultation_id, sender_id = None):
                 if api_response.get('status') == "success":
                     return api_response.get('data')
             
-            logging.error(f"Error Occurred When Reading Chat Data: {response.text}, User Id: {user_id}")
+            logging.error(f"Error Occurred When Reading Chat Data, User Id: {user_id}")
 
         else:
             messages.error(request, USER_MESSAGE)
@@ -138,6 +148,9 @@ def chat_messages(request, consultation_id, sender_id = None):
 
 
 def create_chat(request, consultation_id, message, sender_id = None):
+    
+    request.session['prediction_successful'] = False
+    
     try:
         user_id = request.session.get('user_id')
 
@@ -158,7 +171,7 @@ def create_chat(request, consultation_id, message, sender_id = None):
                 if api_response.get('status') == "success":
                     return api_response.get('data')
 
-            logging.error(f"Creating Chat Data: {response.text}, User Id: {user_id}")
+            logging.error(f"Creating Chat Data, User Id: {user_id}")
 
         else:
             messages.error(request, USER_MESSAGE)
@@ -168,6 +181,39 @@ def create_chat(request, consultation_id, message, sender_id = None):
     
     return None
 
+
+def send_message(request, consultation_id):
+    
+    request.session['prediction_successful'] = False
+    
+    if request.method == 'POST':
+        
+        if request.POST.get('message'):
+            try:
+                user_id = request.session.get('user_id')
+
+                if user_id is not None:
+
+                    message = request.POST.get('message')
+
+                    chat_messages = create_chat(request, consultation_id, message, user_id)
+                    if chat_messages is not None:
+                        messages.success(request, "Message Sent Successfully")
+
+                    else:
+                        logging.error(f"Creating Chat Data, User Id: {user_id}")
+
+                else:
+                    messages.error(request, USER_MESSAGE)
+
+            except requests.RequestException as e:
+                logging.error(f"Creating Chat Data: {e}, User Id: {user_id}")
+            
+        else:
+            messages.error(request, MESSAGE)
+
+    consultation_url = reverse('consultation_view', args=[consultation_id])
+    return HttpResponseRedirect(consultation_url)
 
 def whatsapp(request):
 
