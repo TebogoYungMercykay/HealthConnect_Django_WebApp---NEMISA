@@ -202,7 +202,13 @@
                         <!-- End Messages Nav -->
                         <li class="nav-item dropdown pe-3">
                             <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-                                <img src="{% static 'img/profile-img.jpg' %}" alt="Profile" class="rounded-circle">
+                                {% if request.session.is_doctor %}
+                                    <img src="{% static 'img/doctors/doctors-3.jpg' %}" alt="Profile" class="rounded-circle">
+                                {% elif request.session.is_patient %}
+                                    <img src="{% static 'img/testimonials/testimonials-4.jpg' %}" alt="Profile" class="rounded-circle">
+                                {% else %}
+                                    <img src="{% static 'img/profile-img.jpg' %}" alt="Profile" class="rounded-circle">
+                                {% endif %}
                                 <span class="d-none d-md-block dropdown-toggle ps-2">{{ request.session.name }}</span>
                             </a>
                             <!-- End Profile Iamge Icon -->
@@ -307,154 +313,172 @@
                     <div class="section-title">
                         <h2>Consultation Details</h2>
                     </div>
-                    <div class="row">
-                        <div class="col-lg-4 col-md-6 d-flex mt-4 mt-lg-0">
-                            <div class="icon-box">
-                                <div class="icon">
-                                    <i class="fas fa-hospital-user"></i>
+                    {% if consultation_info %}
+                        <div class="row">
+                            <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+                                <div class="icon-box">
+                                    <div class="icon">
+                                        <i class="fas fa-hospital-user"></i>
+                                    </div>
+                                    <h4>
+                                        <a href="">Patient Information</a>
+                                    </h4>
+                                    <p><strong>{{ consultation_info.patient.surname }} {{ consultation_info.patient.name }} ({{ consultation_info.patient.age }})</strong></h6>
+                                    <p><strong>Date of Birth</strong>: {{ consultation_info.patient.dob }}</p>
+                                    <p><strong>Address</strong>: {{ consultation_info.patient.address }}</p>
+                                    <p><strong>Gender</strong>: {{ consultation_info.patient.gender }}</p>
+                                    <p><strong>Mobile No</strong>: {{ consultation_info.patient.mobile_no }}</p>
+                                    <p><strong>Opening Date</strong>: {{ consultation_info.patient.consultation_date }}</p>
                                 </div>
-                                <h4>
-                                    <a href="">Patient</a>
-                                </h4>
-                                <p>Some Information: Will be Displayed Here</p>
-                                <p>Some Information: Will be Displayed Here</p>
-                                <p>Some Information: Will be Displayed Here</p>
-                                <p>Some Information: Will be Displayed Here</p>
-                                <p>Some Information: Will be Displayed Here</p>
+                            </div>
+                            <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+                                <div class="icon-box">
+                                    <div class="icon">
+                                        <i class="fas fa-notes-medical"></i>
+                                    </div>
+                                    <h4>
+                                        <a href="">Disease Information</a>
+                                    </h4>
+                                    <p><strong>Name: {{ consultation_info.diseaseinfo.diseasename }}</strong></h6>
+                                    <p><strong>Confidence</strong> {{ consultation_info.diseaseinfo.confidence }} Percent</p>
+                                    <p><strong>ConsultDoctor</strong>: {{ consultation_info.diseaseinfo.consultdoctor }}</p>
+                                    <p><strong>Symptoms</strong>: {{ consultation_info.diseaseinfo.symptoms }}</p>
+                                    <p><strong>Consultation Status</strong>:  {{ consultation_info.status }}</p>
+                                    <p><strong>Days Elapsed</strong>: {{ consultation_info.patient.days_elapsed_since }}</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+                                <div class="icon-box">
+                                    <div class="icon">
+                                        <i class="fas fa-hospital-user"></i>
+                                    </div>
+                                    <h4>
+                                        <a href="">Doctor Information</a>
+                                    </h4>
+                                    <p><strong>Dr {{ consultation_info.doctor.surname }} {{ consultation_info.doctor.name }}</strong></h6>
+                                    <p><strong>Qualification</strong>: {{ consultation_info.doctor.qualification }}</p>
+                                    <p><strong>Council</strong>: {{ consultation_info.doctor.state_medical_council }}</p>
+                                    <p><strong>Specialization</strong>: {{ consultation_info.doctor.specialization }}</p>
+                                    <p><strong>Address</strong>: {{ consultation_info.doctor.address }}</p>
+                                    <p><strong>Rating</strong>: {{ consultation_info.doctor.rating }}</p>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-lg-4 col-md-6 d-flex mt-4 mt-lg-0">
-                            <div class="icon-box">
-                                <div class="icon">
-                                    <i class="fas fa-notes-medical"></i>
-                                </div>
-                                <h4>
-                                    <a href="">Disease Info</a>
-                                </h4>
-                                <p>Some Information: Will be Displayed Here</p>
-                                <p>Some Information: Will be Displayed Here</p>
-                                <p>Some Information: Will be Displayed Here</p>
-                                <p>Some Information: Will be Displayed Here</p>
-                                <p>Some Information: Will be Displayed Here</p>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 d-flex mt-4 mt-lg-0">
-                            <div class="icon-box">
-                                <div class="icon">
-                                    <i class="fas fa-hospital-user"></i>
-                                </div>
-                                <h4>
-                                    <a href="">Doctor</a>
-                                </h4>
-                                <p>Some Information: Will be Displayed Here</p>
-                                <p>Some Information: Will be Displayed Here</p>
-                                <p>Some Information: Will be Displayed Here</p>
-                                <p>Some Information: Will be Displayed Here</p>
-                                <p>Some Information: Will be Displayed Here</p>
-                            </div>
-                        </div>
-                    </div>
+                    {% endif %}
                 </div>
             </section>
             <section>
                 <div class="container">
-                    <div class="section-title">
+                    <div class="section-title mt-4">
                         <h2>Consultation Chats</h2>
                     </div>
                 </div>
                 <!-- Chat Here -->
-                <div class="container-fluid h-100">
-                    <div class="row justify-content-center h-100">
-                        <div class="col-md-8 col-xl-8 chat">
-                            <div class="card">
-                                <div class="card-header msg_head">
-                                    <div class="d-flex bd-highlight">
-                                        <div class="img_cont">
-                                            <img src="{% static 'img/testimonials/testimonials-4.jpg' %}" class="rounded-circle user_img" alt="Profile Picture">
-                                            <span class="online_icon"></span>
-                                        </div>
-                                        <div class="user_info">
-                                            <span>khalid Charif</span>
-                                            <p>1767 Messages</p>
-                                        </div>
-                                        <div class="ms-auto">
-                                            <div class="video_cam" id="action_menu_btn">
-                                                <span>
-                                                    <i class="fas fa-video"></i>
-                                                </span>
-                                                <span class="star-icon" onclick="openRatingModal()">
-                                                    <i class="fas fa-star"></i>
-                                                </span>
+                {% if consultation_chats %}
+                    <div class="container-fluid h-100">
+                        <div class="row justify-content-center h-100">
+                            <div class="col-md-8 col-xl-8 chat">
+                                <div class="card">
+                                    <div class="card-header msg_head">
+                                        <div class="d-flex bd-highlight">
+                                            {% if request.session.is_doctor %}
+                                                <div class="img_cont">
+                                                    <img src="{% static 'img/testimonials/testimonials-4.jpg' %}" class="rounded-circle user_img" alt="Profile Picture">
+                                                    <span class="online_icon"></span>
+                                                </div>
+                                                <div class="user_info">
+                                                    <span>{{ consultation_info.patient.surname }} {{ consultation_info.patient.name }}</span>
+                                                    <p>{{ consultation_chats.chats.length }} Messages</p>
+                                                </div>
+                                            {% else %}
+                                                <div class="img_cont">
+                                                    <img src="{% static 'img/doctors/doctors-3.jpg' %}" class="rounded-circle user_img" alt="Profile Picture">
+                                                    <span class="online_icon"></span>
+                                                </div>
+                                                <div class="user_info">
+                                                    <span>Dr {{ consultation_info.doctor.surname }} {{ consultation_info.doctor.name }}</span>
+                                                    <p>{{ consultation_chats.chats.length }} Messages</p>
+                                                </div>
+                                            {% endif %}
+                                            <div class="ms-auto">
+                                                <div class="video_cam" id="action_menu_btn">
+                                                    <span>
+                                                        <i class="fas fa-video"></i>
+                                                    </span>
+                                                    {% if request.session.is_patient %}
+                                                        <span class="star-icon" onclick="openRatingModal()">
+                                                            <i class="fas fa-star"></i>
+                                                        </span>
+                                                    {% endif %}
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="card-body msg_card_body pt-4">
-                                    <div class="d-flex justify-content-start mb-4">
-                                        <div class="img_cont_msg">
-                                            <img src="{% static 'img/testimonials/testimonials-4.jpg' %}" class="rounded-circle user_img" alt="Profile Picture">
-                                        </div>
-                                        <div class="msg_cotainer"> Hi, how are you samim? <span class="msg_time">8:40 AM, Today</span>
-                                        </div>
+                                    <div class="card-body msg_card_body pt-4">
+                                        {% for sent_message in consultation_chats.chats %}
+                                            {% if request.session.is_doctor %}
+                                                {% if sent_message.sender_id == request.session.user_id %}
+                                                    <div class="d-flex justify-content-end mb-4">
+                                                        <div class="msg_cotainer_send"> {{ sent_message.message }} <span class="msg_time_send">{{ sent_message.created_at }}</span>
+                                                        </div>
+                                                        <div class="img_cont_msg">
+                                                            <img src="{% static 'img/doctors/doctors-3.jpg' %}" class="rounded-circle user_img" alt="Profile Picture">
+                                                        </div>
+                                                    </div>
+                                                {% else %}
+                                                    <div class="d-flex justify-content-start mb-4">
+                                                        <div class="img_cont_msg">
+                                                            <img src="{% static 'img/testimonials/testimonials-4.jpg' %}" class="rounded-circle user_img" alt="Profile Picture">
+                                                        </div>
+                                                        <div class="msg_cotainer"> {{ sent_message.message }} <span class="msg_time">{{ sent_message.created_at }}</span>
+                                                        </div>
+                                                    </div>
+                                                {% endif %}
+                                            {% else %}
+                                                {% if sent_message.sender_id == request.session.user_id %}
+                                                    <div class="d-flex justify-content-end mb-4">
+                                                        <div class="msg_cotainer_send"> {{ sent_message.message }} <span class="msg_time_send">{{ sent_message.created_at }}</span>
+                                                        </div>
+                                                        <div class="img_cont_msg">
+                                                            <img src="{% static 'img/testimonials/testimonials-4.jpg' %}" class="rounded-circle user_img" alt="Profile Picture">
+                                                        </div>
+                                                    </div>
+                                                {% else %}
+                                                    <div class="d-flex justify-content-start mb-4">
+                                                        <div class="img_cont_msg">
+                                                            <img src="{% static 'img/doctors/doctors-3.jpg' %}" class="rounded-circle user_img" alt="Profile Picture">
+                                                        </div>
+                                                        <div class="msg_cotainer"> {{ sent_message.message }} <span class="msg_time">{{ sent_message.created_at }}</span>
+                                                        </div>
+                                                    </div>
+                                                {% endif %}
+                                            {% endif %}
+                                        {% endfor %}
                                     </div>
-                                    <div class="d-flex justify-content-end mb-4">
-                                        <div class="msg_cotainer_send"> Hi Khalid i am good tnx how about you? <span class="msg_time_send">8:55 AM, Today</span>
-                                        </div>
-                                        <div class="img_cont_msg">
-                                            <img src="{% static 'img/doctors/doctors-3.jpg' %}" class="rounded-circle user_img" alt="Profile Picture">
-                                        </div>
-                                    </div>
-                                    <div class="d-flex justify-content-start mb-4">
-                                        <div class="img_cont_msg">
-                                            <img src="{% static 'img/testimonials/testimonials-4.jpg' %}" class="rounded-circle user_img" alt="Profile Picture">
-                                        </div>
-                                        <div class="msg_cotainer"> I am good too, thank you for your chat template <span class="msg_time">9:00 AM, Today</span>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex justify-content-end mb-4">
-                                        <div class="msg_cotainer_send"> You are welcome <span class="msg_time_send">9:05 AM, Today</span>
-                                        </div>
-                                        <div class="img_cont_msg">
-                                            <img src="{% static 'img/doctors/doctors-3.jpg' %}" class="rounded-circle user_img" alt="Profile Picture">
-                                        </div>
-                                    </div>
-                                    <div class="d-flex justify-content-start mb-4">
-                                        <div class="img_cont_msg">
-                                            <img src="{% static 'img/testimonials/testimonials-4.jpg' %}" class="rounded-circle user_img" alt="Profile Picture">
-                                        </div>
-                                        <div class="msg_cotainer"> I am looking for your next templates <span class="msg_time">9:07 AM, Today</span>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex justify-content-end mb-4">
-                                        <div class="msg_cotainer_send"> Ok, thank you have a good day <span class="msg_time_send">9:10 AM, Today</span>
-                                        </div>
-                                        <div class="img_cont_msg">
-                                            <img src="{% static 'img/doctors/doctors-3.jpg' %}" class="rounded-circle user_img" alt="Profile Picture">
-                                        </div>
-                                    </div>
-                                    <div class="d-flex justify-content-start mb-4">
-                                        <div class="img_cont_msg">
-                                            <img src="{% static 'img/testimonials/testimonials-4.jpg' %}" class="rounded-circle user_img" alt="Profile Picture">
-                                        </div>
-                                        <div class="msg_cotainer"> Bye, see you <span class="msg_time">9:12 AM, Today</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card-footer">
-                                    <div class="input-group">
-                                        <textarea name="" class="form-control type_msg" placeholder="Type your message..."></textarea>
-                                        <div class="input-group-append">
-                                            <span class="input-group-text send_btn" id="send_btn">
-                                                <i class="fas fa-location-arrow"></i>
-                                            </span>
-                                        </div>
+                                    <div class="card-footer">
+                                        {% if consultation_chats.status != 'closed' %}
+                                            <div class="input-group">
+                                                <textarea name="" class="form-control type_msg" placeholder="Type your message..."></textarea>
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text send_btn" id="send_btn">
+                                                        <i class="fas fa-location-arrow"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        {% else %}
+                                            <div class="input-group">
+                                                <textarea name="" class="form-control type_msg" placeholder="Closed Consultation" disabled></textarea>
+                                            </div>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <a href="#" class="close-button">Close Consultation</a>
+                    {% if consultation_chats.status != 'closed' %}
+                        <a href="#" class="close-button">Close Consultation</a>
+                    {% endif %}
+                {% endif %}
             </section>
             <!-- Modal -->
             <div class="modal fade" id="ratingModal" tabindex="-1" role="dialog" aria-labelledby="ratingModalLabel" aria-hidden="true">
