@@ -1005,6 +1005,14 @@ section {
 .services .icon-box p {
     line-height: 24px;
     font-size: 14px;
+    font-weight: 300;
+    margin-bottom: 0;
+}
+
+.services .icon-box .names {
+    line-height: 24px;
+    font-size: 16px;
+    font-weight: 500;
     margin-bottom: 0;
 }
 
@@ -1027,6 +1035,10 @@ section {
 
 .services .icon-box:hover h4 a,
 .services .icon-box:hover p {
+    color: #fff;
+}
+
+.services .icon-box:hover .names {
     color: #fff;
 }
 
