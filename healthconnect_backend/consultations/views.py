@@ -193,7 +193,6 @@ def consultation_view(request, consultation_id):
                         if consultation_info is not None:
                             
                             # Formatting Consultation Info
-                            print("Date 1: ", consultation_info['consultation_date'])
                             consultation_info['consultation_date'] = utils.format_date(consultation_info['consultation_date'])
                             consultation_info['diseaseinfo']['confidence'] = round(consultation_info['diseaseinfo']['confidence'], 2)
                             consultation_info['list_symptoms'] = ', '.join(map(str, consultation_info['diseaseinfo']['symptoms']))
@@ -209,7 +208,6 @@ def consultation_view(request, consultation_id):
                             consultation_chats['length'] = len(consultation_chats['chats'])
                             if consultation_chats is not None:
                                 for chat in consultation_chats['chats']:
-                                    print("Date 1: ", chat['created_at'])
                                     chat['created_at'] = utils.format_date(chat['created_at'])
                             
                             return render(request, CONSULTATION_CHATS_TEMPLATE, { 'consultation_info': consultation_info, 'consultation_chats': consultation_chats })
