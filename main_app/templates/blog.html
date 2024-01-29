@@ -201,7 +201,13 @@
                         <!-- End Messages Nav -->
                         <li class="nav-item dropdown pe-3">
                             <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-                                <img src="{% static 'img/profile-img.jpg' %}" alt="Profile" class="rounded-circle">
+                                {% if request.session.is_doctor %}
+                                    <img src="{% static 'img/doctors/doctors-3.jpg' %}" alt="Profile" class="rounded-circle">
+                                {% elif request.session.is_patient %}
+                                    <img src="{% static 'img/testimonials/testimonials-4.jpg' %}" alt="Profile" class="rounded-circle">
+                                {% else %}
+                                    <img src="{% static 'img/profile-img.jpg' %}" alt="Profile" class="rounded-circle">
+                                {% endif %}
                                 <span class="d-none d-md-block dropdown-toggle ps-2">{{ request.session.name }}</span>
                             </a>
                             <!-- End Profile Iamge Icon -->
