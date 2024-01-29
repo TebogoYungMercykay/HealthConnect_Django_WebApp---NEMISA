@@ -1,6 +1,7 @@
 import random
 from datetime import datetime
 
+
 TEMP_EMAIL = "temp@gmail.com"
 TEMP_DATETIME = "Jan 29, 2024"
 
@@ -43,6 +44,23 @@ def format_date(input_string):
         
         except ValueError:
             return "Jan 1, 2024"
+
+from datetime import datetime
+
+def days_elapsed_since(start_date_str):
+    start_date = datetime.strptime(start_date_str, '%b %d, %Y')
+    current_date = datetime.now()
+    days_elapsed = (current_date - start_date).days
+
+    return days_elapsed
+
+
+def days_between_dates(date_str1, date_str2):
+    date1 = datetime.strptime(date_str1, '%b %d, %Y')
+    date2 = datetime.strptime(date_str2, '%b %d, %Y')
+    days_difference = (date2 - date1).days
+
+    return days_difference
 
 
 def calculate_age(dob):
@@ -140,6 +158,22 @@ def get_posts_retrieval_error():
         ]
     }
 
+
+def get_first_message():
+    return  {
+        "consultation_id": 100,
+        "status": "closed",
+        "chats": [
+            {
+                "consultation_id": 3,
+                "created_at": "2024-01-11T10:34:09.062302",
+                "message": "Welcome to our consultation chat. I'm Dr. Taylor and I'm here to assist you. It's great to connect with you! When you have some questions, concerns, or if there's anything you'd like to discuss, feel free to let me know. Your health is my priority.",
+                "sender_id": 8
+            }
+        ]
+    }
+
+
 def get_symptoms():
     return sorted([
         'itching', 'skin_rash', 'nodal_skin_eruptions', 'continuous_sneezing', 'shivering', 'chills', 'joint_pain',
@@ -168,6 +202,7 @@ def get_symptoms():
         'silver_like_dusting', 'small_dents_in_nails', 'inflammatory_nails', 'blister', 'red_sore_around_nose',
         'yellow_crust_ooze'
     ])
+
 
 def post_retrieval_error():
     shuffled_image = shuffled_images()
