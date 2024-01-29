@@ -6,10 +6,7 @@ from django.core.exceptions import PermissionDenied
 from django.contrib import messages
 from .form import PatientCreateForm, DoctorCreateForm
 from ..utils import utils
-import requests
-import json
-import logging
-import os
+import requests, logging, json, os
 
 MESSAGE = "Some Error Occured, Please Try Again."
 CONSULTATION_TEMPLATE = 'patient/consult_a_doctor/consult_a_doctor.html'
@@ -119,45 +116,6 @@ def signup_doctor(request):
     else:
         return render(request,'pages-register.html')
 
-
-def get_doctors(request):
-
-    if request.method == 'GET':
-        
-        try:
-            user_id = request.session.get('user_id')
-            jwt_token = request.session.get('access_token')
-            token_type = request.session.get('token_type')
-
-            api_url = os.getenv("API_ENDPOINT") + '/users/doctors'
-
-            headers = {
-                "Content-Type": JSON_DATA,
-                "Authorization": f"{token_type} {jwt_token}",
-            }
-
-            response = requests.post(api_url, headers=headers)
-            response.raise_for_status()
-
-            doctors_obj = None
-            
-            if response.status_code == 200:
-                api_response = response.json()
-                if api_response.get('status') == "success":
-
-                    doctors_obj = api_response.get('data')
-                    return render(request, CONSULTATION_TEMPLATE, {"dobj": doctors_obj})
-            
-            logging.error(f"Error Occured When Requesting for Doctors Data: {e}: User Id: {user_id}")
-            return render(request, CONSULTATION_TEMPLATE, {"dobj": None})
-                    
-        except requests.RequestException as e:
-            logging.error(f"Error Occured When Requesting for Doctors Data: {e}: User Id: {user_id}")
-            return redirect(reverse('home'))
-
-    else:
-        return render(request, CONSULTATION_TEMPLATE, {"dobj": None})
-        
 
 def get_user(request):
 
