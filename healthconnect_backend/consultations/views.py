@@ -201,11 +201,7 @@ def consultation_view(request, consultation_id):
                             consultation_info['days_elapsed_since'] = utils.days_elapsed_since(consultation_info['consultation_date'])
                             
                             # Formatting Chat Messages
-                            sender_id = consultation_info['patient']['patient_id']
-                            if request.session.get('is_patient') is True:
-                                sender_id = consultation_info['doctor']['doctor_id']
-                                
-                            consultation_chats = chat_messages(request, consultation_id, sender_id)
+                            consultation_chats = chat_messages(request, consultation_id)
                             if consultation_chats is not None:
                                 for chat in consultation_chats['chats']:
                                     chat['created_at'] = utils.format_date(chat['created_at'])

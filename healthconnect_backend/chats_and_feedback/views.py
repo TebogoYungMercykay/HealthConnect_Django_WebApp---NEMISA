@@ -126,13 +126,6 @@ def chat_messages(request, consultation_id, sender_id = None):
                 if api_response.get('status') == "success":
                     return api_response.get('data')
             
-            if response.json().get('status') == "error":
-                if request.session.get('is_doctor'):
-                    return create_chat(request, consultation_id, "Welcome to our consultation chat. I'm here to assist you. It's great to connect with you! When you have some questions, concerns, or if there's anything you'd like to discuss, feel free to let me know. Your health is my priority.", sender_id)
-
-                else:
-                    return create_chat(request, consultation_id, "Good Day Dr, Please view my Disease condition details and give me detailed information on the steps I need to take to get better.", sender_id)
-                    
             logging.error(f"Error Occurred When Reading Chat Data: {response.text}, User Id: {user_id}")
 
         else:
