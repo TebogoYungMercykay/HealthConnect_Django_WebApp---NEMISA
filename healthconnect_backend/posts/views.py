@@ -13,12 +13,15 @@ JSON_DATA = 'application/json'
 METHOD_ERROR = "Incorrect Method Used, Please Try Again."
 
 def all_posts(request):
+    
+    request.session['prediction_successful'] = False
+    
     if request.method == 'GET' or request.method == 'POST':
         
         try:
             user_id = request.session.get('user_id')
             
-            if user_id != None:
+            if user_id is not None:
                 
                 jwt_token = request.session.get('access_token')
                 token_type = request.session.get('token_type')
@@ -51,13 +54,13 @@ def all_posts(request):
                         
                         return render(request, POSTS_TEMPLATE, { 'all_posts': api_response_data} )
                 
-                logging.error(f"Error Occured When Requesting Posts Data: {e}: User Id: {user_id}")
+                logging.error(f"Error Occured When Requesting Posts Data, User Id: {user_id}")
             
             else:
                 messages.error(request, USER_MESSAGE)
       
         except requests.RequestException as e:
-            logging.error(f"Error Occured When Requesting Posts Data: {e}: User Id: {user_id}")
+            logging.error(f"Error Occured When Requesting Posts Data: {e}, User Id: {user_id}")
 
     else:
         messages.error(request, METHOD_ERROR)
@@ -67,6 +70,8 @@ def all_posts(request):
 
 def create_post(request):
     
+    request.session['prediction_successful'] = False
+    
     if request.method == 'POST':
         
         if request.POST['title'] and request.POST['content']:
@@ -74,7 +79,7 @@ def create_post(request):
             try:
                 user_id = request.session.get('user_id')
                 
-                if user_id != None:
+                if user_id is not None:
                     jwt_token = request.session.get('access_token')
                     token_type = request.session.get('token_type')
 
@@ -97,14 +102,14 @@ def create_post(request):
                             messages.info(request, "Successfully Created a Post")
                             return redirect('all_posts')
                     
-                    logging.error(f"Error Occured When Creating Post: {e}: User Id: {user_id}")
+                    logging.error(f"Error Occured When Creating Post, User Id: {user_id}")
                     messages.error(request, "Failed to Create a Post")
                 
                 else:
                     messages.error(request, USER_MESSAGE)
         
             except requests.RequestException as e:
-                logging.error(f"Error Occured When Creating Post: {e}: User Id: {user_id}")
+                logging.error(f"Error Occured When Creating Post: {e}, User Id: {user_id}")
                 messages.error(request, "Error Occurred While Creating a Post")
 
         else:
@@ -119,12 +124,14 @@ def create_post(request):
 
 def get_post(request, post_id):
     
+    request.session['prediction_successful'] = False
+    
     if request.method == 'GET' or request.method == 'POST':
         
         try:
             user_id = request.session.get('user_id')
             
-            if user_id != None:
+            if user_id is not None:
                 
                 jwt_token = request.session.get('access_token')
                 token_type = request.session.get('token_type')
@@ -168,13 +175,13 @@ def get_post(request, post_id):
                             
                         return render(request, POST_TEMPLATE, {'post_details': api_response_data})
                 
-                logging.error(f"Error Occured When Requesting Post Data: {e}: Post ID: {post_id}, User ID: {user_id}")
+                logging.error(f"Error Occured When Requesting Post Data, Post ID: {post_id}, User ID: {user_id}")
             
             else:
                 messages.error(request, USER_MESSAGE)
       
         except requests.RequestException as e:
-            logging.error(f"Error Occured When Requesting Post Data: {e}: Post ID: {post_id}, User ID: {user_id}")
+            logging.error(f"Error Occured When Requesting Post Data: {e}, Post ID: {post_id}, User ID: {user_id}")
 
     else:
         messages.error(request, METHOD_ERROR)
@@ -184,6 +191,8 @@ def get_post(request, post_id):
 
 def update_post(request, post_id):
     
+    request.session['prediction_successful'] = False
+    
     if request.method == 'GET' or request.method == 'POST':
         
         if request.POST['title'] and request.POST['content']:
@@ -191,7 +200,7 @@ def update_post(request, post_id):
             try:
                 user_id = request.session.get('user_id')
                 
-                if user_id != None:
+                if user_id is not None:
                     
                     jwt_token = request.session.get('access_token')
                     token_type = request.session.get('token_type')
@@ -218,33 +227,33 @@ def update_post(request, post_id):
                             messages.info(request, "Post updated Successfully")
                             return api_response.get('data')
                     
-                    logging.error(f"Error Occured When Requesting Post Data: {e}: Post ID: {post_id}, User ID: {user_id}")
-                    return None
+                    logging.error(f"Error Occured When Requesting Post Data, Post ID: {post_id}, User ID: {user_id}")
                 
                 else:
-                    raise PermissionDenied(USER_MESSAGE)
+                    messages.error(request, USER_MESSAGE)
         
             except requests.RequestException as e:
-                logging.error(f"Error Occured When Requesting Post Data: {e}: Post ID: {post_id}, User ID: {user_id}")
-                return None
+                logging.error(f"Error Occured When Requesting Post Data: {e}, Post ID: {post_id}, User ID: {user_id}")
 
         else:
             messages.error(request, "Missing Data, Please Try Again")
-            return None
     
     else:
         messages.error(request, METHOD_ERROR)
-        return None
-
+        
+    return None
+    
 
 def delete_post(request, post_id):
+    
+    request.session['prediction_successful'] = False
     
     if request.method == 'GET' or request.method == 'POST':
         
         try:
             user_id = request.session.get('user_id')
             
-            if user_id != None:
+            if user_id is not None:
                 
                 jwt_token = request.session.get('access_token')
                 token_type = request.session.get('token_type')
@@ -266,22 +275,23 @@ def delete_post(request, post_id):
                         messages.info(request, api_response.get('data'))
                         return api_response.get('data')
                 
-                logging.error(f"Error Occured When Requesting Post Data: {e}: Post ID: {post_id}, User ID: {user_id}")
-                return None
+                logging.error(f"Error Occured When Requesting Post Data, Post ID: {post_id}, User ID: {user_id}")
             
             else:
-                raise PermissionDenied(USER_MESSAGE)
+                messages.error(request, USER_MESSAGE)
       
         except requests.RequestException as e:
-            logging.error(f"Error Occured When Requesting Post Data: {e}: Post ID: {post_id}, User ID: {user_id}")
-            return None
+            logging.error(f"Error Occured When Requesting Post Data: {e}, Post ID: {post_id}, User ID: {user_id}")
 
     else:
         messages.error(request, METHOD_ERROR)
-        return None
+        
+    return None
 
 
 def create_reply(request):
+    
+    request.session['prediction_successful'] = False
     post_id = 1
     
     if request.method == 'POST':
@@ -291,7 +301,7 @@ def create_reply(request):
             try:
                 user_id = request.session.get('user_id')
                 post_id = request.POST['post_id']
-                if user_id != None:
+                if user_id is not None:
                     jwt_token = request.session.get('access_token')
                     token_type = request.session.get('token_type')
 
@@ -315,17 +325,16 @@ def create_reply(request):
                             messages.info(request, "Successfully Created a Reply")
                             return redirect('get_post', post_id=post_id)
                     
-                    logging.error(f"Error Occured When Creating Reply: {e}: Post ID: {post_id}, User ID: {user_id}")
+                    logging.error(f"Error Occured When Creating Reply, Post ID: {post_id}, User ID: {user_id}")
                 
                 else:
-                    raise PermissionDenied(USER_MESSAGE)
+                    messages.error(request, USER_MESSAGE)
         
             except requests.RequestException as e:
-                logging.error(f"Error Occured When Creating Reply: {e}: Post ID: {post_id}, User ID: {user_id}")
+                logging.error(f"Error Occured When Creating Reply: {e}, Post ID: {post_id}, User ID: {user_id}")
 
         else:
             messages.error(request, MESSAGE)
-            return redirect(reverse('all_posts'))
 
     else:
         messages.error(request, METHOD_ERROR)
@@ -335,6 +344,8 @@ def create_reply(request):
 
 def vote(request):
     
+    request.session['prediction_successful'] = False
+    
     if request.method == 'POST':
         
         if request.POST['post_id']: # and request.POST['dir']:
@@ -342,7 +353,7 @@ def vote(request):
             try:
                 user_id = request.session.get('user_id')
                 
-                if user_id != None:
+                if user_id is not None:
                     
                     jwt_token = request.session.get('access_token')
                     token_type = request.session.get('token_type')
@@ -369,15 +380,13 @@ def vote(request):
                             messages.info(request, "Successfully Created a Reply")
                             return api_response.get('data')
                     
-                    logging.error(f"Error Occured When Creating Reply: {e}: User Id: {user_id}")
-                    return None
+                    logging.error(f"Error Occured When Creating Reply, User Id: {user_id}")
                 
                 else:
-                    raise PermissionDenied(USER_MESSAGE)
+                    messages.error(request, USER_MESSAGE)
         
             except requests.RequestException as e:
-                logging.error(f"Error Occured When Creating Reply: {e}: User Id: {user_id}")
-                return None
+                logging.error(f"Error Occured When Creating Reply: {e}, User Id: {user_id}")
 
         else:
             messages.error(request, MESSAGE)
@@ -385,5 +394,5 @@ def vote(request):
 
     else:
         messages.error(request, METHOD_ERROR)
-        return None
-
+        
+    return None
