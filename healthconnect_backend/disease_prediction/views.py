@@ -21,7 +21,7 @@ def get_disease(request, user_id):
             param_id = user_id
             user_id = request.session.get('user_id')
             
-            if user_id != None and param_id == user_id:
+            if user_id is not None and param_id == user_id:
                 
                 jwt_token = request.session.get('access_token')
                 token_type = request.session.get('token_type')
@@ -42,11 +42,11 @@ def get_disease(request, user_id):
 
                         return api_response.get('data')
                 
-                logging.error(f"Error Occured When Requesting Diseases Data: {e}: User Id: {user_id}")
+                logging.error(f"Error Occured When Requesting Diseases Data: User Id: {user_id}")
                 return None
             
             else:
-                raise PermissionDenied(USER_MESSAGE)
+                messages.error(request, USER_MESSAGE)
       
         except requests.RequestException as e:
             logging.error(f"Error Occured When Requesting Diseases Data: {e}: User Id: {user_id}")
@@ -59,13 +59,15 @@ def get_disease(request, user_id):
 
 def check_disease(request, user_id, disease_id):
     
+    request.session['prediction_successful'] = False
+    
     if request.method == 'GET' or request.method == 'POST':
         
         try:
             param_id = user_id
             user_id = request.session.get('user_id')
             
-            if user_id != None and param_id == user_id:
+            if user_id is not None and param_id == user_id:
                 
                 jwt_token = request.session.get('access_token')
                 token_type = request.session.get('token_type')
@@ -86,11 +88,11 @@ def check_disease(request, user_id, disease_id):
 
                         return api_response.get('data')
                 
-                logging.error(f"Error Occured When Requesting Diseases Data: {e}: User Id: {user_id}")
+                logging.error(f"Error Occured When Requesting Diseases Data, User Id: {user_id}")
                 return None
             
             else:
-                raise PermissionDenied(USER_MESSAGE)
+                messages.error(request, USER_MESSAGE)
       
         except requests.RequestException as e:
             logging.error(f"Error Occured When Requesting Diseases Data: {e}: User Id: {user_id}")
@@ -102,6 +104,8 @@ def check_disease(request, user_id, disease_id):
 
 
 def create_disease(request):
+    
+    request.session['prediction_successful'] = False
     
     if request.method == 'POST':
         
@@ -141,13 +145,13 @@ def create_disease(request):
                             
                             return render(request, CONSULTATION_TEMPLATE, { 'consultation_history': consultation_history, 'doctors_info': doctors_data, 'predicted_disesse': disease_data })
                     
-                    logging.error(f"Error Occured When Creating Disease Prediction: {e}: User ID: {user_id}")
+                    logging.error(f"Error Occured When Creating Disease Prediction, User ID: {user_id}")
                 
                 else:
                     messages.error(request, USER_MESSAGE)
         
             except requests.RequestException as e:
-                logging.error(f"Error Occured When Creating Disease Prediction: {e}: User ID: {user_id}")
+                logging.error(f"Error Occured When Creating Disease Prediction: {e}, User ID: {user_id}")
 
         else:
             messages.error(request, MESSAGE)
