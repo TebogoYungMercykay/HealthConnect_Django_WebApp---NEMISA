@@ -3,10 +3,7 @@ from django.urls import reverse
 from django.http import HttpResponse
 from .form import LoginForm
 from django.contrib import messages
-import requests
-import json
-import logging
-import os
+import requests, logging, json, os
 
 from django.http import JsonResponse
 
@@ -49,6 +46,7 @@ def login_patient(request):
                         request.session['is_doctor'] = False
                         request.session['is_admin'] = False
                         request.session['chatbot_id'] = os.getenv("CHATBOT_ID")
+                        request.session['prediction_successful'] = False
 
                         return render(request, 'pages-login.html')
                         
@@ -101,6 +99,7 @@ def login_doctor(request):
                         request.session['is_doctor'] = True
                         request.session['is_admin'] = False
                         request.session['chatbot_id'] = os.getenv("CHATBOT_ID")
+                        request.session['prediction_successful'] = False
                         
                         return render(request, 'pages-login.html')
         
@@ -153,6 +152,7 @@ def login_admin(request):
                         request.session['is_doctor'] = False
                         request.session['is_admin'] = True
                         request.session['chatbot_id'] = os.getenv("CHATBOT_ID")
+                        request.session['prediction_successful'] = False
                         
                         return render(request, 'pages-login.html')
         
@@ -203,6 +203,7 @@ def logout(request):
                     request.session.pop('is_doctor', None)
                     request.session.pop('is_admin', None)
                     request.session.pop('chatbot_id', None)
+                    request.session.pop('prediction_successful', None)
 
                     return redirect(reverse('home'))
             
