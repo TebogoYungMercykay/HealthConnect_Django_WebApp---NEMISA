@@ -45,14 +45,13 @@ def format_date(input_string):
         except ValueError:
             return "Jan 1, 2024"
 
-from datetime import datetime
 
 def days_elapsed_since(start_date_str):
     start_date = datetime.strptime(start_date_str, '%b %d, %Y')
     current_date = datetime.now()
     days_elapsed = (current_date - start_date).days
 
-    return days_elapsed
+    return abs(days_elapsed)
 
 
 def days_between_dates(date_str1, date_str2):
@@ -60,7 +59,7 @@ def days_between_dates(date_str1, date_str2):
     date2 = datetime.strptime(date_str2, '%b %d, %Y')
     days_difference = (date2 - date1).days
 
-    return days_difference
+    return abs(days_difference)
 
 
 def calculate_age(dob):

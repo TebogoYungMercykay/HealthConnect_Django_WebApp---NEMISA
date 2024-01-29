@@ -198,8 +198,9 @@ def consultation_view(request, consultation_id):
                             consultation_info['doctor']['rating'] = round(consultation_info['doctor']['rating'], 2)
                             consultation_info['patient']['dob'] = utils.format_date(consultation_info['patient']['dob'])
                             consultation_info['patient']['age'] = utils.calculate_age(consultation_info['patient']['dob'])
+                            consultation_info['patient']['age'] = utils.calculate_age(consultation_info['patient']['dob'])
                             consultation_info['days_elapsed_since'] = utils.days_elapsed_since(consultation_info['consultation_date'])
-                            
+
                             # Formatting Chat Messages
                             consultation_chats = chat_messages(request, consultation_id)
                             if consultation_chats is not None:
@@ -229,12 +230,12 @@ def close_consultation(request, consultation_id):
     
     request.session['prediction_successful'] = False
     
-    if request.method == 'POST' or request.method == 'GET':
+    if request.method == 'POST':
         
         try:
             user_id = request.session.get('user_id')
             
-            if user_id is not None and user_id == id:
+            if user_id is not None and consultation_id is not None:
                 
                 jwt_token = request.session.get('access_token')
                 token_type = request.session.get('token_type')
@@ -250,7 +251,8 @@ def close_consultation(request, consultation_id):
                     api_response = response.json()
                     if api_response.get('status') == "success":
                         
-                        return redirect(reverse('home'))
+                        consultation_url = reverse('consultation_view', args=[consultation_id])
+                        return HttpResponseRedirect(consultation_url)
                 
                 logging.error(f"Error Occured When Consultation History, User Id: {user_id}")
             
@@ -263,7 +265,7 @@ def close_consultation(request, consultation_id):
     else:
         messages.error(request, METHOD_ERROR)
         
-    return redirect(reverse('consultation_view'))
+    return redirect(reverse('home'))
 
 
 def create_review(request, doctor_id):
