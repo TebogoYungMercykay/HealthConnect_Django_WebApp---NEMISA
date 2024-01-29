@@ -328,7 +328,7 @@
                                     <p><strong>Address</strong>: {{ consultation_info.patient.address }}</p>
                                     <p><strong>Gender</strong>: {{ consultation_info.patient.gender }}</p>
                                     <p><strong>Mobile No</strong>: {{ consultation_info.patient.mobile_no }}</p>
-                                    <p><strong>Opening Date</strong>: {{ consultation_info.patient.consultation_date }}</p>
+                                    <p><strong>Opening Date</strong>: {{ consultation_info.consultation_date }}</p>
                                 </div>
                             </div>
                             <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
@@ -344,7 +344,7 @@
                                     <p><strong>ConsultDoctor</strong>: {{ consultation_info.diseaseinfo.consultdoctor }}</p>
                                     <p><strong>Symptoms</strong>: {{ consultation_info.diseaseinfo.symptoms }}</p>
                                     <p><strong>Consultation Status</strong>:  {{ consultation_info.status }}</p>
-                                    <p><strong>Days Elapsed</strong>: {{ consultation_info.patient.days_elapsed_since }}</p>
+                                    <p><strong>Days Elapsed</strong>: {{ consultation_info.days_elapsed_since }}</p>
                                 </div>
                             </div>
                             <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
@@ -457,14 +457,17 @@
                                     </div>
                                     <div class="card-footer">
                                         {% if consultation_chats.status != 'closed' %}
-                                            <div class="input-group">
-                                                <textarea name="" class="form-control type_msg" placeholder="Type your message..."></textarea>
-                                                <div class="input-group-append">
-                                                    <span class="input-group-text send_btn" id="send_btn">
-                                                        <i class="fas fa-location-arrow"></i>
-                                                    </span>
+                                            <form action="{% url 'send_message' consultation_id=consultation_info.consultation_id %}" method="post" class="message-form">
+                                                {% csrf_token %}
+                                                <div class="input-group">
+                                                    <textarea name="message" class="form-control type_msg" placeholder="Type your message..."></textarea>
+                                                    <div class="input-group-append">
+                                                        <button type="submit" class="input-group-text send_btn" id="send_btn">
+                                                            <i class="fas fa-location-arrow"></i>
+                                                        </button>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            </form>
                                         {% else %}
                                             <div class="input-group">
                                                 <textarea name="" class="form-control type_msg" placeholder="Closed Consultation" disabled></textarea>
@@ -476,48 +479,56 @@
                         </div>
                     </div>
                     {% if consultation_chats.status != 'closed' %}
-                        <a href="#" class="close-button">Close Consultation</a>
+                        <form action="{% url 'close_consultation' consultation_id=consultation_info.consultation_id %}" method="post">
+                            {% csrf_token %}
+                            <input type="submit" value="Close Consultation" class="close-button">
+                        </form>
                     {% endif %}
                 {% endif %}
             </section>
             <!-- Modal -->
-            <div class="modal fade" id="ratingModal" tabindex="-1" role="dialog" aria-labelledby="ratingModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="ratingModalLabel">Rate and Provide Feedback</h5>
-                        </div>
-                        <div class="modal-body">
-                            <div class="text-center">
-                                <span class="fa fa-star fa-2x" id="star1"></span>
-                                <span class="fa fa-star fa-2x" id="star2"></span>
-                                <span class="fa fa-star fa-2x" id="star3"></span>
-                                <span class="fa fa-star fa-2x" id="star4"></span>
-                                <span class="fa fa-star fa-2x" id="star5"></span>
+            {% if consultation_info %}
+                <div class="modal fade" id="ratingModal" tabindex="-1" role="dialog" aria-labelledby="ratingModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="ratingModalLabel">Rate and Provide Feedback</h5>
                             </div>
-                            <div class="form-group mt-3">
-                                <label for="rating">Rating:</label>
-                                <select class="form-control" id="rating" name="rating">
-                                    <option value="" disabled selected>Select a rating</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                </select>
+                            <div class="modal-body">
+                                <form action="{% url 'post_feedback' doctor_id=consultation_info.doctor.doctor_id consultation_id=consultation_info.consultation_id %}" method="post">
+                                    {% csrf_token %}
+                                    <div class="text-center">
+                                        <span class="fa fa-star fa-2x" id="star1"></span>
+                                        <span class="fa fa-star fa-2x" id="star2"></span>
+                                        <span class="fa fa-star fa-2x" id="star3"></span>
+                                        <span class="fa fa-star fa-2x" id="star4"></span>
+                                        <span class="fa fa-star fa-2x" id="star5"></span>
+                                    </div>
+                                    <div class="form-group mt-3">
+                                        <label for="rating">Rating:</label>
+                                        <select class="form-control" id="rating" name="rating">
+                                            <option value="" disabled selected>Select Rating</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="feedback">Feedback:</label>
+                                        <textarea class="form-control" id="feedback" name="feedback" rows="3"></textarea>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeBtn">Close</button>
+                                        <button type="submit" class="btn btn-primary" id="submitBtn">Submit Feedback</button>
+                                    </div>
+                                </form>
                             </div>
-                            <div class="form-group">
-                                <label for="feedback">Feedback:</label>
-                                <textarea class="form-control" id="feedback" name="feedback" rows="3"></textarea>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeBtn">Close</button>
-                            <button type="button" class="btn btn-primary" id="submitBtn">Submit</button>
                         </div>
                     </div>
                 </div>
-            </div>
+            {% endif %}            
         </main>
         <footer id="footer" class="footer">
             <div class="copyright"> &copy; Copyright <strong>
