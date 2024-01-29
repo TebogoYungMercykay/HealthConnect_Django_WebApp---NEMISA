@@ -204,7 +204,13 @@
                         <!-- End Messages Nav -->
                         <li class="nav-item dropdown pe-3">
                             <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-                                <img src="{% static 'img/profile-img.jpg' %}" alt="Profile" class="rounded-circle">
+                                {% if request.session.is_doctor %}
+                                    <img src="{% static 'img/doctors/doctors-3.jpg' %}" alt="Profile" class="rounded-circle">
+                                {% elif request.session.is_patient %}
+                                    <img src="{% static 'img/testimonials/testimonials-4.jpg' %}" alt="Profile" class="rounded-circle">
+                                {% else %}
+                                    <img src="{% static 'img/profile-img.jpg' %}" alt="Profile" class="rounded-circle">
+                                {% endif %}
                                 <span class="d-none d-md-block dropdown-toggle ps-2">{{ request.session.name }} </span>
                             </a>
                             <!-- End Profile Iamge Icon -->
@@ -404,6 +410,27 @@
                                                 {% endfor %}
                                             </tbody>
                                         </table>
+                                        <script>
+                                            document.addEventListener('DOMContentLoaded', function() {
+                                                // Doctor Consultation
+                                                document.addEventListener('click', function (event) {
+                                                    let predictedDiseaseId = document.getElementById('disease_id').textContent.trim();
+                                                
+                                                    if (event.target.classList.contains('doctor-link')) {
+                                                        let doctorId = event.target.getAttribute('data-doctor-id');
+                                                        console.log(doctorId);
+                                                        let currentDatetime = new Date().toISOString();
+                                
+                                                        document.getElementById('hiddenDoctor_id').value = doctorId;
+                                                        document.getElementById('hiddenDiseaseinfo_id').value = predictedDiseaseId;
+                                                        document.getElementById('hiddenConsultation_date').value = currentDatetime;
+                                                        document.getElementById('hiddenStatus').value = 'active';
+                                
+                                                        document.getElementById('make_consultation').submit();
+                                                    }
+                                                });
+                                            });
+                                        </script>
                                         <h5 class="card-title"></h5>
                                     </div>
                                 </div>
@@ -421,12 +448,66 @@
             {% else %}
                 <section class="section">
                     <div class="section-title">
-                        <h2>I Shall Put Something to Display for a Doctor</h2>
-                        <p>
-                            {% lorem 750 w random %}
-                        </p>
+                        <h2>HealthConnect Consultations</h2>
+                    </div>
+                    <div id="service_information" class="service_information">
+                        <div class="container" data-aos="fade-up">
+                            <div class="row gy-5">
+                                <div class="col-xl-4 col-md-6" data-aos="zoom-in" data-aos-delay="200">
+                                    <div class="service-item">
+                                        <div class="img">
+                                            <img src="{% static 'img/blog/blog-recent-1.jpg' %}" class="img-fluid" alt="">
+                                        </div>
+                                        <div class="details position-relative">
+                                            <div class="icon">
+                                                <i class="bi bi-broadcast"></i>
+                                            </div>
+                                            <a href="#" class="stretched-link">
+                                                <h3>Video Consultations</h3>
+                                            </a>
+                                            <p>As a dedicated Medical Professional, our doctor conducts video meetings to provide vital healthcare consultations. Utilizing technology to bridge the gap and save lives.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-xl-4 col-md-6" data-aos="zoom-in" data-aos-delay="200">
+                                    <div class="service-item">
+                                        <div class="img">
+                                            <img src="{% static 'img/blog/blog-1.jpg' %}" class="img-fluid" alt="">
+                                        </div>
+                                        <div class="details position-relative">
+                                            <div class="icon">
+                                                <i class="bi bi-chat-square-text"></i>
+                                            </div>
+                                            <a href="#" class="stretched-link">
+                                                <h3>Consultation Chats</h3>
+                                            </a>
+                                            <p>Responding promptly to queries and concerns through consultation chats, our doctor ensures that individuals receive the guidance and support they need for their health journey.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-xl-4 col-md-6" data-aos="zoom-in" data-aos-delay="200">
+                                    <div class="service-item">
+                                        <div class="img">
+                                            <img src="{% static 'img/blog/blog-6.jpg' %}" class="img-fluid" alt="">
+                                        </div>
+                                        <div class="details position-relative">
+                                            <div class="icon">
+                                                <i class="bi bi-calendar4-week"></i>
+                                            </div>
+                                            <a href="{% url 'all_posts' %}" class="stretched-link">
+                                                <h3>Posts and Replies</h3>
+                                            </a>
+                                            <p>Our Doctors actively engages in responding to posts and providing insightful replies. By participating in online discussions, the aim is to contribute to the well-being of the community and save lives through shared knowledge.</p>
+                                        </div>
+                                    </div>
+                                </div>                                         
+                            </div>
+                        </div>
                     </div>
                 </section>
+
             {% endif %}
             {% if consultation_history %}
                 <section class="section">
@@ -503,106 +584,90 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <script>
             document.addEventListener('DOMContentLoaded', function() {
-                function generateWordList() {
-                    let availableList = document.getElementById('availableList');
-                    let selectedList = document.getElementById('selectedList');
+                {% if request.session.is_patient %}
+                    function generateWordList() {
+                        let availableList = document.getElementById('availableList');
+                        let selectedList = document.getElementById('selectedList');
 
-                    let words = [
-                        'itching', 'skin_rash', 'nodal_skin_eruptions', 'continuous_sneezing', 'shivering', 'chills', 'joint_pain',
-                        'stomach_pain', 'acidity', 'ulcers_on_tongue', 'muscle_wasting', 'vomiting', 'burning_micturition', 'spotting_ urination',
-                        'fatigue', 'weight_gain', 'anxiety', 'cold_hands_and_feets', 'mood_swings', 'weight_loss', 'restlessness', 'lethargy',
-                        'patches_in_throat', 'irregular_sugar_level', 'cough', 'high_fever', 'sunken_eyes', 'breathlessness', 'sweating',
-                        'dehydration', 'indigestion', 'headache', 'yellowish_skin', 'dark_urine', 'nausea', 'loss_of_appetite', 'pain_behind_the_eyes',
-                        'back_pain', 'constipation', 'abdominal_pain', 'diarrhoea', 'mild_fever', 'yellow_urine',
-                        'yellowing_of_eyes', 'acute_liver_failure', 'fluid_overload', 'swelling_of_stomach',
-                        'swelled_lymph_nodes', 'malaise', 'blurred_and_distorted_vision', 'phlegm', 'throat_irritation',
-                        'redness_of_eyes', 'sinus_pressure', 'runny_nose', 'congestion', 'chest_pain', 'weakness_in_limbs',
-                        'fast_heart_rate', 'pain_during_bowel_movements', 'pain_in_anal_region', 'bloody_stool',
-                        'irritation_in_anus', 'neck_pain', 'dizziness', 'cramps', 'bruising', 'obesity', 'swollen_legs',
-                        'swollen_blood_vessels', 'puffy_face_and_eyes', 'enlarged_thyroid', 'brittle_nails',
-                        'swollen_extremeties', 'excessive_hunger', 'extra_marital_contacts', 'drying_and_tingling_lips',
-                        'slurred_speech', 'knee_pain', 'hip_joint_pain', 'muscle_weakness', 'stiff_neck', 'swelling_joints',
-                        'movement_stiffness', 'spinning_movements', 'loss_of_balance', 'unsteadiness',
-                        'weakness_of_one_body_side', 'loss_of_smell', 'bladder_discomfort', 'foul_smell_of urine',
-                        'continuous_feel_of_urine', 'passage_of_gases', 'internal_itching', 'toxic_look_(typhos)',
-                        'depression', 'irritability', 'muscle_pain', 'altered_sensorium', 'red_spots_over_body', 'belly_pain',
-                        'abnormal_menstruation', 'dischromic _patches', 'watering_from_eyes', 'increased_appetite', 'polyuria', 'family_history', 'mucoid_sputum',
-                        'rusty_sputum', 'lack_of_concentration', 'visual_disturbances', 'receiving_blood_transfusion',
-                        'receiving_unsterile_injections', 'coma', 'stomach_bleeding', 'distention_of_abdomen',
-                        'history_of_alcohol_consumption', 'fluid_overload', 'blood_in_sputum', 'prominent_veins_on_calf',
-                        'palpitations', 'painful_walking', 'pus_filled_pimples', 'blackheads', 'scurring', 'skin_peeling',
-                        'silver_like_dusting', 'small_dents_in_nails', 'inflammatory_nails', 'blister', 'red_sore_around_nose',
-                        'yellow_crust_ooze'
-                    ];
-                
-                    for (let word of words.sort()) {
-                        let listItem = document.createElement('li');
-                        listItem.textContent = word;
-                        listItem.classList.add('word-list-item');
-                        listItem.addEventListener('click', function() {
-                            let currentList = this.parentNode.id;
-                            if (currentList === 'availableList') {
-                                let selectedWord = this.cloneNode(true);
-                                selectedList.appendChild(selectedWord);
-                                this.remove();
-                            } else if (currentList === 'selectedList') {
-                                let availableWord = this.cloneNode(true);
-                                availableList.appendChild(availableWord);
-                                this.remove();
-                            }
+                        let words = [
+                            'itching', 'skin_rash', 'nodal_skin_eruptions', 'continuous_sneezing', 'shivering', 'chills', 'joint_pain',
+                            'stomach_pain', 'acidity', 'ulcers_on_tongue', 'muscle_wasting', 'vomiting', 'burning_micturition', 'spotting_ urination',
+                            'fatigue', 'weight_gain', 'anxiety', 'cold_hands_and_feets', 'mood_swings', 'weight_loss', 'restlessness', 'lethargy',
+                            'patches_in_throat', 'irregular_sugar_level', 'cough', 'high_fever', 'sunken_eyes', 'breathlessness', 'sweating',
+                            'dehydration', 'indigestion', 'headache', 'yellowish_skin', 'dark_urine', 'nausea', 'loss_of_appetite', 'pain_behind_the_eyes',
+                            'back_pain', 'constipation', 'abdominal_pain', 'diarrhoea', 'mild_fever', 'yellow_urine',
+                            'yellowing_of_eyes', 'acute_liver_failure', 'fluid_overload', 'swelling_of_stomach',
+                            'swelled_lymph_nodes', 'malaise', 'blurred_and_distorted_vision', 'phlegm', 'throat_irritation',
+                            'redness_of_eyes', 'sinus_pressure', 'runny_nose', 'congestion', 'chest_pain', 'weakness_in_limbs',
+                            'fast_heart_rate', 'pain_during_bowel_movements', 'pain_in_anal_region', 'bloody_stool',
+                            'irritation_in_anus', 'neck_pain', 'dizziness', 'cramps', 'bruising', 'obesity', 'swollen_legs',
+                            'swollen_blood_vessels', 'puffy_face_and_eyes', 'enlarged_thyroid', 'brittle_nails',
+                            'swollen_extremeties', 'excessive_hunger', 'extra_marital_contacts', 'drying_and_tingling_lips',
+                            'slurred_speech', 'knee_pain', 'hip_joint_pain', 'muscle_weakness', 'stiff_neck', 'swelling_joints',
+                            'movement_stiffness', 'spinning_movements', 'loss_of_balance', 'unsteadiness',
+                            'weakness_of_one_body_side', 'loss_of_smell', 'bladder_discomfort', 'foul_smell_of urine',
+                            'continuous_feel_of_urine', 'passage_of_gases', 'internal_itching', 'toxic_look_(typhos)',
+                            'depression', 'irritability', 'muscle_pain', 'altered_sensorium', 'red_spots_over_body', 'belly_pain',
+                            'abnormal_menstruation', 'dischromic _patches', 'watering_from_eyes', 'increased_appetite', 'polyuria', 'family_history', 'mucoid_sputum',
+                            'rusty_sputum', 'lack_of_concentration', 'visual_disturbances', 'receiving_blood_transfusion',
+                            'receiving_unsterile_injections', 'coma', 'stomach_bleeding', 'distention_of_abdomen',
+                            'history_of_alcohol_consumption', 'fluid_overload', 'blood_in_sputum', 'prominent_veins_on_calf',
+                            'palpitations', 'painful_walking', 'pus_filled_pimples', 'blackheads', 'scurring', 'skin_peeling',
+                            'silver_like_dusting', 'small_dents_in_nails', 'inflammatory_nails', 'blister', 'red_sore_around_nose',
+                            'yellow_crust_ooze'
+                        ];
+                    
+                        for (let word of words.sort()) {
+                            let listItem = document.createElement('li');
+                            listItem.textContent = word;
+                            listItem.classList.add('word-list-item');
+                            listItem.addEventListener('click', function() {
+                                let currentList = this.parentNode.id;
+                                if (currentList === 'availableList') {
+                                    let selectedWord = this.cloneNode(true);
+                                    selectedList.appendChild(selectedWord);
+                                    this.remove();
+                                } else if (currentList === 'selectedList') {
+                                    let availableWord = this.cloneNode(true);
+                                    availableList.appendChild(availableWord);
+                                    this.remove();
+                                }
+                            });
+                            availableList.appendChild(listItem);
+                        }
+                    }
+
+                    // Disease Prediction
+                    document.getElementById('predictButton').addEventListener('click', function () {
+                        let selectedListItems = document.querySelectorAll('#selectedList .word-list-item');
+                        let selectedWordsArray = Array.from(selectedListItems).map(function (item) {
+                            return item.textContent;
                         });
-                        availableList.appendChild(listItem);
-                    }
-                }
 
-                // Disease Prediction
-                document.getElementById('predictButton').addEventListener('click', function () {
-                    let selectedListItems = document.querySelectorAll('#selectedList .word-list-item');
-                    let selectedWordsArray = Array.from(selectedListItems).map(function (item) {
-                        return item.textContent;
+                        document.getElementById('hiddenNoOfSymptoms').value = selectedWordsArray.length;
+                        document.getElementById('hiddenSymptoms').value = JSON.stringify(selectedWordsArray);
+                    
+                        document.getElementById('hiddenForm').submit();
                     });
-
-                    document.getElementById('hiddenNoOfSymptoms').value = selectedWordsArray.length;
-                    document.getElementById('hiddenSymptoms').value = JSON.stringify(selectedWordsArray);
-                
-                    document.getElementById('hiddenForm').submit();
-                });
-
-                // Doctor Consultation
-                document.addEventListener('click', function (event) {
-                    let predictedDiseaseId = document.getElementById('disease_id').textContent.trim();
-                
-                    if (event.target.classList.contains('doctor-link')) {
-                        let doctorId = event.target.getAttribute('data-doctor-id');
-                        console.log(doctorId);
-                        let currentDatetime = new Date().toISOString();
-
-                        document.getElementById('hiddenDoctor_id').value = doctorId;
-                        document.getElementById('hiddenDiseaseinfo_id').value = predictedDiseaseId;
-                        document.getElementById('hiddenConsultation_date').value = currentDatetime;
-                        document.getElementById('hiddenStatus').value = 'active';
-
-                        document.getElementById('make_consultation').submit();
-                    }
-                });
-                
-                
-                generateWordList();
-
-                document.getElementById('selectedList').addEventListener('click', function(event) {
-                    if (event.target.tagName === 'LI') {
-                        event.target.remove();
-                        availableList.appendChild(event.target);
-                    }
-                });
-                document.getElementById('searchInput').addEventListener('input', function() {
-                    let searchInput = this.value.toLowerCase();
-                    let availableListItems = document.querySelectorAll('#availableList .word-list-item');
-                    availableListItems.forEach(function(item) {
-                        let word = item.textContent.toLowerCase();
-                        item.style.display = word.includes(searchInput) ? 'block' : 'none';
+                    
+                    generateWordList();
+    
+                    document.getElementById('selectedList').addEventListener('click', function(event) {
+                        if (event.target.tagName === 'LI') {
+                            event.target.remove();
+                            availableList.appendChild(event.target);
+                        }
                     });
-                });
+                    document.getElementById('searchInput').addEventListener('input', function() {
+                        let searchInput = this.value.toLowerCase();
+                        let availableListItems = document.querySelectorAll('#availableList .word-list-item');
+                        availableListItems.forEach(function(item) {
+                            let word = item.textContent.toLowerCase();
+                            item.style.display = word.includes(searchInput) ? 'block' : 'none';
+                        });
+                    });
+                {% endif %}
+                
             });
 
             document.addEventListener('DOMContentLoaded', function () {
