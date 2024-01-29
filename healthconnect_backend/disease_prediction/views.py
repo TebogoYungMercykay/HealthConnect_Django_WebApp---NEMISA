@@ -1,14 +1,14 @@
-from django.shortcuts import redirect
+from django.http import HttpResponse, JsonResponse
+from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.core.exceptions import PermissionDenied
 from django.contrib import messages
-import requests
-import logging
-import os
+from ..consultations.views import get_consultation_history, get_doctors_data
+import requests, logging, json, os
 
 MESSAGE = "Some Error Occured, Please Try Again."
 USER_MESSAGE = "Incorrect User Id Used, Please Try Again."
-POSTS_TEMPLATE = 'blog/posts.html'
+CONSULTATION_TEMPLATE = 'consultation.html'
 JSON_DATA = 'application/json'
 METHOD_ERROR = "Incorrect Method Used, Please Try Again."
 
@@ -101,32 +101,30 @@ def check_disease(request, user_id, disease_id):
         return None
 
 
-def create_disease(request, user_id):
+def create_disease(request):
     
     if request.method == 'POST':
         
         if request.POST['no_of_symptoms'] and request.POST['symptoms']:
-        
+            
             try:
                 user_id = request.session.get('user_id')
-                
-                if user_id != None:
+                if user_id is not None:
                     
                     jwt_token = request.session.get('access_token')
                     token_type = request.session.get('token_type')
+                    is_patient = request.session.get('is_patient')
 
                     api_url = os.getenv("API_ENDPOINT") + f'/disease_prediction/create_disease/{user_id}'
 
                     post_data = {
                         "no_of_symptoms": request.POST['no_of_symptoms'],
-                        "symptoms": request.POST['symptoms']
+                        "symptoms": json.loads(request.POST['symptoms'])
                     }
-                    
-                    headers = {
-                        "Content-Type": JSON_DATA,
-                        "Authorization": f"{token_type} {jwt_token}",
-                    }
+                    post_data = json.dumps(post_data, indent=4, ensure_ascii=False)
 
+                    headers = { "Content-Type": JSON_DATA, "Authorization": f"{token_type} {jwt_token}", }
+                    
                     response = requests.post(api_url, data=post_data, headers=headers)
                     response.raise_for_status()
                     
@@ -135,23 +133,27 @@ def create_disease(request, user_id):
                         if api_response.get('status') == "success":
 
                             messages.info(request, "Successfully Created a Disease Prediction")
-                            return api_response.get('data')
+                            disease_data = api_response.get('data')
+                            consultation_history = get_consultation_history(request, user_id, jwt_token, token_type, is_patient)
+                            doctors_data = get_doctors_data(request, user_id, jwt_token, token_type)
+                            
+                            request.session['prediction_successful'] = True
+                            
+                            return render(request, CONSULTATION_TEMPLATE, { 'consultation_history': consultation_history, 'doctors_info': doctors_data, 'predicted_disesse': disease_data })
                     
                     logging.error(f"Error Occured When Creating Disease Prediction: {e}: User ID: {user_id}")
-                    return None
                 
                 else:
-                    raise PermissionDenied(USER_MESSAGE)
+                    messages.error(request, USER_MESSAGE)
         
             except requests.RequestException as e:
                 logging.error(f"Error Occured When Creating Disease Prediction: {e}: User ID: {user_id}")
-                return None
 
         else:
             messages.error(request, MESSAGE)
-            return redirect(reverse(POSTS_TEMPLATE))
 
     else:
         messages.error(request, METHOD_ERROR)
-        return None
+    
+    return render(request, CONSULTATION_TEMPLATE, { 'consultation_history': None, 'doctors_info': None, 'predicted_disesse': None })
 
