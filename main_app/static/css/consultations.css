@@ -201,15 +201,13 @@
 
 /* # Services Section */
 
-#service_information .service-item {
+#service_information .img {
     border-radius: 8px;
     overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 #service_information .img img {
     transition: 0.6s;
-    border-radius: 8px;
 }
 
 #service_information .details {
@@ -272,4 +270,23 @@
 
 #service_information .service-item:hover .img img {
     transform: scale(1.2);
+}
+
+.service_information .service-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.service_information .details {
+    flex: 1;
+}
+
+.service_information .details p {
+    height: 130px;
+    overflow: hidden;
+}
+
+.service_information .img {
+    height: 250px;
+    overflow: hidden;
 }
