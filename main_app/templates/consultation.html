@@ -40,6 +40,7 @@
         <link href="{% static 'css/main.css' %}" rel="stylesheet">
         <link href="{% static 'css/datatable.css' %}" rel="stylesheet">
         <link href="{% static 'css/consultations.css' %}" rel="stylesheet">
+        <link href="{% static 'css/variables.css' %}" rel="stylesheet">
     </head>
     <body>
         <div id="topbar" class="d-flex align-items-center fixed-top">
@@ -666,6 +667,23 @@
                             item.style.display = word.includes(searchInput) ? 'block' : 'none';
                         });
                     });
+                {% else %}
+                    document.addEventListener("DOMContentLoaded", function () {
+                        equalizeDetailsHeight();
+                    });
+                
+                    function equalizeDetailsHeight() {
+                        var detailsElements = document.querySelectorAll('.details');
+                        var maxHeight = 0;
+                        
+                        detailsElements.forEach(function (details) {
+                            maxHeight = Math.max(maxHeight, details.clientHeight);
+                        });
+
+                        detailsElements.forEach(function (details) {
+                            details.style.height = maxHeight + 'px';
+                        });
+                    }
                 {% endif %}
                 
             });
