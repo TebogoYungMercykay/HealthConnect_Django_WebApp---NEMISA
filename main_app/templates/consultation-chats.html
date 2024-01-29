@@ -419,7 +419,7 @@
                                             {% if request.session.is_doctor %}
                                                 {% if sent_message.sender_id == request.session.user_id %}
                                                     <div class="d-flex justify-content-end mb-4">
-                                                        <div class="msg_cotainer_send"> {{ sent_message.message }} <span class="msg_time_send">{{ sent_message.created_at }}</span>
+                                                        <div class="msg_cotainer_send max-width-70"> {{ sent_message.message }} <span class="msg_time_send">{{ sent_message.created_at }}</span>
                                                         </div>
                                                         <div class="img_cont_msg">
                                                             <img src="{% static 'img/doctors/doctors-3.jpg' %}" class="rounded-circle user_img" alt="Profile Picture">
@@ -430,14 +430,14 @@
                                                         <div class="img_cont_msg">
                                                             <img src="{% static 'img/testimonials/testimonials-4.jpg' %}" class="rounded-circle user_img" alt="Profile Picture">
                                                         </div>
-                                                        <div class="msg_cotainer"> {{ sent_message.message }} <span class="msg_time">{{ sent_message.created_at }}</span>
+                                                        <div class="msg_cotainer max-width-70"> {{ sent_message.message }} <span class="msg_time">{{ sent_message.created_at }}</span>
                                                         </div>
                                                     </div>
                                                 {% endif %}
                                             {% else %}
                                                 {% if sent_message.sender_id == request.session.user_id %}
                                                     <div class="d-flex justify-content-end mb-4">
-                                                        <div class="msg_cotainer_send"> {{ sent_message.message }} <span class="msg_time_send">{{ sent_message.created_at }}</span>
+                                                        <div class="msg_cotainer_send max-width-70"> {{ sent_message.message }} <span class="msg_time_send">{{ sent_message.created_at }}</span>
                                                         </div>
                                                         <div class="img_cont_msg">
                                                             <img src="{% static 'img/testimonials/testimonials-4.jpg' %}" class="rounded-circle user_img" alt="Profile Picture">
@@ -448,7 +448,7 @@
                                                         <div class="img_cont_msg">
                                                             <img src="{% static 'img/doctors/doctors-3.jpg' %}" class="rounded-circle user_img" alt="Profile Picture">
                                                         </div>
-                                                        <div class="msg_cotainer"> {{ sent_message.message }} <span class="msg_time">{{ sent_message.created_at }}</span>
+                                                        <div class="msg_cotainer max-width-70"> {{ sent_message.message }} <span class="msg_time">{{ sent_message.created_at }}</span>
                                                         </div>
                                                     </div>
                                                 {% endif %}

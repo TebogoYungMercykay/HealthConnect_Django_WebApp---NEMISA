@@ -140,7 +140,6 @@ def make_consultation(request):
                         api_response = response.json()
                         if api_response.get('status') == "success":
                             consultation_info = api_response.get('data')
-                            result = create_chat(request, consultation_info['consultation_id'], f"Welcome to our consultation chat. I'm Dr. {consultation_info['doctor']['surname']} and I'm here to assist you. It's great to connect with you! When you have some questions, concerns, or if there's anything you'd like to discuss, feel free to let me know. Your health is my priority.", consultation_info['doctor']['doctor_id'])
                             
                             consultation_url = reverse('consultation_view', args=[consultation_info['consultation_id']])
                             return HttpResponseRedirect(consultation_url)
