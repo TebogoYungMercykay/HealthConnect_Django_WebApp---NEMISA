@@ -2,11 +2,8 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.core.exceptions import PermissionDenied
 from django.contrib import messages
-import requests
-import logging
-import os
-import json
 from ..utils import utils
+import requests, logging, json, os
 
 MESSAGE = "Some Error Occured, Please Try Again."
 USER_MESSAGE = "Incorrect User Id Used, Please Try Again."
@@ -16,7 +13,6 @@ JSON_DATA = 'application/json'
 METHOD_ERROR = "Incorrect Method Used, Please Try Again."
 
 def all_posts(request):
-    
     if request.method == 'GET' or request.method == 'POST':
         
         try:
