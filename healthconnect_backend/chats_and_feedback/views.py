@@ -21,7 +21,7 @@ def post_feedback(request, user_id):
             param = user_id
             user_id = request.session.get('user_id')
             
-            if user_id != param and user_id != None:
+            if user_id is not param and user_id is not None:
                 
                 jwt_token = request.session.get('access_token')
                 token_type = request.session.get('token_type')
@@ -46,19 +46,18 @@ def post_feedback(request, user_id):
 
                         return api_response.get('data')
                 
-                logging.error(f"Error Occured When Requesting FeedBack Data: {e}: User Id: {user_id}")
-                return None
+                logging.error(f"Error Occured When Requesting FeedBack Data, User Id: {user_id}")
             
             else:
-                raise PermissionDenied(USER_MESSAGE)
+                messages.error(request, USER_MESSAGE)
       
         except requests.RequestException as e:
-            logging.error(f"Error Occured When Requesting FeedBack Data: {e}: User Id: {user_id}")
-            return None
+            logging.error(f"Error Occured When Requesting FeedBack Data: {e}, User Id: {user_id}")
 
     else:
         messages.error(request, METHOD_ERROR)
-        return None
+    
+    return None
 
 
 def user_feedback(request, user_id):
@@ -73,7 +72,7 @@ def user_feedback(request, user_id):
             param = user_id
             user_id = request.session.get('user_id')
             
-            if user_id != param and user_id != None:
+            if user_id is not param and user_id is not None:
                 
                 jwt_token = request.session.get('access_token')
                 token_type = request.session.get('token_type')
@@ -94,54 +93,55 @@ def user_feedback(request, user_id):
 
                         return api_response.get('data')
                 
-                logging.error(f"Error Occured When Requesting FeedBack Data: {e}: User Id: {user_id}")
-                return JsonResponse({'status': 'error', 'message': MESSAGE})
+                logging.error(f"Error Occured When Requesting FeedBack Data, User Id: {user_id}")
             
             else:
-                raise PermissionDenied(USER_MESSAGE)
+                messages.error(request, USER_MESSAGE)
       
         except requests.RequestException as e:
-            logging.error(f"Error Occured When Requesting FeedBack Data: {e}: User Id: {user_id}")
-            return JsonResponse({'status': 'error', 'message': MESSAGE})
+            logging.error(f"Error Occured When Requesting FeedBack Data: {e}, User Id: {user_id}")
 
     else:
         messages.error(request, METHOD_ERROR)
-        return JsonResponse({'status': 'error', 'message': MESSAGE})
+        
+    return JsonResponse({'status': 'error', 'message': MESSAGE})
 
 
-def chat_messages(request, user_id, messages):
+def chat_messages(request, consultation_id, sender_id = None):
     try:
-        param = user_id
         user_id = request.session.get('user_id')
 
-        if user_id != param and user_id is not None:
+        if user_id is not None:
             jwt_token = request.session.get('access_token')
             token_type = request.session.get('token_type')
 
-            api_url = os.getenv("API_ENDPOINT") + f'/chats/chat_messages/{user_id}'
+            api_url = os.getenv("API_ENDPOINT") + f'/chats/chat_messages/{consultation_id}'
 
-            headers = {
-                "Content-Type": JSON_DATA,
-                "Authorization": f"{token_type} {jwt_token}",
-            }
-
+            headers = { "Content-Type": JSON_DATA, "Authorization": f"{token_type} {jwt_token}", }
             response = requests.post(api_url, headers=headers)
 
             if response.status_code == 200:
                 api_response = response.json()
+                
                 if api_response.get('status') == "success":
                     return api_response.get('data')
+            
+            if response.json().get('status') == "error":
+                if request.session.get('is_doctor'):
+                    return create_chat(request, consultation_id, "Welcome to our consultation chat. I'm here to assist you. It's great to connect with you! When you have some questions, concerns, or if there's anything you'd like to discuss, feel free to let me know. Your health is my priority.", sender_id)
 
-            logging.error(f"Error Occurred When Requesting Chat Data: {response.text}, User Id: {user_id}")
-            return None
+                else:
+                    return create_chat(request, consultation_id, "Good Day Dr, Please view my Disease condition details and give me detailed information on the steps I need to take to get better.", sender_id)
+                    
+            logging.error(f"Error Occurred When Reading Chat Data: {response.text}, User Id: {user_id}")
 
         else:
             messages.error(request, USER_MESSAGE)
-            return None
 
     except requests.RequestException as e:
-        logging.error(f"Error Occurred When Requesting Chat Data: {e}, User Id: {user_id}")
-        return None
+        logging.error(f"Error Occurred When Reading Chat Data: {e}, User Id: {user_id}")
+    
+    return None
 
 
 def create_chat(request, consultation_id, message, sender_id = None):
@@ -157,11 +157,7 @@ def create_chat(request, consultation_id, message, sender_id = None):
             post_data = {  "message": message, }
             post_data = json.dumps(post_data, indent=4, ensure_ascii=False)
 
-            headers = {
-                "Content-Type": JSON_DATA,
-                "Authorization": f"{token_type} {jwt_token}",
-            }
-
+            headers = { "Content-Type": JSON_DATA, "Authorization": f"{token_type} {jwt_token}", }
             response = requests.post(api_url, data=post_data, headers=headers)
 
             if response.status_code == 200:
@@ -169,16 +165,16 @@ def create_chat(request, consultation_id, message, sender_id = None):
                 if api_response.get('status') == "success":
                     return api_response.get('data')
 
-            logging.error(f"Error Occurred When Requesting Chat Data: {response.text}, User Id: {user_id}")
-            return None
+            logging.error(f"Creating Chat Data: {response.text}, User Id: {user_id}")
 
         else:
             messages.error(request, USER_MESSAGE)
-            return None
 
     except requests.RequestException as e:
-        logging.error(f"Error Occurred When Requesting Chat Data: {e}, User Id: {user_id}")
-        return None
+        logging.error(f"Creating Chat Data: {e}, User Id: {user_id}")
+    
+    return None
+
 
 def whatsapp(request):
 
@@ -196,9 +192,8 @@ def whatsapp(request):
 
         print(message.sid)
 
-        return redirect('admin_ui')
+        return redirect('home')
 
 
 def meeting(request):
     return render(request, 'consultation/videocall.html', {'name': request.user.first_name + " " + request.user.last_name})
-
