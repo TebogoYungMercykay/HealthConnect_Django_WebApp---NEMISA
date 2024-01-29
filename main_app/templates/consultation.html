@@ -645,10 +645,14 @@
                             return item.textContent;
                         });
 
-                        document.getElementById('hiddenNoOfSymptoms').value = selectedWordsArray.length;
-                        document.getElementById('hiddenSymptoms').value = JSON.stringify(selectedWordsArray);
-                    
-                        document.getElementById('hiddenForm').submit();
+                        if (selectedWordsArray.length > 0) {
+                            document.getElementById('hiddenNoOfSymptoms').value = selectedWordsArray.length;
+                            document.getElementById('hiddenSymptoms').value = JSON.stringify(selectedWordsArray);
+
+                            document.getElementById('hiddenForm').submit();
+                        } else {
+                            alert('Please select At Least One Symptom before Predicting.');
+                        }
                     });
                     
                     generateWordList();
