@@ -201,7 +201,7 @@ def savedata(request, user_id):
                 return redirect(reverse('patient_profile', args=[user_id]))            
             
             else:
-                raise PermissionDenied("Incorrect User Id used.")
+                messages.error(request, "Incorrect User Id used.")
 
         except requests.RequestException as e:
             logging.error(f"Error Occured When Updating User Data: {e}: User Id: {user_id}")
