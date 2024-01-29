@@ -198,3 +198,78 @@
 #hiddenForm, #make_consultation {
     display: block;
 }
+
+/* # Services Section */
+
+#service_information .service-item {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#service_information .img img {
+    transition: 0.6s;
+    border-radius: 8px;
+}
+
+#service_information .details {
+    padding: 50px 30px;
+    margin: -100px 30px 0 30px;
+    transition: all ease-in-out 0.3s;
+    background: var(--color-white);
+    position: relative;
+    background: rgba(var(--color-white-rgb), 0.9);
+    text-align: center;
+    border-radius: 8px;
+    box-shadow: 0px 0 25px rgba(var(--color-black-rgb), 0.1);
+}
+
+#service_information .details .icon {
+    margin: 0;
+    width: 72px;
+    height: 72px;
+    background: var(--color-primary);
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    color: var(--color-white);
+    font-size: 28px;
+    transition: ease-in-out 0.3s;
+    position: absolute;
+    top: -36px;
+    left: calc(50% - 36px);
+    border: 6px solid var(--color-white);
+}
+
+#service_information .details h3 {
+    color: var(--color-default);
+    font-weight: 700;
+    margin: 10px 0 15px 0;
+    font-size: 22px;
+    transition: ease-in-out 0.3s;
+}
+
+#service_information .details p {
+    line-height: 24px;
+    font-size: 14px;
+    margin-bottom: 0;
+}
+
+#service_information .service-item:hover .details h3 {
+    color: var(--color-primary);
+}
+
+#service_information .service-item:hover .details .icon {
+    background: var(--color-white);
+    border: 2px solid var(--color-primary);
+}
+
+#service_information .service-item:hover .details .icon i {
+    color: var(--color-primary);
+}
+
+#service_information .service-item:hover .img img {
+    transform: scale(1.2);
+}
