@@ -7,28 +7,28 @@ const baseEvents = [
     name: "Health Seminar",
     description: "Learn about maintaining a healthy lifestyle.",
     date: "01/12/2024",
-    type: "health_event",
+    type: "event",
   },
   {
     id: "9jU6g6f",
     name: "Online Consultation",
     description: "Virtual consultation with health experts.",
     date: "02/01/2024",
-    type: "health_event",
+    type: "event",
   },
   {
     id: "0g5G6ja",
     name: "Fitness Class",
     description: "Join us for a fun fitness session.",
     date: "03/15/2024",
-    type: "health_event",
+    type: "event",
   },
   {
     id: "y2u7UaF",
     name: "Healthy Cooking Workshop",
     description: "Learn to prepare nutritious meals.",
     date: "05/20/2024",
-    type: "health_event",
+    type: "event",
   }
 ];
 
@@ -97,34 +97,35 @@ $(document).ready(function() {
 			everyYear: !0
 		}, {
 			id: "in8bha4",
-			name: "Create Consultation and Posts to be Displayed on the Website",
+			name: "View Blog Posts",
+			description: "Create Consultation and Posts to be Displayed on the Website",
 			date: today,
 			type: "event"
 		}, {
-			id: "in8bha4",
+			id: "d8jai7s",
 			name: "Nemisa Datathon",
 			description: "Join us for the Nemisa Datathon Project Demo in East London.",
 			date: "02/21/2024",
-			type: "event",
+			type: "holiday",
 		}, {
-			id: "in8bha4",
+			id: "d8jai7s",
 			name: "Nemisa Datathon",
 			description: "Join us for the Nemisa Datathon Project Demo in East London.",
 			date: "02/22/2024",
-			type: "event",
+			type: "holiday",
 		}, {
-			id: "in8bha4",
+			id: "d8jai7s",
 			name: "Nemisa Datathon",
 			description: "Join us for the Nemisa Datathon Project Demo in East London.",
 			date: "02/23/2024",
-			type: "event",
+			type: "holiday",
 		}, {
-			id: "in8bha4",
+			id: "d8jai7s",
 			name: "Nemisa Datathon",
 			description: "Join us for the Nemisa Datathon Project Demo in East London.",
 			date: "02/24/2024",
-			type: "event",
-		}, ]
+			type: "holiday",
+		}, ].concat(events)
 	});
 	$("[data-set-theme]").click(function(b) {
 		a(b.target);
