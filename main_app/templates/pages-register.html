@@ -5,7 +5,7 @@
     <script>
         {% if request.session.user_id and request.session.is_authenticated %}
             {% if request.session.is_admin %}
-                window.location.href = "{% url 'admin_page' %}";
+                window.location.href = "{% url 'dashboard' %}";
             {% elif request.session.is_doctor or request.session.is_patient %}
                 window.location.href = "{% url 'all_posts' %}";
             {% else %}
