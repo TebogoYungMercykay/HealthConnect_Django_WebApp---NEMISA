@@ -198,6 +198,167 @@ def get_symptoms():
     ])
 
 
+def news_retrieval_error():
+    return [
+        {
+            "source": {
+                "id": None,
+                "name": "Netmeds.com"
+            },
+            "author": "Sowmya Binu",
+            "title": "Diabetes Care: Manage Blood Sugar Levels With Smart Carbohydrate Choices - Netmeds.com",
+            "description": "Read about carbohydrates and diabetes type 2 and how this ailment can be managed and blood sugar levels be kept in check by smart carbohydrate choices in daily life in the feature.",
+            "url": "https://www.netmeds.com/health-library/post/diabetes-care-manage-blood-sugar-levels-with-smart-carbohydrate-choices",
+            "urlToImage": "https://www.netmeds.com/images/cms/magefan_blog/nmslite/1706519863_Diabetes-care_480x180.jpg",
+            "publishedAt": "2024-01-29T18:30:00Z",
+            "content": "Diabetes is a chronic metabolic disorder categorised by elevated blood sugar levels and requires careful management to avert complications and maintain overall health. One key aspect of diabetes mana… [+4961 chars]"
+        },
+        {
+            "source": {
+                "id": None,
+                "name": "YouTube"
+            },
+            "author": None,
+            "title": "Connection between Covid & diabetes - WSMV 4 Nashville",
+            "description": "As Covid cases exploded across the country, doctors realized another virus was skyrocketing at the same time.   For more Local News from WSMV:  https://www.w...",
+            "url": "https://www.youtube.com/watch?v=8zyuP8ETIzo",
+            "urlToImage": "https://i.ytimg.com/vi/8zyuP8ETIzo/maxresdefault.jpg",
+            "publishedAt": "2024-01-29T18:28:13Z",
+            "content": None
+        },
+        {
+            "source": {
+                "id": None,
+                "name": "Futurity: Research News"
+            },
+            "author": "National University of Singapore",
+            "title": "Mosquito protein could block dengue virus infection - Futurity: Research News",
+            "description": "A protein found in a mosquito's exoskeleton could offer protection against dengue virus, a new study shows.",
+            "url": "https://www.futurity.org/mosquitos-protein-dengue-fever-viruses-317214/",
+            "urlToImage": "https://www.futurity.org/wp/wp-content/uploads/2024/01/mosquito-dengue-1600.jpg",
+            "publishedAt": "2024-01-29T18:27:02Z",
+            "content": "Despite its role as a carrier of the dengue virus, the female Aedes aegypti mosquito could possess the key to discovering new anti-viral strategies to control dengue virus infection, researchers repo… [+3444 chars]"
+        },
+        {
+            "source": {
+                "id": None,
+                "name": "YouTube"
+            },
+            "author": None,
+            "title": "How to navigate the different symptoms during cold and flu season - ABC11",
+            "description": "The are certain questions to ask yourself to understand what you're body is dealing with.Story: https://abc11.com/covid-symptoms-common-cold-flu-season-how-t...",
+            "url": "https://www.youtube.com/watch?v=5lri9KNmZlU",
+            "urlToImage": "https://i.ytimg.com/vi/5lri9KNmZlU/maxresdefault.jpg?sqp=-oaymwEmCIAKENAF8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGGUgZShlMA8=&rs=AOn4CLAdYpZR9g26zfL9BNlG03DU_I0d8g",
+            "publishedAt": "2024-01-29T18:22:38Z",
+            "content": None
+        },
+        {
+            "source": {
+                "id": None,
+                "name": "Nature.com"
+            },
+            "author": None,
+            "title": "Signs of 'transmissible' Alzheimer's seen in people who received growth hormone - Nature.com",
+            "description": "The findings support a controversial hypothesis that proteins related to the neurodegenerative disease can be ‘seeded’ in the brain through material taken from cadavers.",
+            "url": "https://www.nature.com/articles/d41586-024-00268-5",
+            "urlToImage": "https://media.nature.com/lw1024/magazine-assets/d41586-024-00268-5/d41586-024-00268-5_26671396.jpg",
+            "publishedAt": "2024-01-29T17:18:19Z",
+            "content": None
+        },
+        {
+            "source": {
+                "id": None,
+                "name": "[Removed]"
+            },
+            "author": None,
+            "title": "[Removed]",
+            "description": "[Removed]",
+            "url": "https://removed.com",
+            "urlToImage": None,
+            "publishedAt": "1970-01-01T00:00:00Z",
+            "content": "[Removed]"
+        },
+        {
+            "source": {
+                "id": None,
+                "name": "NDTV News"
+            },
+            "author": None,
+            "title": "Haircare Tips: Nutritionist Explains Why Certain Vitamins Are Essential For Hair Health - NDTV",
+            "description": "It's recommended to maintain a balanced diet, consult a healthcare professional, and follow their advice for personalised guidance on vitamin intake for hair health.",
+            "url": "https://www.ndtv.com/health/haircare-tips-nutritionist-explains-why-certain-vitamins-are-essential-for-hair-health-4955316",
+            "urlToImage": "https://c.ndtvimg.com/2022-06/p0hm464_haircare650_625x300_30_June_22.jpg",
+            "publishedAt": "2024-01-29T15:33:00Z",
+            "content": "Vitamin B5 strengthens hair follicles, reduces hair loss, and adds shine and softness to the hair strands\r\nVitamins play a crucial role in maintaining overall hair health. Nutritionist Anjali Mukerje… [+2467 chars]"
+        },
+        {
+            "source": {
+                "id": None,
+                "name": "The Indian Express"
+            },
+            "author": "Lifestyle Desk",
+            "title": "Does switching from polished to unpolished rice control diabetes and weight? - The Indian Express",
+            "description": "For weight management and diabetes control, consuming foods low in calories, fat, and sugar is key. This is where fibre shines, said Dr Vikas Jindal, consultant, dept of gastroenterology, CK Birla Hospital, Delhi",
+            "url": "https://indianexpress.com/article/lifestyle/life-style/switch-polished-unpolished-rice-benefits-control-diabetes-weight-nutrients-how-to-cook-9123061/",
+            "urlToImage": "https://images.indianexpress.com/2024/01/rice_types_1600_freepik.jpg",
+            "publishedAt": "2024-01-29T15:32:59Z",
+            "content": "There are so many theories floating around that the consumption of polished rice may not be good for individuals who are watching their weight or trying to lower their blood sugar levels. As such, ce… [+4309 chars]"
+        },
+        {
+            "source": {
+                "id": None,
+                "name": "[Removed]"
+            },
+            "author": None,
+            "title": "[Removed]",
+            "description": "[Removed]",
+            "url": "https://removed.com",
+            "urlToImage": None,
+            "publishedAt": "1970-01-01T00:00:00Z",
+            "content": "[Removed]"
+        },
+        {
+            "source": {
+                "id": None,
+                "name": "[Removed]"
+            },
+            "author": None,
+            "title": "[Removed]",
+            "description": "[Removed]",
+            "url": "https://removed.com",
+            "urlToImage": None,
+            "publishedAt": "1970-01-01T00:00:00Z",
+            "content": "[Removed]"
+        },
+        {
+            "source": {
+                "id": None,
+                "name": "KCRA Sacramento"
+            },
+            "author": None,
+            "title": "Avian flu is devastating farms in California's 'Egg Basket' as outbreaks roil poultry industry - KCRA Sacramento",
+            "description": "Last month, Mike Weber got the news every poultry farmer fears: His chickens tested positive for avian flu.",
+            "url": "https://www.kcra.com/article/avian-flu-is-devastating-farms-in-californias-egg-basket-as-outbreaks-roil-poultry-industry/46569691",
+            "urlToImage": "https://kubrick.htvapps.com/htv-prod-media.s3.amazonaws.com/images/gettyimages-1408473972-65b7bccc70eb1.jpg?crop=1.00xw:0.846xh;0,0.0711xh&resize=1200:*",
+            "publishedAt": "2024-01-29T15:05:00Z",
+            "content": "PETALUMA, Calif. —Last month, Mike Weber got the news every poultry farmer fears: His chickens tested positive for avian flu.\r\nFollowing government rules, Weber's company, Sunrise Farms, had to slaug… [+5546 chars]"
+        },
+        {
+            "source": {
+                "id": None,
+                "name": "CNET"
+            },
+            "author": None,
+            "title": "What's Causing the Ringing in Your Ears and How to Stop It - CNET",
+            "description": "That ringing in your ears is called tinnitus, and there are ways to make it less bothersome.",
+            "url": "https://www.cnet.com/health/medical/whats-causing-the-ringing-in-your-ears-and-how-to-stop-it/",
+            "urlToImage": "https://www.cnet.com/a/img/resize/eca08691fb77e5ee6f05819765b73d442253127b/hub/2024/01/25/54176717-d34e-44af-a3ac-c342396cf11e/gettyimages-1777374318.jpg?auto=webp&fit=crop&height=675&width=1200",
+            "publishedAt": "2024-01-29T15:00:00Z",
+            "content": "A ringing in your ears that comes and goes isn't just an annoyance that makes it difficult to concentrate, it could be a sign that you have tinnitus. Tinnitus can sound like a soft or loud buzzing, w… [+5113 chars]"
+        }
+    ]
+
+
 def post_retrieval_error():
     shuffled_image = shuffled_images()
     
