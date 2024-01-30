@@ -67,16 +67,6 @@ def contact(request):
 
     else:
         return redirect('home')
-    
-    
-def admin_page(request):
-
-    if request.method == 'GET':
-
-        return render(request, 'admin-dashboard.html')
-
-    else:
-        return redirect('home')
 
  
 def register(request):
@@ -98,8 +88,3 @@ def login(request):
     else:
         return redirect('home')
 
-    
-def login_temp(request):
-
-    print("Form Submists Successfully")
-    return redirect('home')
