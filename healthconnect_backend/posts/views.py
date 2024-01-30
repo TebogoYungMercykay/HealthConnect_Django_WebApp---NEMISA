@@ -21,13 +21,14 @@ def all_posts(request):
         
         try:
             user_id = request.session.get('user_id')
+            limit = 8
             
             if user_id is not None:
                 
                 jwt_token = request.session.get('access_token')
                 token_type = request.session.get('token_type')
 
-                api_url = os.getenv("API_ENDPOINT") + '/posts/all_posts?limit=8'
+                api_url = os.getenv("API_ENDPOINT") + f'/posts/all_posts?limit={limit}'
 
                 headers = {
                     "Content-Type": JSON_DATA,
@@ -44,6 +45,72 @@ def all_posts(request):
                         api_response_data = api_response.get('data')
                         shuffled_images = utils.shuffled_images()
                         
+                        for index, post in enumerate(api_response_data):
+                            post_date = post["Post"]["created_at"]
+                            post["Post"]["created_at"] = utils.format_date(post_date)
+
+                            owner_date = post["Post"]["owner"]["created_at"]
+                            post["Post"]["owner"]["created_at"] = utils.format_date(owner_date)
+
+                            post["Post"]["image_link"] = shuffled_images[index % len(shuffled_images)]
+                        
+                        return render(request, POSTS_TEMPLATE, { 'all_posts': api_response_data} )
+                
+                logging.error(f"Error Occured When Requesting Posts Data, User Id: {user_id}")
+            
+            else:
+                messages.error(request, USER_MESSAGE)
+      
+        except requests.RequestException as e:
+            logging.error(f"Error Occured When Requesting Posts Data: {e}, User Id: {user_id}")
+
+    else:
+        messages.error(request, METHOD_ERROR)
+        
+    return render(request, POSTS_TEMPLATE, { 'all_posts': utils.post_retrieval_error()} )
+
+
+def search_posts(request):
+    
+    request.session['prediction_successful'] = False
+    request.session['message_successful'] = False
+    
+    if request.method == 'GET' or request.method == 'POST':
+        
+        if not request.POST['search']:
+            return redirect(reverse('all_posts'))
+            
+        try:
+            user_id = request.session.get('user_id')
+            limit = 8
+            search = request.POST['search']
+            
+            if user_id is not None:
+                
+                jwt_token = request.session.get('access_token')
+                token_type = request.session.get('token_type')
+
+                api_url = os.getenv("API_ENDPOINT") + f'/posts/all_posts?search={search}&limit={limit}'
+
+                headers = {
+                    "Content-Type": JSON_DATA,
+                    "Authorization": f"{token_type} {jwt_token}",
+                }
+
+                response = requests.post(api_url, headers=headers)
+                response.raise_for_status()
+                
+                if response.status_code == 200:
+                    api_response = response.json()
+                    if api_response.get('status') == "success":
+
+                        api_response_data = api_response.get('data')
+                        
+                        if len(api_response_data) == 0:
+                            redirect(reverse('all_posts'))
+
+                        shuffled_images = utils.shuffled_images()
+                            
                         for index, post in enumerate(api_response_data):
                             post_date = post["Post"]["created_at"]
                             post["Post"]["created_at"] = utils.format_date(post_date)
