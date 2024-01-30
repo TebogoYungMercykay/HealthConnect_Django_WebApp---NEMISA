@@ -224,7 +224,7 @@
                                     <hr class="dropdown-divider">
                                 </li>
                                 <li>
-                                    <a class="dropdown-item d-flex align-items-center" href="{% url 'get_user' %}">
+                                    <a class="dropdown-item d-flex align-items-center" href="#">
                                         <i class="bi bi-person"></i>
                                         <span>My Profile</span>
                                     </a>
@@ -233,7 +233,7 @@
                                     <hr class="dropdown-divider">
                                 </li>
                                 <li>
-                                    <a class="dropdown-item d-flex align-items-center" href="{% url 'get_user' %}">
+                                    <a class="dropdown-item d-flex align-items-center" href="#">
                                         <i class="bi bi-gear"></i>
                                         <span>Account Settings</span>
                                     </a>
@@ -274,13 +274,7 @@
                 <nav id="navbar" class="navbar order-last order-lg-0">
                     <ul>
                         <li>
-                            <a class="nav-link scrollto" href="#">Doctors</a>
-                        </li>
-                        <li>
-                            <a class="nav-link scrollto" href="#">Diseases</a>
-                        </li>
-                        <li>
-                            <a class="nav-link scrollto" href="#">Patients</a>
+                            <a class="nav-link scrollto" href="{% url 'health_news' %}">News</a>
                         </li>
                         <li>
                             <a class="nav-link scrollto" href="#">Dashboard</a>
