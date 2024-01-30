@@ -1,0 +1,77 @@
+:root {
+
+    /* Fonts */
+    --font-default: 'Open Sans', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    --font-primary: 'Source Sans Pro', sans-serif;
+    --font-secondary: 'Poppins', sans-serif;
+  
+    /* Colors */
+    /* The *-rgb color names are simply the RGB converted value of the corresponding color for use in the rgba() function */
+  
+    /* Default text color */
+    --color-default: #1a1f24;
+    --color-default-rgb: 26, 31, 36;
+  
+    /* Defult links color */
+    --color-links: #0ea2bd;
+    --color-links-hover: #1ec3e0;
+  
+    /* Primay colors */
+    --color-primary: #0ea2bd;
+    --color-primary-light: #1ec3e0;
+    --color-primary-dark: #0189a1;
+  
+    --color-primary-rgb: 14, 162, 189;
+    --color-primary-light-rgb: 30, 195, 224;
+    --color-primary-dark-rgb: 1, 137, 161;
+  
+    /* Secondary colors */
+    --color-secondary: #485664;
+    --color-secondary-light: #8f9fae;
+    --color-secondary-dark: #3a4753;
+  
+    --color-secondary-rgb: 72, 86, 100;
+    --color-secondary-light-rgb: 143, 159, 174;
+    --color-secondary-dark-rgb: 58, 71, 83;
+  
+    /* General colors */
+    --color-blue: #0d6efd;
+    --color-blue-rgb: 13, 110, 253;
+  
+    --color-indigo: #6610f2;
+    --color-indigo-rgb: 102, 16, 242;
+  
+    --color-purple: #6f42c1;
+    --color-purple-rgb: 111, 66, 193;
+  
+    --color-pink: #f3268c;
+    --color-pink-rgb: 243, 38, 140;
+  
+    --color-red: #df1529;
+    --color-red-rgb: 223, 21, 4;
+  
+    --color-orange: #fd7e14;
+    --color-orange-rgb: 253, 126, 20;
+  
+    --color-yellow: #ffc107;
+    --color-yellow-rgb: 255, 193, 7;
+  
+    --color-green: #059652;
+    --color-green-rgb: 5, 150, 82;
+  
+    --color-teal: #20c997;
+    --color-teal-rgb: 32, 201, 151;
+  
+    --color-cyan: #0dcaf0;
+    --color-cyan-rgb: 13, 202, 240;
+  
+    --color-white: #ffffff;
+    --color-white-rgb: 255, 255, 255;
+  
+    --color-gray: #6c757d;
+    --color-gray-rgb: 108, 117, 125;
+  
+    --color-black: #000000;
+    --color-black-rgb: 0, 0, 0;
+    
+  }
