@@ -1,45 +1,57 @@
 let defaultTheme = 1;
 
 let today = new Date();
+const baseEvents = [
+  {
+    id: "imwyx6S",
+    name: "Health Seminar",
+    description: "Learn about maintaining a healthy lifestyle.",
+    date: "01/12/2024",
+    type: "health_event",
+  },
+  {
+    id: "9jU6g6f",
+    name: "Online Consultation",
+    description: "Virtual consultation with health experts.",
+    date: "02/01/2024",
+    type: "health_event",
+  },
+  {
+    id: "0g5G6ja",
+    name: "Fitness Class",
+    description: "Join us for a fun fitness session.",
+    date: "03/15/2024",
+    type: "health_event",
+  },
+  {
+    id: "y2u7UaF",
+    name: "Healthy Cooking Workshop",
+    description: "Learn to prepare nutritious meals.",
+    date: "05/20/2024",
+    type: "health_event",
+  }
+];
 
-let events = [{
-	id: "imwyx6S",
-	name: "Event #3",
-	description: "Lorem ipsum dolor sit amet.",
-	date: today.getMonth() + 1 + "/18/" + today.getFullYear(),
-	type: "event"
-}, {
-	id: "9jU6g6f",
-	name: "Holiday #1",
-	description: "Lorem ipsum dolor sit amet.",
-	date: today.getMonth() + 1 + "/10/" + today.getFullYear(),
-	type: "holiday"
-}, {
-	id: "0g5G6ja",
-	name: "Event #1",
-	description: "Lorem ipsum dolor sit amet.",
-	date: [today.getMonth() + 1 + "/2/" + today.getFullYear(), today.getMonth() + 1 + "/5/" + today.getFullYear()],
-	type: "event",
-	everyYear: !0
-}, {
-	id: "y2u7UaF",
-	name: "Holiday #3",
-	description: "Lorem ipsum dolor sit amet.",
-	date: today.getMonth() + 1 + "/23/" + today.getFullYear(),
-	type: "holiday"
-}, {
-	id: "dsu7HUc",
-	name: "Birthday #1",
-	description: "Lorem ipsum dolor sit amet.",
-	date: new Date(),
-	type: "birthday"
-}, {
-	id: "dsu7HUc",
-	name: "Birthday #2",
-	description: "Lorem ipsum dolor sit amet.",
-	date: today.getMonth() + 1 + "/27/" + today.getFullYear(),
-	type: "birthday"
-}];
+function getRandomDate(start, end) {
+  return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+}
+
+let events = [];
+
+for (let i = 1; i <= 50; i++) {
+  let startDate = getRandomDate(new Date(2024, 0, 1), new Date(2024, 5, 30));
+  let baseEvent = baseEvents[i % baseEvents.length];
+
+  let event = {
+    id: baseEvent.id,
+    name: baseEvent.name,
+    description: baseEvent.description,
+    date: `${startDate.getMonth() + 1}/${startDate.getDate()}/${startDate.getFullYear()}`,
+    type: "health_event",
+  };
+
+  events.push(event);
+}
 
 let active_events = [];
 
@@ -78,31 +90,41 @@ $(document).ready(function() {
 		titleFormat: "MM",
 		calendarEvents: [{
 			id: "d8jai7s",
-			name: "Author's Birthday",
-			description: "Author's note: Thank you for using EvoCalendar! :)",
-			date: "February/15/1999",
+			name: "Marketing and Management",
+			description: "Admin's Note, Thank you for using our Application! :)",
+			date: "February/18/2024",
 			type: "birthday",
 			everyYear: !0
 		}, {
-			id: "sKn89hi",
-			name: "1-Week Coding Bootcamp",
-			description: "Lorem ipsum dolor sit amet.",
-			badge: "5-day event",
-			date: [today.getMonth() + 1 + "/" + week_date.start + "/" + today.getFullYear(), today.getMonth() + 1 + "/" + week_date.end + "/" + today.getFullYear()],
-			type: "event",
-			everyYear: !0
-		}, {
 			id: "in8bha4",
-			name: "Holiday #2",
-			description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-			date: today,
-			type: "holiday"
-		}, {
-			id: "in8bha4",
-			name: "Event #2",
+			name: "Create Consultation and Posts to be Displayed on the Website",
 			date: today,
 			type: "event"
-		}]
+		}, {
+			id: "in8bha4",
+			name: "Nemisa Datathon",
+			description: "Join us for the Nemisa Datathon Project Demo in East London.",
+			date: "02/21/2024",
+			type: "event",
+		}, {
+			id: "in8bha4",
+			name: "Nemisa Datathon",
+			description: "Join us for the Nemisa Datathon Project Demo in East London.",
+			date: "02/22/2024",
+			type: "event",
+		}, {
+			id: "in8bha4",
+			name: "Nemisa Datathon",
+			description: "Join us for the Nemisa Datathon Project Demo in East London.",
+			date: "02/23/2024",
+			type: "event",
+		}, {
+			id: "in8bha4",
+			name: "Nemisa Datathon",
+			description: "Join us for the Nemisa Datathon Project Demo in East London.",
+			date: "02/24/2024",
+			type: "event",
+		}, ]
 	});
 	$("[data-set-theme]").click(function(b) {
 		a(b.target);
