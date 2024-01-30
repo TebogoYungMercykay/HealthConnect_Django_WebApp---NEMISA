@@ -97,8 +97,14 @@ $(document).ready(function() {
 			everyYear: !0
 		}, {
 			id: "in8bha4",
-			name: "View Blog Posts",
-			description: "Create Consultation and Posts to be Displayed on the Website",
+			name: "Blog Posts",
+			description: "Create Posts to be Displayed on the Website",
+			date: today,
+			type: "event"
+		}, {
+			id: "in8bha4",
+			name: "Consultation",
+			description: "Perform a self-diagnosis using our Disease Prediction Tool and schedule a consultation with our specialized medical practitioners.",
 			date: today,
 			type: "event"
 		}, {
