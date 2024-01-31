@@ -10,7 +10,7 @@
     <head>
         <meta charset="utf-8">
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
-        <title>News</title>
+        <title>Articles</title>
         <meta content="" name="description">
         <meta content="" name="keywords">
         <!-- Favicons -->
@@ -207,7 +207,7 @@
                                 {% else %}
                                     <img src="{% static 'img/profile-img.jpg' %}" alt="Profile" class="rounded-circle">
                                 {% endif %}
-                                <span class="d-none d-md-block dropdown-toggle ps-2">{{ request.session.name }}</span>
+                                <span class="d-none d-md-block dropdown-toggle ps-2">{{ request.session.name }} </span>
                             </a>
                             <!-- End Profile Iamge Icon -->
                             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
@@ -225,7 +225,7 @@
                                     <hr class="dropdown-divider">
                                 </li>
                                 <li>
-                                    <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <a class="dropdown-item d-flex align-items-center" href="{% url 'get_user' %}">
                                         <i class="bi bi-person"></i>
                                         <span>My Profile</span>
                                     </a>
@@ -234,7 +234,7 @@
                                     <hr class="dropdown-divider">
                                 </li>
                                 <li>
-                                    <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <a class="dropdown-item d-flex align-items-center" href="{% url 'get_user' %}">
                                         <i class="bi bi-gear"></i>
                                         <span>Account Settings</span>
                                     </a>
@@ -275,13 +275,19 @@
                 <nav id="navbar" class="navbar order-last order-lg-0">
                     <ul>
                         <li>
-                            <a class="nav-link scrollto" href="{% url 'diseaseinfos' %}">Diseases</a>
+                            <a class="nav-link scrollto" href="{% url 'all_posts' %}">Blogs</a>
                         </li>
                         <li>
-                            <a class="nav-link scrollto" href="#">News</a>
+                            <a class="nav-link scrollto active" href="#">Articles</a>
                         </li>
                         <li>
-                            <a class="nav-link scrollto" href="{% url 'dashboard' %}">Dashboard</a>
+                            <a class="nav-link scrollto" href="{% url 'consultation' %}">Consultations</a>
+                        </li>
+                        <li>
+                            <a class="nav-link scrollto" href="{% url 'calendar' %}">Schedule</a>
+                        </li>
+                        <li>
+                            <a class="nav-link scrollto" href="{% url 'contact' %}">Contact</a>
                         </li>
                     </ul>
                     <i class="bi bi-list mobile-nav-toggle"></i>
