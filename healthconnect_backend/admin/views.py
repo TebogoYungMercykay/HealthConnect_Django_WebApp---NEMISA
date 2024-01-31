@@ -19,7 +19,13 @@ def dashboard(request):
     
     if request.method == 'GET':
 
-        return render(request, 'admin-dashboard.html')
+        return render(request, 'admin-dashboard.html', {
+            'cards': utils.cards(),
+            'recent_activity': utils.recent_activity(),
+            'top_selling_medication': utils.top_selling_medication(),
+            'recent_consultations': utils.recent_consultations()
+            }
+        )
 
     else:
         return redirect('home')
