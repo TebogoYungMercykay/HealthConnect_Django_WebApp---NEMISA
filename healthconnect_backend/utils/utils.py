@@ -5,6 +5,7 @@ from dateutil import parser
 
 TEMP_EMAIL = "temp@gmail.com"
 TEMP_DATETIME = "Jan 29, 2024"
+DOCTOR = "Medical Doctor"
 
 def shuffled_images():
     posts_images = [
@@ -537,70 +538,70 @@ def cards():
 def recent_activity():
     recent_activity = [
         {
-            "time": f"{random.randint(5, 30)} mins ago",
+            "time": f"{random.randint(2, 9)} mins ago",
             "badge": "text-success",
             "type": "update",
             "link": "#",
             "text": "Posted a new update on the feed",
         },
         {
-            "time": f"{random.randint(2, 10)} hrs ago",
+            "time": f"{random.randint(2, 9)} mins ago",
             "badge": "text-danger",
             "type": "consultation",
             "link": "#",
             "text": "Had a consultation with Dr. Smith",
         },
         {
-            "time": f"{random.randint(4, 9)} hrs ago",
+            "time": f"{random.randint(4, 9)} mins ago",
             "badge": "text-primary",
             "type": "health tip",
             "link": "#",
             "text": "Shared a health tip on the feed",
         },
         {
-            "time": f"{random.randint(2, 6)} hrs ago",
+            "time": f"{random.randint(2, 6)} mins ago",
             "badge": "text-info",
             "type": "follow-up consultation",
             "link": "#",
             "text": "Scheduled a follow-up consultation",
         },
         {
-            "time": f"{random.randint(5, 9)} hrs ago",
+            "time": f"{random.randint(5, 9)} mins ago",
             "badge": "text-warning",
             "type": "disease post",
             "link": "#",
             "text": "Liked a disease post on the feed",
         },
         {
-            "time": f"{random.randint(5, 30)} hrs ago",
+            "time": f"{random.randint(2, 9)} mins ago",
             "badge": "text-muted",
             "type": "virtual consultation",
             "link": "#",
             "text": "Attended a virtual consultation",
         },
         {
-            "time": f"{random.randint(2, 15)} hrs ago",
+            "time": f"{random.randint(2, 9)} mins ago",
             "badge": "text-success",
             "type": "update",
             "link": "#",
             "text": "Posted another update on the feed",
         },
         {
-            "time": f"{random.randint(1, 8)} hrs ago",
+            "time": f"{random.randint(1, 8)} mins ago",
             "badge": "text-warning",
             "type": "discussion",
             "link": "#",
             "text": "Participated in a discussion",
         },
         {
-            "time": f"{random.randint(3, 12)} hrs ago",
+            "time": f"{random.randint(3, 6)} mins ago",
             "badge": "text-info",
             "type": "tip",
             "link": "#",
             "text": "Shared a useful tip",
         },
         {
-            "time": f"{random.randint(4, 20)} hrs ago",
+            "time": f"{random.randint(2, 8)} mins ago",
             "badge": "text-muted",
             "type": "webinar",
             "link": "#",
@@ -702,7 +703,7 @@ def recent_consultations():
         {
             "consultationId": "#2457",
             "patient": "None",
-            "diseaseName": "None",
+            "diseasename": "None",
             "consultationCostPrice": "R64",
             "status": "Open",
             "badge": "success"
@@ -710,7 +711,7 @@ def recent_consultations():
         {
             "consultationId": "#2147",
             "patient": "None",
-            "diseaseName": "None",
+            "diseasename": "None",
             "consultationCostPrice": "R47",
             "status": "Pending",
             "badge": "warning"
@@ -718,7 +719,7 @@ def recent_consultations():
         {
             "consultationId": "#2049",
             "patient": "None",
-            "diseaseName": "None",
+            "diseasename": "None",
             "consultationCostPrice": "R147",
             "status": "Open",
             "badge": "success"
@@ -726,7 +727,7 @@ def recent_consultations():
         {
             "consultationId": "#2644",
             "patient": "None",
-            "diseaseName": "None",
+            "diseasename": "None",
             "consultationCostPrice": "R67",
             "status": "Closed",
             "badge": "danger"
@@ -734,7 +735,7 @@ def recent_consultations():
         {
             "consultationId": "#2644",
             "patient": "None",
-            "diseaseName": "None",
+            "diseasename": "None",
             "consultationCostPrice": "R165",
             "status": "Open",
             "badge": "success"
@@ -758,8 +759,143 @@ def recent_consultations():
         consultation["patient"] = " ".join([random.choice(["John", "Jane", "Alice", "Bob", "Eva", "Mike", "Sophie", "Chris", "Olivia", "Daniel"]),
                                         random.choice(["Smith", "Doe", "Johnson", "Williams", "Brown", "Jones", "Garcia", "Davis", "Rodriguez", "Martinez"])])
         
-        consultation["diseaseName"] = random.choice(disease_names)
+        consultation["diseasename"] = random.choice(disease_names)
 
     random.shuffle(recent_consultations)
 
     return recent_consultations
+
+
+def admin_table():
+    return [
+        {
+            "id": 1,
+            "diseasename": "Common Cold",
+            "confidence": 75,
+            "consultdoctor": "DOCTOR",
+            "symptoms": ["Fever", "Runny Nose", "Cough"],
+            "no_of_symp": 3,
+            "consultation_date": "2023-03-15",
+            "status": "closed"
+        },
+        {
+            "id": 2,
+            "diseasename": "Flu",
+            "confidence": 80,
+            "consultdoctor": "DOCTOR",
+            "symptoms": ["Fever", "Body Aches", "Fatigue"],
+            "no_of_symp": 3,
+            "consultation_date": "2023-02-20",
+            "status": "active"
+        },
+        {
+            "id": 3,
+            "diseasename": "Allergies",
+            "confidence": 60,
+            "consultdoctor": "DOCTOR",
+            "symptoms": ["Sneezing", "Itchy Eyes"],
+            "no_of_symp": 2,
+            "consultation_date": "2023-04-10",
+            "status": "closed"
+        },
+        {
+            "id": 4,
+            "diseasename": "COVID-19",
+            "confidence": 90,
+            "consultdoctor": "DOCTOR",
+            "symptoms": ["Fever", "Shortness of Breath", "Loss of Taste"],
+            "no_of_symp": 4,
+            "consultation_date": "2023-01-05",
+            "status": "active"
+        },
+        {
+            "id": 5,
+            "diseasename": "Migraine",
+            "confidence": 70,
+            "consultdoctor": "DOCTOR",
+            "symptoms": ["Headache", "Nausea"],
+            "no_of_symp": 2,
+            "consultation_date": "2023-06-02",
+            "status": "closed"
+        },
+        {
+            "id": 6,
+            "diseasename": "Stomach Flu",
+            "confidence": 85,
+            "consultdoctor": "DOCTOR",
+            "symptoms": ["Nausea", "Vomiting", "Diarrhea"],
+            "no_of_symp": 3,
+            "consultation_date": "2023-03-28",
+            "status": "active"
+        },
+        {
+            "id": 7,
+            "diseasename": "Hay Fever",
+            "confidence": 55,
+            "consultdoctor": "DOCTOR",
+            "symptoms": ["Sneezing", "Runny Nose"],
+            "no_of_symp": 2,
+            "consultation_date": "2023-07-15",
+            "status": "closed"
+        },
+        {
+            "id": 8,
+            "diseasename": "Chickenpox",
+            "confidence": 80,
+            "consultdoctor": "DOCTOR",
+            "symptoms": ["Fever", "Itchy Rash"],
+            "no_of_symp": 2,
+            "consultation_date": "2023-09-10",
+            "status": "closed"
+        },
+        {
+            "id": 9,
+            "diseasename": "Diabetes",
+            "confidence": 65,
+            "consultdoctor": "DOCTOR",
+            "symptoms": ["Frequent Urination", "Increased Thirst"],
+            "no_of_symp": 2,
+            "consultation_date": "2023-11-03",
+            "status": "active"
+        },
+        {
+            "id": 10,
+            "diseasename": "Asthma",
+            "confidence": 75,
+            "consultdoctor": "DOCTOR",
+            "symptoms": ["Shortness of Breath", "Wheezing"],
+            "no_of_symp": 2,
+            "consultation_date": "2023-08-20",
+            "status": "active"
+        }
+    ]
+
+
+def admin_card():
+    
+    return [
+        {
+            "icon": "bi bi-chat-square-quote",
+            "value": 2000,
+            "status": {
+                "label": "increase",
+                "count": 1
+            }
+        },
+        {
+            "icon": "bi bi-check-circle",
+            "value": 2000,
+            "status": {
+                "label": "increase",
+                "count": 1
+            }
+        },
+        {
+            "icon": "bi bi-x-circle",
+            "value": 2000,
+            "status": {
+                "label": "increase",
+                "count": 1
+            }
+        }
+    ]
