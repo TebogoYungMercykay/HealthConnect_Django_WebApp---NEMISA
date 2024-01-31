@@ -90,6 +90,7 @@ def diseaseinfos(request):
 
 
 def health_news(request):
+    
     articles_slice = None
     
     try:
@@ -134,6 +135,10 @@ def health_news(request):
             article_data['source']['name'] = "The Indian Express"
         
         article_data['publishedAt'] = utils.format_date(article_data['publishedAt'])
-            
-    return render(request, 'admin-blog.html', { "articles": articles_slice })
+    
+    if request.session.get('is_admin') and request.session.get('name') in 'Admin User':
+        return render(request, 'admin-blog.html', { "articles": articles_slice })
+    
+    else:
+        return render(request, 'articles.html', { "articles": articles_slice })
 
