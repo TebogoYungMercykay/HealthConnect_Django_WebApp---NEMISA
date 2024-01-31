@@ -35,17 +35,22 @@ def health_news(request):
     articles_slice = None
     
     try:
-        api_key = request.session.get('API_KEY_NEWSAPI')
+        api_key = os.getenv("API_KEY_NEWSAPI")
+        
         if request.session.get('user_id') is not None and api_key is not None and request.method == 'GET':
 
             api_url = f"https://newsapi.org/v2/top-headlines?language=en&category=health&apiKey={api_key}"
+            
             response = requests.get(api_url)
             
-            if response.status == "ok":
-                articles_slice = response.get('articles')[:12]
+            print("Response: ", response)
+            
+            if response.status_code == 200:
+                api_response = response.json()
+                articles_slice = api_response.get('articles')[:12]
                         
-    except requests.RequestException as e:
-            logging.error("Error Occured When Requesting News Articles: {e}")
+    except Exception as e:
+            logging.error(f"Error Occured When Requesting News Articles: {e}")
 
     if not articles_slice:
         articles_slice = utils.news_retrieval_error()
