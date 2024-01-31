@@ -1,16 +1,9 @@
-from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
-from django.urls import reverse
-from django.core.exceptions import PermissionDenied
 from django.contrib import messages
 from ..utils import utils
-from ..chats_and_feedback.views import create_chat, chat_messages
-import requests, logging, json, os, random
+import requests, logging, os, random
 
-MESSAGE = "Some Error Occured, Please Try Again."
 USER_MESSAGE = "Incorrect User Id Used, Please Try Again."
-CONSULTATION_TEMPLATE = 'consultation.html'
-CONSULTATION_CHATS_TEMPLATE = 'consultation-chats.html'
 JSON_DATA = 'application/json'
 METHOD_ERROR = "Incorrect Method Used, Please Try Again."
 REMOVED = "[Removed]"    
@@ -105,10 +98,7 @@ def health_news(request):
         if request.session.get('user_id') is not None and api_key is not None and request.method == 'GET':
 
             api_url = f"https://newsapi.org/v2/top-headlines?language=en&category=health&apiKey={api_key}"
-            
             response = requests.get(api_url)
-            
-            print("Response: ", response)
             
             if response.status_code == 200:
                 api_response = response.json()
