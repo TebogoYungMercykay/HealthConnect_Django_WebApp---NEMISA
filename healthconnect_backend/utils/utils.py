@@ -508,3 +508,258 @@ def post_retrieval_error():
             ]
         }
     ]
+
+
+def cards():
+    cards = [
+        {
+            "period": "Today",
+            "value": (1415 + random.randint(-105, 105)),
+            "percentage": (10 + random.randint(-8, 8)),
+        },
+        {
+            "period": "This Month",
+            "value": f"R{(1455 + random.randint(-500, 500))}",
+            "percentage": (10 + random.randint(-8, 8)),
+        },
+        {
+            "period": "This Year",
+            "value": (1245 + random.randint(10, 50)),
+            "percentage": (10 + random.randint(-8, 8)),
+        },
+    ]
+
+    random.shuffle(cards)
+
+    return cards
+
+
+def recent_activity():
+    recent_activity = [
+        {
+            "time": f"{random.randint(5, 30)} mins ago",
+            "badge": "text-success",
+            "type": "update",
+            "link": "#",
+            "text": "Posted a new update on the feed",
+        },
+        {
+            "time": f"{random.randint(2, 10)} hrs ago",
+            "badge": "text-danger",
+            "type": "consultation",
+            "link": "#",
+            "text": "Had a consultation with Dr. Smith",
+        },
+        {
+            "time": f"{random.randint(4, 9)} hrs ago",
+            "badge": "text-primary",
+            "type": "health tip",
+            "link": "#",
+            "text": "Shared a health tip on the feed",
+        },
+        {
+            "time": f"{random.randint(2, 6)} hrs ago",
+            "badge": "text-info",
+            "type": "follow-up consultation",
+            "link": "#",
+            "text": "Scheduled a follow-up consultation",
+        },
+        {
+            "time": f"{random.randint(5, 9)} hrs ago",
+            "badge": "text-warning",
+            "type": "disease post",
+            "link": "#",
+            "text": "Liked a disease post on the feed",
+        },
+        {
+            "time": f"{random.randint(5, 30)} hrs ago",
+            "badge": "text-muted",
+            "type": "virtual consultation",
+            "link": "#",
+            "text": "Attended a virtual consultation",
+        },
+        {
+            "time": f"{random.randint(2, 15)} hrs ago",
+            "badge": "text-success",
+            "type": "update",
+            "link": "#",
+            "text": "Posted another update on the feed",
+        },
+        {
+            "time": f"{random.randint(1, 8)} hrs ago",
+            "badge": "text-warning",
+            "type": "discussion",
+            "link": "#",
+            "text": "Participated in a discussion",
+        },
+        {
+            "time": f"{random.randint(3, 12)} hrs ago",
+            "badge": "text-info",
+            "type": "tip",
+            "link": "#",
+            "text": "Shared a useful tip",
+        },
+        {
+            "time": f"{random.randint(4, 20)} hrs ago",
+            "badge": "text-muted",
+            "type": "webinar",
+            "link": "#",
+            "text": "Joined a medical webinar",
+        }
+    ]
+    
+    processed_activities = []
+    for activity in recent_activity:
+        text_parts = activity["text"].split(" ")
+        text_b = " ".join(text_parts[:-2])
+        type_verb = text_parts[-2]
+        text_a = text_parts[-1]
+
+        processed_activity = {
+            "time": activity["time"],
+            "badge": activity["badge"],
+            "type": activity["type"],
+            "link": activity["link"],
+            "text_b": text_b,
+            "type_verb": type_verb,
+            "text_a": text_a,
+        }
+
+        processed_activities.append(processed_activity)
+
+    random.shuffle(processed_activities)
+
+    return processed_activities
+
+
+def top_selling_medication():
+    random_number = random.randint(30, 50)
+    top_selling_medication = [
+        {
+            "preview": "https://media.biogen.co.za/wp-content/uploads/6009544945475-multi-vitamin-50plus-advanced-value-pack.jpg",
+            "product": {
+                "name": "Vitamin Supplements",
+                "link": "#",
+                "class": "text-primary fw-bold",
+            },
+            "price": "R64",
+            "sold": random_number + 23,
+            "revenue": f"R{(random_number + 23) * 64}",
+        },
+        {
+            "preview": "https://www.firstaider.co.za/wp-content/uploads/2021/08/electrical-kit.jpg",
+            "product": {
+                "name": "First Aid Kit",
+                "link": "#",
+                "class": "text-primary fw-bold",
+            },
+            "price": "R46",
+            "sold": random_number + 67,
+            "revenue": f"R{(random_number + 67) * 46}",
+        },
+        {
+            "preview": "https://www.dischem.co.za/media/catalog/product/cache/41fea429c8575e0d68f148c3fb0cdd35/6/2/62a343f0085e2_8006540339169.jpg",
+            "product": {
+                "name": "Cough Syrup",
+                "link": "#",
+                "class": "text-primary fw-bold",
+            },
+            "price": "R59",
+            "sold": random_number + 10,
+            "revenue": f"R{(random_number + 10) + 59}",
+        },
+        {
+            "preview": "https://images.apollo247.in/pub/media/catalog/product/c/r/cro0007_1.jpg",
+            "product": {
+                "name": "Pain Relief Tablets",
+                "link": "#",
+                "class": "text-primary fw-bold",
+            },
+            "price": "R32",
+            "sold": random_number + 20,
+            "revenue": f"R{(random_number + 20) * 32}",
+        },
+        {
+            "preview": "https://www.capricorn-scientific.com/capricorn/product%20pictures/Cell%20Culture%20Reagents/Antibiotics/AAS-B%20Zweitbild.jpg",
+            "product": {
+                "name": "Antibiotic Solution",
+                "link": "#",
+                "class": "text-primary fw-bold",
+            },
+            "price": "R79",
+            "sold": random_number + 5,
+            "revenue": f"R{(random_number + 5) * 79}",
+        },
+    ]
+
+    random.shuffle(top_selling_medication)
+
+    return top_selling_medication
+
+
+def recent_consultations():
+    recent_consultations = [
+        {
+            "consultationId": "#2457",
+            "patient": "None",
+            "diseaseName": "None",
+            "consultationCostPrice": "R64",
+            "status": "Open",
+            "badge": "success"
+        },
+        {
+            "consultationId": "#2147",
+            "patient": "None",
+            "diseaseName": "None",
+            "consultationCostPrice": "R47",
+            "status": "Pending",
+            "badge": "warning"
+        },
+        {
+            "consultationId": "#2049",
+            "patient": "None",
+            "diseaseName": "None",
+            "consultationCostPrice": "R147",
+            "status": "Open",
+            "badge": "success"
+        },
+        {
+            "consultationId": "#2644",
+            "patient": "None",
+            "diseaseName": "None",
+            "consultationCostPrice": "R67",
+            "status": "Closed",
+            "badge": "danger"
+        },
+        {
+            "consultationId": "#2644",
+            "patient": "None",
+            "diseaseName": "None",
+            "consultationCostPrice": "R165",
+            "status": "Open",
+            "badge": "success"
+        },
+    ]
+    
+    disease_names = [
+        "COVID-19",
+        "Malaria",
+        "Influenza",
+        "Diabetes",
+        "Hypertension",
+        "Alzheimer's disease",
+        "Cancer",
+        "Heart disease",
+        "Stroke",
+        "Osteoporosis",
+    ]
+
+    for consultation in recent_consultations:
+        consultation["patient"] = " ".join([random.choice(["John", "Jane", "Alice", "Bob", "Eva", "Mike", "Sophie", "Chris", "Olivia", "Daniel"]),
+                                        random.choice(["Smith", "Doe", "Johnson", "Williams", "Brown", "Jones", "Garcia", "Davis", "Rodriguez", "Martinez"])])
+        
+        consultation["diseaseName"] = random.choice(disease_names)
+
+    random.shuffle(recent_consultations)
+
+    return recent_consultations
