@@ -512,5 +512,19 @@
         <!-- Template Main JS File -->
         <script src="{% static 'js/main.js' %}"></script>
         <script src="{% static 'js/table-data.js' %}"></script>
+
+        {% comment %} ChatBot {% endcomment %}
+        <script>
+            window.embeddedChatbotConfig = {
+                chatbotId: "{{ request.session.chatbot_id }}",
+                domain: "www.chatbase.co"
+            }
+        </script>
+        <script
+            src = "https://www.chatbase.co/embed.min.js"
+            chatbotId = "{{ request.session.chatbot_id }}"
+            domain = "www.chatbase.co"
+            defer>
+        </script>
     </body>
 </html>
