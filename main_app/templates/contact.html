@@ -23,7 +23,6 @@
         <!-- Vendor CSS Files -->
         <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
         <link href="{% static 'vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
-        <link href="{% static 'vendor/aos/aos.css' %}" rel="stylesheet">
         <link href="{% static 'vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
         <link href="{% static 'vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
         <link href="{% static 'vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
@@ -289,9 +288,6 @@
                         <li>
                             <a class="nav-link scrollto active" href="#">Contact</a>
                         </li>
-                        {% comment %} <li>
-                            <a class="nav-link scrollto" href="{% url 'contact' %}">Contact</a>
-                        </li> {% endcomment %}
                     </ul>
                     <i class="bi bi-list mobile-nav-toggle"></i>
                 </nav>
@@ -316,23 +312,24 @@
                                 <div class="address">
                                     <i class="bi bi-geo-alt"></i>
                                     <h4>Location:</h4>
-                                    <p>A108 Adam Street, New York, NY 535022</p>
+                                    <p>Johannesburg, Gauteng 011, ZA</p>
                                 </div>
                                 <div class="email">
                                     <i class="bi bi-envelope"></i>
                                     <h4>Email:</h4>
-                                    <p>info@example.com</p>
+                                    <p>info@healthconnect.com</p>
                                 </div>
                                 <div class="phone">
                                     <i class="bi bi-phone"></i>
                                     <h4>Call:</h4>
-                                    <p>+1 5589 55488 55s</p>
+                                    <p>+27718453722</p>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-8 mt-5 mt-lg-0">
-                            {% comment %} <!-- I will use SMTP to send mail --> {% endcomment %}
+                            <!-- I will use SMTP to send mail -->
                             <form action="{% url 'sendmail' %}" method="post" role="form" class="php-email-form">
+                                {% csrf_token %}
                                 <div class="row">
                                     <div class="col-md-6 form-group">
                                         <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>
@@ -353,17 +350,17 @@
                                     <div class="sent-message">Your message has been sent. Thank you!</div>
                                 </div>
                                 <div class="text-center">
-                                    <button type="submit" disabled>Send Message</button>
+                                    <button type="submit">Send Message</button>
                                 </div>
                             </form>
                         </div>
                     </div>
                 </div>
             </section>
-            {% comment %} <!-- End Contact Section --> {% endcomment %}
+            <!-- End Contact Section -->
         </main>
-        {% comment %} <!-- End #main --> {% endcomment %}
-        {% comment %} <!-- ======= Footer ======= --> {% endcomment %}
+        <!-- End #main -->
+        <!-- ======= Footer ======= -->
         <footer id="footer">
             <div class="footer-top">
                 <div class="container">
@@ -463,16 +460,16 @@
             </div>
         </footer>
         
-        {% comment %} <!-- Vendor JS Files --> {% endcomment %}
+        <!-- Vendor JS Files -->
         <script src="{% static 'vendor/purecounter/purecounter_vanilla.js' %}"></script>
         <script src="{% static 'vendor/glightbox/js/glightbox.min.js' %}"></script>
         <script src="{% static 'vendor/swiper/swiper-bundle.min.js' %}"></script>
         <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
         <script src="{% static 'vendor/php-email-form/validate.js' %}"></script>
-        {% comment %} <!-- Template Main JS File --> {% endcomment %}
+        <!-- Template Main JS File -->
         <script src="{% static 'js/main.js' %}"></script>
 
-        {% comment %} ChatBot {% endcomment %}
+        <!-- ChatBot -->
         <script>
             window.embeddedChatbotConfig = {
                 chatbotId: "{{ request.session.chatbot_id }}",
