@@ -1,12 +1,20 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.core.mail import send_mail
+from django.template import Template, Context
+# from django.template.loader import render_to_string
+import base64
+from pathlib import Path
+import mailtrap as mt
 from ..utils import utils
 import requests, logging, os, random
+from .form import ContactForm
 
 USER_MESSAGE = "Incorrect User Id Used, Please Try Again."
 JSON_DATA = 'application/json'
 METHOD_ERROR = "Incorrect Method Used, Please Try Again."
-REMOVED = "[Removed]"    
+REMOVED = "[Removed]"
+CONTACT_EMAIL = 'contact.html'    
 
 def dashboard(request):
     
@@ -142,3 +150,80 @@ def health_news(request):
     else:
         return render(request, 'articles.html', { "articles": articles_slice })
 
+
+def sendmail(request):
+    print("Send Mail: Here")
+    if request.method == 'POST':
+        
+        try:
+            form = ContactForm(request.POST)
+            if form.is_valid():
+                name = form.cleaned_data['name']
+                client_email = form.cleaned_data['email']
+                subject = form.cleaned_data['subject']
+                message = form.cleaned_data['message']
+                
+                template = Template("""
+                <!DOCTYPE html>
+                <html>
+                    <head>
+                        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+                    </head>
+                    <body style="font-family: sans-serif;">
+                        <div style="display: block; margin: auto; max-width: 600px;" class="main">
+                            <h1 style="font-size: 18px; font-weight: bold; margin-top: 20px">
+                                Health App Form Enquiry
+                            </h1>
+                            <p>Thank you for your interest in our Health App! We have received your form enquiry and will get back to you as soon as possible.</p>
+                            <p>Here are the details you provided:</p>
+                            <ul>
+                                <li><strong>Name:</strong> {{ name }}</li>
+                                <li><strong>Email:</strong> {{ email }}</li>
+                                <li><strong>Subject:</strong> {{ subject }}</li>
+                                <li><strong>Message:</strong> {{ message }}</li>
+                            </ul>
+                            <p>Our team will review your information and respond to your enquiry promptly. If you have any additional questions or concerns, feel free to reach out to us.</p>
+                            <p>Thank you for choosing our HealthConnect App!</p>
+                        </div>
+                        <!-- Example of invalid for email HTML/CSS, will be detected by Mailtrap: -->
+                        <style>
+                            .main {
+                                background-color: white;
+                            }
+
+                            a:hover {
+                                border-left-width: 1em;
+                                min-height: 2em;
+                            }
+                        </style>
+                    </body>
+                </html>
+                """)
+                
+                context = Context({'name': name, 'email': client_email, 'subject': subject, 'message': message})
+                html_content = template.render(context)
+
+                mail = mt.Mail(
+                    sender=mt.Address(email = os.environ.get('EMAIL_RECEIVER'), name = "Mailtrap Test"),
+                    to = [mt.Address(email = client_email, name = "HealthConnect")],
+                    subject = subject,
+                    text = "Congrats for sending an email to HealthConnect",
+                    html = html_content,
+                    category = "Test",
+                    headers = {"X-MT-Header": "HealthConnect"},
+                    custom_variables = {"year": 2024},
+                )
+
+                client = mt.MailtrapClient(token=os.environ.get('EMAIL_HOST_PASSWORD'))
+                client.send(mail)
+                
+                return render(request, CONTACT_EMAIL, {'status': "success", 'data': "Email sent successfully"})
+            
+            else:
+                return render(request, CONTACT_EMAIL, {'status': "error", 'data': "Mailtrap is checking your domain credibility, it usually takes one business day"})
+
+        except Exception as e:
+            logging.error(f"Error Occurred When Sending Email: {e}")
+
+            
+    return render(request, CONTACT_EMAIL, {'status': "success", 'data': "Email sent successfully"})
