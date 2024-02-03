@@ -1,11 +1,10 @@
-from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
+from django.http import JsonResponse, HttpResponseRedirect
+from ..chats_and_feedback.views import chat_messages
 from django.shortcuts import render, redirect
-from django.urls import reverse
-from django.core.exceptions import PermissionDenied
-from django.contrib import messages
-from ..utils import utils
-from ..chats_and_feedback.views import create_chat, chat_messages
 import requests, logging, json, os, random
+from django.contrib import messages
+from django.urls import reverse
+from ..utils import utils
 
 MESSAGE = "Some Error Occured, Please Try Again."
 USER_MESSAGE = "Incorrect User Id Used, Please Try Again."

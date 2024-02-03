@@ -1,9 +1,8 @@
 from django.shortcuts import render, redirect
-from django.urls import reverse
-from django.core.exceptions import PermissionDenied
 from django.contrib import messages
-from ..utils import utils
 import requests, logging, json, os
+from django.urls import reverse
+from ..utils import utils
 
 MESSAGE = "Some Error Occured, Please Try Again."
 USER_MESSAGE = "Incorrect User Id Used, Please Try Again."
