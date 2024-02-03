@@ -1,6 +1,6 @@
-import random
 from datetime import datetime
 from dateutil import parser
+import random
 
 
 TEMP_EMAIL = "temp@gmail.com"

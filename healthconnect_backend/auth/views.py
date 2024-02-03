@@ -1,11 +1,9 @@
 from django.shortcuts import render, redirect
-from django.urls import reverse
-from django.http import HttpResponse
-from .form import LoginForm
 from django.contrib import messages
-import requests, logging, json, os
+from django.urls import reverse
+import requests, logging, os
+from .form import LoginForm
 
-from django.http import JsonResponse
 
 MESSAGE = "Some Error Occured, Please Try Again."
 FORM_DATA = 'application/x-www-form-urlencoded'
