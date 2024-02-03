@@ -1,12 +1,10 @@
-from datetime import datetime, time
-from django.shortcuts import render, redirect
-from django.http import HttpResponse, JsonResponse
-from django.urls import reverse
-from django.core.exceptions import PermissionDenied
-from django.contrib import messages
 from .form import PatientCreateForm, DoctorCreateForm
-from ..utils import utils
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from datetime import datetime, time
 import requests, logging, json, os
+from django.urls import reverse
+from ..utils import utils
 
 MESSAGE = "Some Error Occured, Please Try Again."
 CONSULTATION_TEMPLATE = 'patient/consult_a_doctor/consult_a_doctor.html'

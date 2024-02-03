@@ -1,14 +1,10 @@
-from django.shortcuts import render, redirect
-from django.contrib import messages
-from django.core.mail import send_mail
 from django.template import Template, Context
-# from django.template.loader import render_to_string
-import base64
-from pathlib import Path
-import mailtrap as mt
-from ..utils import utils
+from django.shortcuts import render, redirect
 import requests, logging, os, random
+from django.contrib import messages
 from .form import ContactForm
+from ..utils import utils
+# import mailtrap as mt
 
 USER_MESSAGE = "Incorrect User Id Used, Please Try Again."
 JSON_DATA = 'application/json'
