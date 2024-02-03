@@ -1,7 +1,5 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.models import User
 from django.urls import reverse
-
 
 MESSAGE = "Some Error Occured, Please Try Again."
 FORM_DATA = 'application/x-www-form-urlencoded'
