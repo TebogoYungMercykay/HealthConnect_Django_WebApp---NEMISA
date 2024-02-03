@@ -13,7 +13,6 @@
 """
 
 import os
-from decouple import config
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 
@@ -28,7 +27,7 @@ SECRET_KEY = 'v3v5vfsn0xxjtmb=eoawoiw$5br4g0r&jy_l39995h_93l+-z5'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-DEBUG = True
+DEBUG = False
 
 # # Sending Form Data Via Email
 
