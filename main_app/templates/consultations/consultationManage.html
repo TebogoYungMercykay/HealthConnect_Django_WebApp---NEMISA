@@ -1,0 +1,243 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block consultation_active %} active {% endblock %}
+{% block redirect_script %}
+{% if not request.session.user_id or not request.session.is_authenticated %}
+<script type="text/javascript">
+    window.location.href = "{% url 'login' %}";
+</script>
+{% endif %}
+{% endblock %}
+{% block title %}Consultations{% endblock %}
+{% block pagespecificstyle %}
+<link href="{% static 'css/chat.css' %}" rel="stylesheet">
+<link href="{% static 'css/datatable.css' %}" rel="stylesheet">
+<link href="{% static 'css/consultations.css' %}" rel="stylesheet">
+<link href="{% static 'css/variables.css' %}" rel="stylesheet">
+{% endblock %}
+{% block content %}
+<main id="main" class="main">
+    <div class="pagetitle">
+
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{% url 'consulation_home' %}">
+                        <i class="ri-home-line"></i>
+                    </a>
+                </li>
+
+            </ol>
+        </nav>
+    </div>
+    {% if consultation_info %}
+
+    <section id="services">
+        <div class="container">
+            <div class="section-title">
+                <h2>Consultation Details</h2>
+            </div>
+            {% if consultation_info %}
+            <div class="row">
+                {%if not request.session.is_patient or request.session.is_admin %}
+                {% comment %} PatientInfo Info {% endcomment %}
+                <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+                    <div class="icon-box">
+                        <div class="icon">
+                            <i class="fas fa-hospital-user"></i>
+                        </div>
+                        <h4>
+                            <a href="">Patient Information</a>
+                        </h4>
+                        <p><strong>{{ consultation_info.patient.surname }} {{ consultation_info.patient.name }}
+                                ({{consultation_info.patient.age }})</strong></p>
+                        <p><strong>Date of Birth</strong>: {{ consultation_info.patient.dob }}</p>
+                        <p><strong>Address</strong>: {{ consultation_info.patient.address }}</p>
+                        <p><strong>Gender</strong>: {{ consultation_info.patient.gender }}</p>
+                        <p><strong>Mobile No</strong>: {{ consultation_info.patient.mobile_no }}</p>
+                        <p><strong>Opening Date</strong>: {{ consultation_info.consultation_date }}</p>
+                    </div>
+                </div>
+                {% endif %}
+                {% if consultation_info.diseaseinfo %}
+                {% comment %} Disease Info {% endcomment %}
+                <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+                    <div class="icon-box">
+                        <div class="icon">
+                            <i class="fas fa-notes-medical"></i>
+                        </div>
+                        <h4>
+                            <a href="">Disease Information</a>
+                        </h4>
+                        <p><strong>Name: {{ consultation_info.diseaseinfo.diseasename }}</strong></p>
+                        <p><strong>Confidence</strong> {{ consultation_info.diseaseinfo.confidence }} Percent</p>
+                        <p><strong>ConsultDoctor</strong>: {{ consultation_info.diseaseinfo.consultdoctor }}</p>
+                        <p><strong>Symptoms</strong>: {{ consultation_info.diseaseinfo.symptoms }}</p>
+                        <p><strong>Consultation Status</strong>: {{ consultation_info.status }}</p>
+                        <p><strong>Days Elapsed</strong>: {{ consultation_info.days_elapsed_since }}</p>
+                    </div>
+                </div>
+                {% endif %}
+                {%if not request.session.is_doctor or request.session.is_admin %}
+                <!-- {% comment %} Doctor Info {% endcomment %} -->
+                <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+                    <div class="icon-box">
+                        <div class="icon">
+                            <i class="fas fa-hospital-user"></i>
+                        </div>
+                        <h4>
+                            <a href="">Doctor Information</a>
+                        </h4>
+                        <p><strong>Dr {{ consultation_info.doctor.surname }} {{ consultation_info.doctor.name}}</strong>
+                        </p>
+                        <p><strong>Qualification</strong>: {{ consultation_info.doctor.qualification }}</p>
+                        <p><strong>Council</strong>: {{ consultation_info.doctor.state_medical_council }}</p>
+                        <p><strong>Specialization</strong>: {{ consultation_info.doctor.specialization }}</p>
+                        <p><strong>Address</strong>: {{ consultation_info.doctor.address }}</p>
+                        <p><strong>Rating</strong>: {{ consultation_info.doctor.rating }}</p>
+                    </div>
+                    <!-- Only allow rating once consultation has been had -->
+                    {%if consultation.status == 'closed' %}
+                    <button type="submit" class="btn btn-primary" id="rateDoctor">Rate Doctor</button>
+
+                    {% endif %}
+
+                    <div class="container mt-5" id="ratingForm" style="display:none;">
+                        <form class="row g-3 needs-validation"
+                            action="{% url 'create_review' doctor_id=consultation_info.doctor.doctor_id %}"
+                            method="post">
+                            {% csrf_token %}
+                           
+                            <div class="form-group">
+                                <input type="hidden" class="form-control" id="hiddenConsultID" name="consultation_id" value="{{consultation_info.consultation_id}}">
+                            </div>
+                            <div class="form-group">
+                                <!-- {% comment %} <label for="doctorId">Doctor ID:</label> {% endcomment %} -->
+                                <input type="hidden" class="form-control" id="doctor_id" name="doctor_id"
+                                    value="{{consultation_info.doctor.doctor_id}}">
+                            </div>
+                            <div class="form-group">
+                                <label for="rating">Rating:</label>
+                                <input type="number" class="form-control" id="rating" name="rating"
+                                    placeholder="Enter Rating" min="0" max="5" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="review">Review:</label>
+                                <textarea class="form-control" id="review" name="review" rows="4"
+                                    placeholder="Enter Review" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                    </div>
+                    <div>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+            <div class="row">
+                {%if  request.session.is_patient %}
+                <button type="joinConsultation" class="btn btn-primary" id="joinConsultation">Join Consultation</button>
+                {% else %}
+                    
+                <button type="joinConsultation" class="btn btn-primary" id="joinConsultation">Start Consultation</button>
+
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
+
+    </section>
+    {% endif %}
+
+    <section class="section">
+        <div class="section-title">
+            {% if request.GET.filter == "Old" %}
+            <h2>Consultation History</h2>
+            {% elif request.GET.filter == "Upcoming" %}
+            <h2>Upcoming Consultations</h2>
+            {% endif %}
+        </div>
+        {% if consultation_history %}
+        <div class="row">
+            <div class="col-10 mx-auto">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title"></h5>
+                        <table class="table table-striped" aria-label="Consultation History Table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Start Date</th>
+                                    <th scope="col">Diseasename</th>
+                                    <th scope="col">Confidence (%)</th>
+                                    <th scope="col">Consult Doctor</th>
+                                    <th scope="col">Symptoms</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Consultation</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for consultation in consultation_history %}
+                                <tr>
+                                    <th scope="row">{{ consultation.consultation_id }}</th>
+                                    <td>{{ consultation.consultation_date }}</td>
+                                    <td>{{ consultation.diseaseinfo.diseasename }}</td>
+                                    <td>{{ consultation.diseaseinfo.confidence }}</td>
+                                    <td>{{ consultation.diseaseinfo.consultdoctor }}</td>
+                                    <td>{{ consultation.list_symptoms }}</td>
+                                    {% if consultation.status == 'closed' %}
+                                    <td>
+                                        <a href="#" class="btn btn-danger">{{consultation.status}}</a>
+
+                                    </td>
+                                    {% elif consultation.status == 'missed' %}
+                                    <td>
+                                        <a href="#" class="btn btn-danger">{{consultation.status}}</a>
+
+                                    </td>
+                                    {% else %}
+                                    <td>
+                                        <a href="#" class="btn btn-success">Open</a>
+                                    </td>
+                                    {% endif %}
+                                    <td>
+                                        <a href="{% url 'consultation_view' consultation.consultation_id %}"
+                                            class="btn btn-primary">View Consultation</a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    {% else %}
+    {% if request.GET.filter == "Old" %}
+    <h2>No Old Consultations Found</h2>
+    {% elif request.GET.filter == "Upcoming" %}
+    <h2>No Upcoming Consultations Found</h2>
+    {% else %}
+    {% if not consultation_info %}
+    <h2>No Consultations Found</h2>
+    {% endif %}
+    {% endif %}
+    {% endif %}
+    {% endblock %}
+
+    {% block pagespecificjs %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+            function toggleForm() {
+                var form = document.getElementById("ratingForm");
+                form.style.display = (form.style.display === 'none' || form.style.display === '') ? 'block' : 'none';
+            }
+            document.getElementById('rateDoctor').addEventListener('click', function (event) {
+                toggleForm();
+            });
+
+        });
+    </script>
+    {% endblock %}

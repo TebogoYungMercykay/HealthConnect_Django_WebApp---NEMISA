@@ -1,0 +1,268 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block consultation_active %} active  {% endblock %}
+{% block redirect_script %}
+{% if not request.session.user_id or not request.session.is_authenticated %}
+<script type="text/javascript">
+    window.location.href = "{% url 'login' %}";
+</script>
+{% endif %}
+{% endblock %}
+{% block title %}Our Doctors{% endblock %}
+<!-- letiables CSS Files. Uncomment your preferred color scheme -->
+{% block pagespecificstyle %}
+<link href="{% static 'css/chat.css' %}" rel="stylesheet">
+<link href="{% static 'css/datatable.css' %}" rel="stylesheet">
+<link href="{% static 'css/consultations.css' %}" rel="stylesheet">
+<link href="{% static 'css/variables.css' %}" rel="stylesheet">
+{% endblock %}
+{% block content %}
+<main id="main" class="main">
+    <div class="pagetitle">
+
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{% url 'consulation_home' %}">
+                        <i class="ri-home-line"></i>
+                    </a>
+                </li>
+                
+            </ol>
+        </nav>
+    </div>
+    {% if request.session.is_patient %}
+    {% if doctors_data %}
+    <section class="section" id="doctors_section">
+        <div class="section-title">
+            <h2>Consult a Doctor</h2>
+        </div>
+        <span>Would want to prepopulate filters if from self diagnosis, ex->
+            specialist={{prediction_data.consultation_dr}}</span>
+        <div class="row">
+            <div class="col-10 mx-auto">
+                <div class="card">
+                    <div class="card-body">
+
+                        <table class="table datatable" aria-describedby="table-description">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <b>Doctor</b> Names
+                                    </th>
+                                    <th>Qualification</th>
+                                    <th>Council</th>
+                                    <th>Specialization</th>
+                                    <th>Registration No</th>
+                                    <th>Address</th>
+                                    <th>Activity</th>
+                                    <th><b>Make</b> Appointment</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for doctor in doctors_data %}
+                                <tr>
+                                    <td>{{ doctor.surname }} {{ doctor.name }}</td>
+                                    <td>{{ doctor.qualification }}</td>
+                                    <td>{{ doctor.state_medical_council }}</td>
+                                    <td>{{ doctor.specialization }}</td>
+                                    <td>{{ doctor.registration_no }}</td>
+                                    <td>{{ doctor.address }}</td>
+                                    <td>{{ doctor.activity }} Hours p.d</td>
+                                    <td>
+                                        <a href="#" class="btn btn-primary doctor-link"
+                                            data-doctor-id="{{ doctor.doctor_id }}"
+                                            data-doctor-name="Dr {{ doctor.surname }} {{ doctor.name }}">Talk to {{ doctor.name }}</a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+
+                        <h5 class="card-title"></h5>
+                    </div>
+                </div>
+                <h5 class="card-title"></h5>
+            </div>
+        </div>
+    </section>
+
+    {% endif %}
+    {% else %}
+    <section class="section">
+        <div class="section-title">
+            <h2>HealthConnect Consultations</h2>
+        </div>
+        <div id="service_information" class="service_information">
+            <div class="container" data-aos="fade-up">
+                <div class="row gy-5">
+                    <div class="col-xl-4 col-md-6" data-aos="zoom-in" data-aos-delay="200">
+                        <div class="service-item">
+                            <div class="img">
+                                <img src="{% static 'img/blog/blog-recent-1.jpg' %}" class="img-fluid" alt="">
+                            </div>
+                            <div class="details position-relative">
+                                <div class="icon">
+                                    <i class="bi bi-broadcast"></i>
+                                </div>
+                                <a href="#" class="stretched-link">
+                                    <h3>Video Consultations</h3>
+                                </a>
+                                <p>As a dedicated Medical Professional, our doctor conducts video meetings to provide
+                                    vital healthcare consultations. Utilizing technology to bridge the gap and save
+                                    lives.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-4 col-md-6" data-aos="zoom-in" data-aos-delay="200">
+                        <div class="service-item">
+                            <div class="img">
+                                <img src="{% static 'img/blog/blog-1.jpg' %}" class="img-fluid" alt="">
+                            </div>
+                            <div class="details position-relative">
+                                <div class="icon">
+                                    <i class="bi bi-chat-square-text"></i>
+                                </div>
+                                <a href="#" class="stretched-link">
+                                    <h3>Consultation Chats</h3>
+                                </a>
+                                <p>Responding promptly to queries and concerns through consultation chats, our doctor
+                                    ensures that individuals receive the guidance and support they need for their health
+                                    journey.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-4 col-md-6" data-aos="zoom-in" data-aos-delay="200">
+                        <div class="service-item">
+                            <div class="img">
+                                <img src="{% static 'img/blog/blog-6.jpg' %}" class="img-fluid" alt="">
+                            </div>
+                            <div class="details position-relative">
+                                <div class="icon">
+                                    <i class="bi bi-calendar4-week"></i>
+                                </div>
+                                <a href="{% url 'all_posts' %}" class="stretched-link">
+                                    <h3>Posts and Replies</h3>
+                                </a>
+                                <p>Our Doctors actively engages in responding to posts and providing insightful replies.
+                                    By participating in online discussions, the aim is to contribute to the well-being
+                                    of the community and save lives through shared knowledge.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    {% endif %}
+    <section class="section " id="book_consultation" style="display: none;">
+        <div class="section-title">
+            <h2>Book Consultatiom</h2>
+        </div>
+        <div class="container mt-4">
+            <h2>Consultation Form</h2>
+            <form method="post" action="{% url 'make_consultation' %}" id="make_consultation">
+                {% csrf_token %}
+
+                <div class="form-group">
+                    <label for="consultation_dr">Consultation Doctor</label>
+                    <input type="hidden" id="doctor_id" name="doctor_id">
+
+                    
+                    <input type="text" class="form-control" id="consultation_dr" name="consultation_dr" required
+                        readonly>
+
+                </div>
+
+                <div class="form-group">
+                    <label for="diseaseinfo_id">Predicted Disease Info </label>
+                    <input type="hidden" id="diseaseinfo_id" name="diseaseinfo_id">
+                    <input type="{% if prediction_data %}text{% else %}hidden{% endif %}" class="form-control"
+                        id="diseaseinfo_name" name="diseaseinfo_name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="consultation_date">Consultation Date</label>
+                    <input type="datetime-local" class="form-control" id="consultation_date" name="consultation_date"
+                        required>
+                </div>
+
+                <div class="form-group d-none">
+                    <label for="status">Status</label>
+                    <select class="form-control" id="status" name="status" required>
+                        <option value="New" selected>New</option>
+                        <option value="Pending">Pending</option>
+                        <option value="Pending">Approved</option>
+                        <option value="Pending">Declined</option>
+                        <option value="Completed">Completed</option>
+                        <!-- Add other status options as needed -->
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+        <hr>
+
+        <button id="back_to_docs" class="btn btn-primary">Choose Another Doctor</button>
+    </section>
+</main>
+{% endblock %}
+
+{% block pagespecificjs %}
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+
+        function toggleSections() {
+            var doctorsSection = document.getElementById('doctors_section');
+            var consultationSection = document.getElementById('book_consultation');
+            if (doctorsSection.style.display === 'none') {
+                doctorsSection.style.display = 'block';
+            } else {
+                doctorsSection.style.display = 'none';
+            }
+            // Show form
+            if (consultationSection.style.display === 'none') {
+                consultationSection.style.display = 'block';
+            } else {
+                consultationSection.style.display = 'none';
+            }
+        }
+
+
+        // Doctor Consultation:When A doctor is selected
+        document.addEventListener('click', function (event) {
+            //let predictedDiseaseId = document.getElementById('disease_id').textContent.trim();
+
+            if (event.target.classList.contains('doctor-link')) {
+                let doctorId = event.target.getAttribute('data-doctor-id');
+                console.log(doctorId);
+                let doctorName = event.target.getAttribute('data-doctor-name');
+                console.log(doctorName);
+
+
+
+
+                document.getElementById('doctor_id').value = doctorId;
+                document.getElementById('consultation_dr').value = doctorName;
+                document.getElementById('diseaseinfo_name').value = "{{ prediction_data.diseaseinfo_name }}";
+                document.getElementById('diseaseinfo_id').value = "{{ prediction_data.diseaseinfo_id }}";
+
+
+                toggleSections();
+
+            }
+        });
+
+        document.getElementById('back_to_docs').addEventListener('click', function (event) {
+            toggleSections();
+        });
+    });
+</script>
+
+
+{% endblock %}

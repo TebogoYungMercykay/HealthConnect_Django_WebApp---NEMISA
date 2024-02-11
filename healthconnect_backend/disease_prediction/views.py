@@ -8,7 +8,8 @@ import requests, logging, json, os
 
 MESSAGE = "Some Error Occured, Please Try Again."
 USER_MESSAGE = "Incorrect User Id Used, Please Try Again."
-CONSULTATION_TEMPLATE = 'consultation.html'
+CONSULTATION_TEMPLATE = 'consultations/consultation.html'
+SELFDIAGNOSE_TEMPLATE = 'consultations/selfdiagnose.html'
 JSON_DATA = 'application/json'
 METHOD_ERROR = "Incorrect Method Used, Please Try Again."
 
@@ -115,12 +116,13 @@ def create_disease(request):
             
             try:
                 user_id = request.session.get('user_id')
+                
                 if user_id is not None:
                     
                     jwt_token = request.session.get('access_token')
                     token_type = request.session.get('token_type')
                     is_patient = request.session.get('is_patient')
-
+                    
                     api_url = os.getenv("API_ENDPOINT") + f'/disease_prediction/create_disease/{user_id}'
 
                     post_data = {
@@ -132,20 +134,21 @@ def create_disease(request):
                     headers = { "Content-Type": JSON_DATA, "Authorization": f"{token_type} {jwt_token}", }
                     
                     response = requests.post(api_url, data=post_data, headers=headers)
+
                     response.raise_for_status()
-                    
                     if response.status_code == 200:
                         api_response = response.json()
                         if api_response.get('status') == "success":
 
                             messages.info(request, "Successfully Created a Disease Prediction")
                             disease_data = api_response.get('data')
-                            consultation_history = get_consultation_history(request, user_id, jwt_token, token_type, is_patient)
-                            doctors_data = get_doctors_data(request, user_id, jwt_token, token_type)
+                            #consultation_history = get_consultation_history(request, user_id, jwt_token, token_type, is_patient)
+                            #doctors_data = get_doctors_data(request, user_id, jwt_token, token_type)
                             
                             request.session['prediction_successful'] = True
                             
-                            return render(request, CONSULTATION_TEMPLATE, { 'consultation_history': consultation_history, 'doctors_info': doctors_data, 'predicted_disesse': disease_data })
+                            # return render(request, SELFDIAGNOSE_TEMPLATE, { 'consultation_history': consultation_history, 'doctors_info': doctors_data, 'predicted_disesse': disease_data })
+                            return render(request, SELFDIAGNOSE_TEMPLATE, {'predicted_disesse': disease_data })
                     
                     logging.error(f"Error Occured When Creating Disease Prediction, User ID: {user_id}")
                 
@@ -161,5 +164,5 @@ def create_disease(request):
     else:
         messages.error(request, METHOD_ERROR)
     
-    return render(request, CONSULTATION_TEMPLATE, { 'consultation_history': None, 'doctors_info': None, 'predicted_disesse': None })
+    return render(request, SELFDIAGNOSE_TEMPLATE, { 'consultation_history': None, 'doctors_info': None, 'predicted_disesse': None })
 

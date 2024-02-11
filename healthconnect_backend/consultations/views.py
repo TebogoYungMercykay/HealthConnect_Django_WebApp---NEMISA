@@ -9,8 +9,10 @@ import requests, logging, json, os, random
 
 MESSAGE = "Some Error Occured, Please Try Again."
 USER_MESSAGE = "Incorrect User Id Used, Please Try Again."
-CONSULTATION_TEMPLATE = 'consultation.html'
+CONSULTATION_TEMPLATE = 'consultations/consultation.html'
 CONSULTATION_CHATS_TEMPLATE = 'consultation-chats.html'
+CONSULTATION_DOCTORS_TEMPLATE = 'consultations/consultationDoctors.html'
+CONSULTATION_MANAGE_TEMPLATE = 'consultations/consultationManage.html'
 JSON_DATA = 'application/json'
 METHOD_ERROR = "Incorrect Method Used, Please Try Again."
 
@@ -57,7 +59,8 @@ def get_consultation_history(request, user_id, jwt_token, token_type, is_patient
             if api_response.get('status') == "success":
                 consultation_history = api_response.get('data')['Consultations']
                 for consultation in consultation_history:
-                    consultation['consultation_date'] = utils.format_date(consultation['consultation_date'])
+                    
+                    #consultation['consultation_date'] = utils.parse_string_date(consultation['consultation_date'])
                     consultation['diseaseinfo']['confidence'] = round(consultation['diseaseinfo']['confidence'], 2)
                     consultation['list_symptoms'] = ', '.join(map(str, consultation['diseaseinfo']['symptoms']))
                 
@@ -69,8 +72,46 @@ def get_consultation_history(request, user_id, jwt_token, token_type, is_patient
     messages.error(request, MESSAGE)
     return None
 
-# Ends Here
+# (Need a get doctors that renders a page too )
+def get_doctors(request):
 
+    if request.method == 'POST' or request.method == 'GET':
+        try:
+            user_id = request.session.get('user_id')
+            if user_id is not None:
+                jwt_token = request.session.get('access_token')
+                token_type = request.session.get('token_type')
+                api_url = os.getenv("API_ENDPOINT") + '/users/doctors'
+
+                #request info
+                post_data = {
+                    'consultation_dr': request.POST.get('consultation_dr', None),
+                    'diseaseinfo_id': request.POST.get('diseaseinfo_id', None),
+                    'diseaseinfo_name': request.POST.get('diseaseinfo_name', None)
+                }
+                headers = {"Content-Type": JSON_DATA, "Authorization": f"{token_type} {jwt_token}"}
+                response = requests.post(api_url, headers=headers)
+                response.raise_for_status()
+                
+                if response.status_code == 200:
+                    api_response = response.json()
+                    if api_response.get('status') == "success":
+                        doctors_data = api_response.get('data')
+                        for doctor in doctors_data:
+                            doctor['activity'] = random.randint(3, 6)
+                        print(doctors_data)
+                        return render(request, CONSULTATION_DOCTORS_TEMPLATE, {"doctors_data": doctors_data,"prediction_data":post_data})
+                        
+                logging.error(f"Error Occurred When Requesting Doctor Data: {e}, User Id: {user_id}")
+                return None
+            else:
+                messages.error(request, USER_MESSAGE)
+                
+        except requests.RequestException as e:
+            logging.error(f"Error Occurred When Requesting Doctor Data: {e}, User Id: {user_id}")
+        
+        messages.error(request, MESSAGE)
+        return None
 
 def consultation(request):
     
@@ -86,9 +127,23 @@ def consultation(request):
                 is_patient = request.session.get('is_patient')
                 
                 consultation_history = get_consultation_history(request, user_id, jwt_token, token_type, is_patient)
-                
+               
                 if consultation_history is not None:
-                    return render(request, CONSULTATION_TEMPLATE, {"consultation_history": consultation_history})
+                    filter = request.GET.get('filter', None)
+                    if filter is not None:
+                        if filter=='Old':
+                            consultation_history = [consultation for consultation in consultation_history if consultation.get('consultation_date') <= utils.date_now()]
+                        elif filter=='Upcoming':
+                            print("########",utils.date_now())
+                            consultation_history = [consultation for consultation in consultation_history if consultation.get('consultation_date') > utils.date_now()]
+
+                    #status update
+                    for c in consultation_history:
+                        if  c.get('consultation_date') <= utils.date_now() or c.get('status')=='approved':#should be and
+                            print("%%%%%%%%%")
+                            c['status']='missed'
+
+                    return render(request, CONSULTATION_MANAGE_TEMPLATE, {"consultation_history": consultation_history})
                 
             else:
                 messages.error(request, USER_MESSAGE)
@@ -100,7 +155,7 @@ def consultation(request):
         messages.error(request, METHOD_ERROR)
     
     messages.error(request, 'Some error Occurred while requesting Consultations')
-    return render(request, CONSULTATION_TEMPLATE, {"consultation_history": None})
+    return render(request, CONSULTATION_MANAGE_TEMPLATE, {"consultation_history": None})
 
 
 def make_consultation(request):
@@ -202,7 +257,7 @@ def consultation_view(request, consultation_id):
                             consultation_info['patient']['age'] = utils.calculate_age(consultation_info['patient']['dob'])
                             consultation_info['patient']['age'] = utils.calculate_age(consultation_info['patient']['dob'])
                             consultation_info['days_elapsed_since'] = utils.days_elapsed_since(consultation_info['consultation_date'])
-
+                            print("$$$$$",consultation_info['doctor']['rating'])
                             # Formatting Chat Messages
                             consultation_chats = chat_messages(request, consultation_id)
                             consultation_chats['length'] = len(consultation_chats['chats'])
@@ -210,7 +265,7 @@ def consultation_view(request, consultation_id):
                                 for chat in consultation_chats['chats']:
                                     chat['created_at'] = utils.format_date(chat['created_at'])
                             
-                            return render(request, CONSULTATION_CHATS_TEMPLATE, { 'consultation_info': consultation_info, 'consultation_chats': consultation_chats })
+                            return render(request, CONSULTATION_MANAGE_TEMPLATE, { 'consultation_info': consultation_info, 'consultation_chats': consultation_chats })
                             
                         else:
                             messages.error(request, MESSAGE)
@@ -299,6 +354,7 @@ def create_review(request, doctor_id):
                     "review": request.POST['review'],
                     "doctor_id": request.POST['doctor_id']
                 }
+                post_data = json.dumps(post_data, indent=4, ensure_ascii=False)
                 
                 headers = {
                     "Content-Type": JSON_DATA,
@@ -310,13 +366,16 @@ def create_review(request, doctor_id):
                 
                 if response.status_code == 200:
                     api_response = response.json()
+                    consultationID = request.POST['consultation_id']
                     if api_response.get('status') == "success":
+                        return redirect('consultation_view', consultationID)
 
-                        title = request.session.get('token_type')[:2]
-                        if title == 'dr':
-                            return redirect('consultation_view_patient', api_response['data']['id'])
-                        else:
-                            return redirect('consultation_view_doctor', api_response['data']['id'])
+                        # title = request.session.get('token_type')[:2]
+                        # print(title)
+                        # if title == 'dr':
+                        #     return redirect('consultation_view_patient', consultationID)
+                        # else:
+                        #     return redirect('consultation_view_doctor', consultationID)
                 
                 logging.error(f"Error Occured When Creating Reviews, User Id: {user_id}")
             

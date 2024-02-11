@@ -1,5 +1,5 @@
 
-(function() {
+(function () {
 	"use strict";
 
 
@@ -40,7 +40,7 @@
 	 * Search bar toggle
 	 */
 	if (select('.search-bar-toggle')) {
-		on('click', '.search-bar-toggle', function(e) {
+		on('click', '.search-bar-toggle', function (e) {
 			select('.search-bar').classList.toggle('search-bar-show')
 		})
 	}
@@ -48,22 +48,83 @@
 	/**
 	 * Navbar links active state on scroll
 	 */
-	let navbarlinks = select('#navbar .scrollto', true)
-	const navbarlinksActive = () => {
+
+
+
+	let navbarlinks_loggedout = select('#navbar .scrollto.loggedout', true);
+
+	function extractWordFromPath(path) {
+		// Define a regular expression pattern
+		const regex = /\/home_id\/(\w+)\//;
+
+		// Use the RegExp exec method to match the pattern
+		const match = regex.exec(path);
+
+		// Check if the pattern is found
+		if (match) {
+			// The word in the "section" position is captured in the first capturing group
+			return match[1];
+		}
+
+		// Return null if no match is found
+		return null;
+	}
+
+
+	const navbarlinks_loggedoutActive = () => {
 		let position = window.scrollY + 200
-		navbarlinks.forEach(navbarlink => {
-			if (!navbarlink.hash) return
-			let section = select(navbarlink.hash)
-			if (!section) return
+		navbarlinks_loggedout.forEach(navbarlink => {
+			const url = navbarlink.getAttribute('href');
+			console.log(url)
+			if (!url) {
+				return;
+			}
+
+			// Extract the path from the Django link
+			const path = new URL(url, window.location.origin).pathname;
+			let section = select("#" + extractWordFromPath(path));
+			if (!section) {
+				return;
+			}
 			if (position >= section.offsetTop && position <= (section.offsetTop + section.offsetHeight)) {
 				navbarlink.classList.add('active')
 			} else {
 				navbarlink.classList.remove('active')
 			}
-		})
+		});
+		//Handle click
+
+		navbarlinks_loggedout.forEach(link => {
+			link.addEventListener('click', function () {
+				// Remove active class from all links
+				navbarlinks_loggedout.forEach(link => link.classList.remove('active'));
+
+				// Add active class to the clicked link
+				this.classList.add('active');
+			});
+		});
+
 	}
-	window.addEventListener('load', navbarlinksActive)
-	onscroll(document, navbarlinksActive)
+	// window.addEventListener('load', navbarlinks_loggedoutActive)
+	// onscroll(document, navbarlinks_loggedoutActive)
+
+	// //LoggedIn
+	// let navbarlinks_loggedin = select('#navbar .scrollto.loggedin', true);
+	// console.log(navbarlinks_loggedin)
+	// function navbarlinks_loggedinActive() {
+	// 	navbarlinks_loggedin.forEach(link => {
+	// 		link.addEventListener('click', function () {
+	// 			// Remove active class from all links
+	// 			navbarlinks_loggedout.forEach(link => link.classList.remove('active'));
+
+	// 			// Add active class to the clicked link
+				
+	// 			this.classList.add('active');
+	// 			window.alert(this.classList)
+	// 		});
+	// 	});
+	// }
+	// window.addEventListener('load', navbarlinks_loggedinActive);
 
 	/**
 	 * Scrolls to an element with header offset
@@ -123,7 +184,7 @@
 	/**
 	 * Mobile nav toggle
 	 */
-	on('click', '.mobile-nav-toggle', function(e) {
+	on('click', '.mobile-nav-toggle', function (e) {
 		select('#navbar').classList.toggle('navbar-mobile')
 		this.classList.toggle('bi-list')
 		this.classList.toggle('bi-x')
@@ -132,7 +193,7 @@
 	/**
 	 * Mobile nav dropdowns activate
 	 */
-	on('click', '.navbar .dropdown > a', function(e) {
+	on('click', '.navbar .dropdown > a', function (e) {
 		if (select('#navbar').classList.contains('navbar-mobile')) {
 			e.preventDefault()
 			this.nextElementSibling.classList.toggle('dropdown-active')
@@ -142,7 +203,7 @@
 	/**
 	 * Scrool with ofset on links with a class name .scrollto
 	 */
-	on('click', '.scrollto', function(e) {
+	on('click', '.scrollto', function (e) {
 		if (select(this.hash)) {
 			e.preventDefault()
 
@@ -179,3 +240,4 @@
 	}
 
 })()
+

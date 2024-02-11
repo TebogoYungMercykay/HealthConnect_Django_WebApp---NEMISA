@@ -40,6 +40,10 @@ def format_date(input_string):
     except parser.ParserError:
         return "Jan 1, 2024"
 
+def date_now():
+    current_date = datetime.now()
+    
+    return current_date.strftime("%Y-%m-%dT%H:%M:%S")
 
 def days_elapsed_since(start_date_str):
     start_date = datetime.strptime(start_date_str, '%b %d, %Y')

@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block consultation_active %} active  {% endblock %}
+{% block redirect_script %}
+{% if not request.session.user_id or not request.session.is_authenticated %}
+<script type="text/javascript">
+    window.location.href = "{% url 'login' %}";
+</script>
+{% endif %}
+{% endblock %}
+{% block title %}Consultations{% endblock %}
+<!-- letiables CSS Files. Uncomment your preferred color scheme -->
+{% block pagespecificstyle %}
+<link href="{% static 'css/chat.css' %}" rel="stylesheet">
+<link href="{% static 'css/datatable.css' %}" rel="stylesheet">
+<link href="{% static 'css/consultations.css' %}" rel="stylesheet">
+<link href="{% static 'css/variables.css' %}" rel="stylesheet">
+{% endblock %}
+{% block content %}
+<main id="main" class="main">
+    <div class="section-title">
+        <h2>Consultations Manager</h2>
+    </div>
+    {% if request.session.is_patient %}
+    <section class="d-flex align-items-start" >
+        <div class="container">
+            <p>Your health services a click away.</p>
+            <a href="#about" class="btn-get-started scrollto">Book Now</a>
+        </div>
+    </section>
+    {% endif%}
+    <section class="d-flex align-items-start justify-content-end">
+        {% if request.session.is_patient %}
+        <div class="container mt-4">
+            <div class="card">
+                <div class="card-body">
+                    <ul class="list-group list-group-horizontal">
+                        <li class="list-group-item">
+                            <a href="{% url 'consultation' %}?filter=Upcoming" class="card-link">Upcoming Appointments</a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{% url 'self_diagnose' %}" class="card-link">Self Diagnose</a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{% url 'find_doctor' %}" class="card-link">Find a Doctor</a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{% url 'consultation' %}?filter=Old" class="card-link">Consultation History</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        {% elif request.session.is_doctor %}
+        <div class="container mt-4">
+            <div class="card">
+                <div class="card-body">
+                    <ul class="list-group list-group-horizontal">
+                        <li class="list-group-item">
+                            <a href="{% url 'consultation' %}?filter=Upcoming" class="card-link">Upcoming Appointments</a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{% url 'create_disease' %}" class="card-link">Manage Consultations</a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{% url 'create_disease' %}" class="card-link">Something</a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{% url 'create_disease' %}" class="card-link">Consultation History</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        
+        {% endif%}
+    </section>
+</main>
+{% endblock %}
+{% block pagespecificjs %}
+
+<!-- ChatBot  -->
+<script>
+    window.embeddedChatbotConfig = {
+        chatbotId: "{{ request.session.chatbot_id }}",
+        domain: "www.chatbase.co"
+    }
+</script>
+<script src="https://www.chatbase.co/embed.min.js" chatbotId="{{ request.session.chatbot_id }}" domain="www.chatbase.co"
+    defer>
+    </script>
+
+{% endblock %}

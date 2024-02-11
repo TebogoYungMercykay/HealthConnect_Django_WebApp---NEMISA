@@ -1,341 +1,361 @@
+{% extends 'base.html' %}
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="en">
-    <script>
-        {% if request.session.user_id and request.session.is_authenticated %}
-            {% if request.session.is_admin %}
-                window.location.href = "{% url 'admin_page' %}";
-            {% elif request.session.is_doctor or request.session.is_patient %}
-                window.location.href = "{% url 'all_posts' %}";
-            {% else %}
-                console.log("Unknown role");
-            {% endif %}
-        {% endif %}
-    </script>
-    
-    <head>
-        <meta charset="utf-8">
-        <meta content="width=device-width, initial-scale=1.0" name="viewport">
-        <title>Register</title>
-        <meta content="" name="description">
-        <meta content="" name="keywords">
+{% block redirect_script %}
+{% if request.session.user_id and request.session.is_authenticated %}
+{% if request.session.is_admin %}
+<script>
+    window.location.href = "{% url 'admin_page' %}";
+</script>
+{% elif request.session.is_doctor or request.session.is_patient %}
+<script>
+    window.location.href = "{% url 'all_posts' %}";
+</script>
+{% else %}
+<script>
+    console.log("Unknown role");
+</script>
+{% endif %}
+{% endif %}
 
-        <!-- Favicons -->
-        <link href="{% static 'img/logo.png' %}" rel="icon">
-        <link href="{% static 'img/logo.png' %}" rel="apple-touch-icon">
-        <!-- Google Fonts -->
-        <link href="https://fonts.gstatic.com" rel="preconnect">
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
-        <!-- Vendor CSS Files -->
-        <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
-        <link href="{% static 'vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
-        <link href="{% static 'vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
-        <link href="{% static 'vendor/quill/quill.snow.css' %}" rel="stylesheet">
-        <link href="{% static 'vendor/quill/quill.bubble.css' %}" rel="stylesheet">
-        <link href="{% static 'vendor/remixicon/remixicon.css' %}" rel="stylesheet">
-        <link href="{% static 'vendor/simple-datatables/style.css' %}" rel="stylesheet">
-        <link href="{% static 'css/page-styles.css' %}" rel="stylesheet">
-        <link href="{% static 'css/style.css' %}" rel="stylesheet">
-        <link href="{% static 'css/main.css' %}" rel="stylesheet">
-    </head>
-    <body>
-        <div id="topbar" class="d-flex align-items-center fixed-top">
-            <div class="container d-flex justify-content-between">
-                <div class="contact-info d-flex align-items-center">
-                    <i class="bi bi-envelope"></i>
-                    <a href="mailto:healthconnect@nemisa.com">healthconnect@nemisa.com</a>
-                    <i class="bi bi-phone"></i> +27 11 111 1111
-                </div>
-                <div class="d-none d-lg-flex social-links align-items-center">
-                    <a href="#" class="twitter">
-                        <i class="bi bi-twitter"></i>
+{% endblock %}
+{% block title %}Register</title>{% endblock %}
+
+{% block calltoaction %}
+<a href="{% url 'login' %}" class="appointment-btn scrollto">Login</a>
+{% endblock %}
+{% block content %}
+<main id="main" class="main min-vh-100">
+    <div class="pagetitle">
+        <h1>Create Account</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{% url 'home' %}">
+                        <i class="ri-home-line"></i>
                     </a>
-                    <a href="#" class="facebook">
-                        <i class="bi bi-facebook"></i>
-                    </a>
-                    <a href="#" class="instagram">
-                        <i class="bi bi-instagram"></i>
-                    </a>
-                    <a href="#" class="linkedin">
-                        <i class="bi bi-linkedin"></i>
-                        </i>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <header id="header" class="fixed-top">
-            <div class="container d-flex align-items-center">
-                <h1 class="logo me-auto">
-                    <a href="#" class="logo me-auto">
-                        <img src="{% static 'img/logo.png' %}" alt="" class="img-fluid">
-                    </a>HealthConnect
-                </h1>
-                <nav id="navbar" class="navbar order-last order-lg-0">
-                    <ul>
-                        <li>
-                            <a class="nav-link scrollto active" href="{% url 'home_id' fragment='hero' %}">Home</a>
-                        </li>
-                        <li>
-                            <a class="nav-link scrollto" href="{% url 'home_id' fragment='about' %}">About</a>
-                        </li>
-                        <li>
-                            <a class="nav-link scrollto" href="{% url 'home_id' fragment='services' %}">Services</a>
-                        </li>
-                        <li>
-                            <a class="nav-link scrollto" href="{% url 'home_id' fragment='departments' %}">Departments</a>
-                        </li>
-                        <li>
-                            <a class="nav-link scrollto" href="{% url 'home_id' fragment='doctors' %}">Doctors</a>
-                        </li>
-                        <li>
-                            <a class="nav-link scrollto" href="{% url 'home_id' fragment='contact' %}">Contact</a>
-                        </li>
-                    </ul>
-                    <i class="bi bi-list mobile-nav-toggle"></i>
-                </nav>
-                <a href="{% url 'login' %}" class="appointment-btn scrollto">Login</a>
-            </div>
-        </header>
-        <main id="main" class="main min-vh-100">
-            <div class="pagetitle">
-                <h1>Create Account</h1>
-                <nav>
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item">
-                            <a href="{% url 'home' %}">
-                                <i class="ri-home-line"></i>
-                            </a>
-                        </li>
-                        <li class="breadcrumb-item active">Register</li>
-                    </ol>
-                </nav>
-            </div>
-            <!-- End Page Title -->
+                </li>
+                <li class="breadcrumb-item active">Register</li>
+            </ol>
+        </nav>
+    </div>
+    <!-- End Page Title -->
+    <div class="container">
+        <section class="section register d-flex flex-column align-items-center justify-content-center py-4">
             <div class="container">
-                <section class="section register d-flex flex-column align-items-center justify-content-center py-4">
-                    <div class="container">
-                        <div class="row justify-content-center">
-                            <div class="col-lg-8 col-md-6 d-flex flex-column align-items-center justify-content-center">
-                                <div class="card mb-3">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8 col-md-6 d-flex flex-column align-items-center justify-content-center">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <div class="pt-4 pb-2">
+                                    <h5 class="card-title text-center pb-0 fs-4">Create an Account</h5>
+                                    <p class="text-center small">Enter your personal details to create account</p>
+                                </div>
+                                <div class="card">
                                     <div class="card-body">
-                                        <div class="pt-4 pb-2">
-                                            <h5 class="card-title text-center pb-0 fs-4">Create an Account</h5>
-                                            <p class="text-center small">Enter your personal details to create account</p>
-                                        </div>
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <!-- Bordered Tabs Justified -->
-                                                <ul class="nav nav-tabs nav-tabs-bordered d-flex" id="borderedTabJustified" role="tablist">
-                                                    <li class="nav-item flex-fill" role="presentation">
-                                                        <button class="nav-link w-100 active" id="patient-tab" data-bs-toggle="tab" data-bs-target="#bordered-justified-patient" type="button" role="tab" aria-controls="bordered-justified-patient" aria-selected="true">Patient</button>
-                                                    </li>
-                                                    <li class="nav-item flex-fill" role="presentation">
-                                                        <button class="nav-link w-100" id="doctor-tab" data-bs-toggle="tab" data-bs-target="#bordered-justified-doctor" type="button" role="tab" aria-controls="doctor" aria-selected="false">Doctor</button>
-                                                    </li>
-                                                </ul>
-                                                <!-- Patient -->
-                                                <div class="tab-content pt-2" id="borderedTabJustifiedContent">
-                                                    <div class="tab-pane fade show active" id="bordered-justified-patient" role="tabpanel" aria-labelledby="patient-tab">
-                                                        <form class="row g-3 needs-validation" action="{% url 'signup_patient' %}" method="post">
-                                                            {% csrf_token %}
-                                                            <div class="col-12">
-                                                                <label for="yourNamePatient" class="form-label">Your Name</label>
-                                                                <input type="text" name="name" class="form-control" id="yourNamePatient" required>
-                                                                <div class="invalid-feedback">Please, enter your name!</div>
-                                                            </div>
-                                                            <div class="col-12">
-                                                                <label for="yourSurnamePatient" class="form-label">Your Surname</label>
-                                                                <input type="text" name="surname" class="form-control" id="yourSurnamePatient" required>
-                                                                <div class="invalid-feedback">Please, enter your surname!</div>
-                                                            </div>
-                                                            <div class="col-12">
-                                                                <label for="yourEmail" class="form-label">Your Email</label>
-                                                                <div class="input-group has-validation">
-                                                                    <span class="input-group-text" id="inputGroupPrepend">@</span>
-                                                                    <input type="email" name="email" class="form-control" id="yourEmail" required>
-                                                                    <div class="invalid-feedback">Please enter a valid Email address!</div>
-                                                                </div>
-                                                            </div>
-                                                            {% comment %} <div class="col-12">
-                                                                <label for="yourUsernamePatient" class="form-label">Username</label>
-                                                                <div class="input-group has-validation">
-                                                                    <span class="input-group-text" id="inputGroupPrepend">@</span>
-                                                                    <input type="text" name="username" class="form-control" id="yourUsernamePatient" required>
-                                                                    <div class="invalid-feedback">Please choose a username.</div>
-                                                                </div>
-                                                            </div> {% endcomment %}
-                                                            <div class="col-12">
-                                                                <label for="yourPasswordPatient" class="form-label">Password</label>
-                                                                <input type="password" name="password" class="form-control" id="yourPasswordPatient" required>
-                                                                <div class="invalid-feedback">Please enter your password!</div>
-                                                            </div>
-                                                            <div class="col-12">
-                                                                <label for="yourPasswordPatient1" class="form-label">Confirm Password</label>
-                                                                <input type="password" name="password1" class="form-control" id="yourPasswordPatient1" required>
-                                                                <div class="invalid-feedback">Please enter your password!</div>
-                                                            </div>
-                                                            <div class="col-12">
-                                                                <label for="yourDobPatient" class="form-label">Date of Birth</label>
-                                                                <input type="date" name="dob" class="form-control" id="yourDobPatient" required>
-                                                                <div class="invalid-feedback">Please enter your date of birth!</div>
-                                                            </div>
-                                                            <div class="col-12">
-                                                                <label for="yourAddressPatient" class="form-label">Your Address</label>
-                                                                <input type="text" name="address" class="form-control" id="yourAddressPatient" required>
-                                                                <div class="invalid-feedback">Please enter your address!</div>
-                                                            </div>
-                                                            <div class="col-12">
-                                                                <label for="yourMobileNoPatient" class="form-label">Your Mobile Number</label>
-                                                                <input type="text" name="mobile_no" class="form-control" id="yourMobileNoPatient" required>
-                                                                <div class="invalid-feedback">Please enter a valid mobile number!</div>
-                                                            </div>
-                                                            <div class="col-12">
-                                                                <label for="yourGenderPatient" class="form-label">Gender</label>
-                                                                <select name="gender" class="form-select" id="yourGenderPatient" required>
-                                                                    <option value="" selected disabled>Select your gender</option>
-                                                                    <option value="Male">Male</option>
-                                                                    <option value="Female">Female</option>
-                                                                    <option value="Other">Other</option>
-                                                                </select>
-                                                                <div class="invalid-feedback">Please select your gender!</div>
-                                                            </div>
-                                                            <div class="col-12">
-                                                                <div class="form-check">
-                                                                    <input class="form-check-input" name="terms" type="checkbox" value="" id="acceptTermsPatient" required>
-                                                                    <label class="form-check-label" for="acceptTermsPatient">I agree and accept the <a href="#">terms and conditions</a></label>
-                                                                    <div class="invalid-feedback">You must agree before submitting.</div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-6 mx-auto">
-                                                                <button class="btn btn-primary w-100" type="submit">Create Account</button>
-                                                            </div>
-                                                            <div class="col-12">
-                                                                <p class="small mb-0">Already have an account? <a href="{% url 'login' %}">Log in</a></p>
-                                                            </div>
-                                                        </form>
+                                        <!-- Bordered Tabs Justified -->
+                                        <ul class="nav nav-tabs nav-tabs-bordered d-flex" id="borderedTabJustified"
+                                            role="tablist">
+                                            <li class="nav-item flex-fill" role="presentation">
+                                                <button class="nav-link w-100 active" id="patient-tab"
+                                                    data-bs-toggle="tab" data-bs-target="#bordered-justified-patient"
+                                                    type="button" role="tab" aria-controls="bordered-justified-patient"
+                                                    aria-selected="true">Patient</button>
+                                            </li>
+                                            <li class="nav-item flex-fill" role="presentation">
+                                                <button class="nav-link w-100" id="doctor-tab" data-bs-toggle="tab"
+                                                    data-bs-target="#bordered-justified-doctor" type="button" role="tab"
+                                                    aria-controls="doctor" aria-selected="false">Doctor</button>
+                                            </li>
+                                        </ul>
+                                        <!-- Patient -->
+                                        <div class="tab-content pt-2" id="borderedTabJustifiedContent">
+                                            <div class="tab-pane fade show active" id="bordered-justified-patient"
+                                                role="tabpanel" aria-labelledby="patient-tab">
+                                                <form class="row g-3 needs-validation"
+                                                    action="{% url 'signup_patient' %}" method="post">
+                                                    {% csrf_token %}
+                                                    <div class="col-12">
+                                                        <label for="yourNamePatient" class="form-label">Your
+                                                            Name</label>
+                                                        <input type="text" name="name" class="form-control"
+                                                            id="yourNamePatient" required>
+                                                        <div class="invalid-feedback">Please, enter your name!</div>
                                                     </div>
-                                                    <!-- Doctor -->
-                                                    <div class="tab-pane fade" id="bordered-justified-doctor" role="tabpanel" aria-labelledby="doctor-tab">
-                                                        <form class="row g-3 needs-validation" action="{% url 'signup_doctor' %}" method="post">
-                                                            {% csrf_token %}
-                                                            <div class="col-12">
-                                                                <label for="yourName" class="form-label">Your Name</label>
-                                                                <input type="text" name="name" class="form-control" id="yourName" required>
-                                                                <div class="invalid-feedback">Please, enter your name!</div>
-                                                            </div>
-                                                            <!-- Add additional fields for the doctor form -->
-                                                            <div class="col-12">
-                                                                <label for="yourSurname" class="form-label">Your Surname</label>
-                                                                <input type="text" name="surname" class="form-control" id="yourSurname" required>
-                                                                <div class="invalid-feedback">Please, enter your surname!</div>
-                                                            </div>
-                                                            <!-- Add additional fields for the doctor form -->
-                                                            <div class="col-12">
-                                                                <label for="yourEmail" class="form-label">Your Email</label>
-                                                                <div class="input-group has-validation">
-                                                                    <span class="input-group-text" id="inputGroupPrepend">@</span>
-                                                                    <input type="email" name="email" class="form-control" id="yourEmail" required>
-                                                                    <div class="invalid-feedback">Please enter a valid Email address!</div>
-                                                                </div>
-                                                            </div>
-                                                            {% comment %} <!-- Add additional fields for the doctor form -->
-                                                            <div class="col-12">
-                                                                <label for="yourUsername" class="form-label">Username</label>
-                                                                <div class="input-group has-validation">
-                                                                    <span class="input-group-text" id="inputGroupPrepend">@</span>
-                                                                    <input type="email" name="username" class="form-control" id="yourUsername" required>
-                                                                    <div class="invalid-feedback">Please choose a username.</div>
-                                                                </div>
-                                                            </div> {% endcomment %}
-                                                            <!-- Add additional fields for the doctor form -->
-                                                            <div class="col-12">
-                                                                <label for="yourPassword" class="form-label">Password</label>
-                                                                <input type="password" name="password" class="form-control" id="yourPassword" required>
-                                                                <div class="invalid-feedback">Please enter your password!</div>
-                                                            </div>
-                                                            <div class="col-12">
-                                                                <label for="yourPassword1" class="form-label">Confirm Password</label>
-                                                                <input type="password" name="password1" class="form-control" id="yourPassword1" required>
-                                                                <div class="invalid-feedback">Please re-enter your password!</div>
-                                                            </div>
-                                                            <!-- Add additional fields for the doctor form -->
-                                                            <div class="col-12">
-                                                                <label for="yourDob" class="form-label">Date of Birth</label>
-                                                                <input type="date" name="dob" class="form-control" id="yourDob" required>
-                                                                <div class="invalid-feedback">Please enter your date of birth!</div>
-                                                            </div>
-                                                            <!-- Add additional fields for the doctor form -->
-                                                            <div class="col-12">
-                                                                <label for="yourAddress" class="form-label">Your Address</label>
-                                                                <input type="text" name="address" class="form-control" id="yourAddress" required>
-                                                                <div class="invalid-feedback">Please enter your address!</div>
-                                                            </div>
-                                                            <!-- Add additional fields for the doctor form -->
-                                                            <div class="col-12">
-                                                                <label for="yourMobileNo" class="form-label">Your Mobile Number</label>
-                                                                <input type="text" name="mobile_no" class="form-control" id="yourMobileNo" required>
-                                                                <div class="invalid-feedback">Please enter a valid mobile number!</div>
-                                                            </div>
-                                                            <!-- Add additional fields for the doctor form -->
-                                                            <div class="col-12">
-                                                                <label for="yourGender" class="form-label">Gender</label>
-                                                                <select name="gender" class="form-select" id="yourGender" required>
-                                                                    <option value="" selected disabled>Select your gender</option>
-                                                                    <option value="Male">Male</option>
-                                                                    <option value="Female">Female</option>
-                                                                    <option value="Other">Other</option>
-                                                                </select>
-                                                                <div class="invalid-feedback">Please select your gender!</div>
-                                                            </div>
-                                                            <!-- Add additional fields for the doctor form -->
-                                                            <div class="col-12">
-                                                                <label for="yourQualification" class="form-label">Qualification</label>
-                                                                <input type="text" name="qualification" class="form-control" id="yourQualification" required>
-                                                                <div class="invalid-feedback">Please enter your qualification!</div>
-                                                            </div>
-                                                            <!-- Add additional fields for the doctor form -->
-                                                            <div class="col-12">
-                                                                <label for="yourRegistrationNo" class="form-label">Registration Number</label>
-                                                                <input type="text" name="registration_no" class="form-control" id="yourRegistrationNo" required>
-                                                                <div class="invalid-feedback">Please enter your registration number!</div>
-                                                            </div>
-                                                            <!-- Add additional fields for the doctor form -->
-                                                            <div class="col-12">
-                                                                <label for="yourYearOfRegistration" class="form-label">Year of Registration</label>
-                                                                <input type="date" name="year_of_registration" class="form-control" id="yourYearOfRegistration" required>
-                                                                <div class="invalid-feedback">Please enter your year of registration!</div>
-                                                            </div>
-                                                            <!-- Add additional fields for the doctor form -->
-                                                            <div class="col-12">
-                                                                <label for="yourStateMedicalCouncil" class="form-label">State Medical Council</label>
-                                                                <input type="text" name="state_medical_council" class="form-control" id="yourStateMedicalCouncil" required>
-                                                                <div class="invalid-feedback">Please enter your state medical council!</div>
-                                                            </div>
-                                                            <!-- Add additional fields for the doctor form -->
-                                                            <div class="col-12">
-                                                                <label for="yourSpecialization" class="form-label">Specialization</label>
-                                                                <input type="text" name="specialization" class="form-control" id="yourSpecialization" required>
-                                                                <div class="invalid-feedback">Please enter your specialization!</div>
-                                                            </div>
-                                                            <!-- Add additional fields for the doctor form -->
-                                                            <div class="col-12">
-                                                                <div class="form-check">
-                                                                    <input class="form-check-input" name="terms" type="checkbox" value="" id="acceptTerms" required>
-                                                                    <label class="form-check-label" for="acceptTerms">I agree and accept the <a href="#">terms and conditions</a></label>
-                                                                    <div class="invalid-feedback">You must agree before submitting.</div>
-                                                                </div>
-                                                            </div>
-                                                            <!-- Add additional fields for the doctor form -->
-                                                            <div class="col-6 mx-auto">
-                                                                <button class="btn btn-primary w-100" type="submit">Create Account</button>
-                                                            </div>
-                                                            <div class="col-12">
-                                                                <p class="small mb-0">Already have an account? <a href="{% url 'login' %}">Log in</a></p>
-                                                            </div>
-                                                        </form>
+                                                    <div class="col-12">
+                                                        <label for="yourSurnamePatient" class="form-label">Your
+                                                            Surname</label>
+                                                        <input type="text" name="surname" class="form-control"
+                                                            id="yourSurnamePatient" required>
+                                                        <div class="invalid-feedback">Please, enter your surname!
+                                                        </div>
                                                     </div>
-                                                </div>
+                                                    <div class="col-12">
+                                                        <label for="yourEmail" class="form-label">Your Email</label>
+                                                        <div class="input-group has-validation">
+                                                            <span class="input-group-text"
+                                                                id="inputGroupPrepend">@</span>
+                                                            <input type="email" name="email" class="form-control"
+                                                                id="yourEmail" required>
+                                                            <div class="invalid-feedback">Please enter a valid Email
+                                                                address!</div>
+                                                        </div>
+                                                    </div>
+                                                    {% comment %} <div class="col-12">
+                                                        <label for="yourUsernamePatient"
+                                                            class="form-label">Username</label>
+                                                        <div class="input-group has-validation">
+                                                            <span class="input-group-text"
+                                                                id="inputGroupPrepend">@</span>
+                                                            <input type="text" name="username" class="form-control"
+                                                                id="yourUsernamePatient" required>
+                                                            <div class="invalid-feedback">Please choose a username.
+                                                            </div>
+                                                        </div>
+                                                    </div> {% endcomment %}
+                                                    <div class="col-12">
+                                                        <label for="yourPasswordPatient"
+                                                            class="form-label">Password</label>
+                                                        <input type="password" name="password" class="form-control"
+                                                            id="yourPasswordPatient" required>
+                                                        <div class="invalid-feedback">Please enter your password!
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <label for="yourPasswordPatient1" class="form-label">Confirm
+                                                            Password</label>
+                                                        <input type="password" name="password1" class="form-control"
+                                                            id="yourPasswordPatient1" required>
+                                                        <div class="invalid-feedback">Please enter your password!
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <label for="yourDobPatient" class="form-label">Date of
+                                                            Birth</label>
+                                                        <input type="date" name="dob" class="form-control"
+                                                            id="yourDobPatient" required>
+                                                        <div class="invalid-feedback">Please enter your date of
+                                                            birth!</div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <label for="yourAddressPatient" class="form-label">Your
+                                                            Address</label>
+                                                        <input type="text" name="address" class="form-control"
+                                                            id="yourAddressPatient" required>
+                                                        <div class="invalid-feedback">Please enter your address!
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <label for="yourMobileNoPatient" class="form-label">Your
+                                                            Mobile Number</label>
+                                                        <input type="text" name="mobile_no" class="form-control"
+                                                            id="yourMobileNoPatient" required>
+                                                        <div class="invalid-feedback">Please enter a valid mobile
+                                                            number!</div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <label for="yourGenderPatient" class="form-label">Gender</label>
+                                                        <select name="gender" class="form-select" id="yourGenderPatient"
+                                                            required>
+                                                            <option value="" selected disabled>Select your gender
+                                                            </option>
+                                                            <option value="Male">Male</option>
+                                                            <option value="Female">Female</option>
+                                                            <option value="Other">Other</option>
+                                                        </select>
+                                                        <div class="invalid-feedback">Please select your gender!
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" name="terms" type="checkbox"
+                                                                value="" id="acceptTermsPatient" required>
+                                                            <label class="form-check-label" for="acceptTermsPatient">I
+                                                                agree and accept the <a href="#">terms and
+                                                                    conditions</a></label>
+                                                            <div class="invalid-feedback">You must agree before
+                                                                submitting.</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-6 mx-auto">
+                                                        <button class="btn btn-primary w-100" type="submit">Create
+                                                            Account</button>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <p class="small mb-0">Already have an account? <a
+                                                                href="{% url 'login' %}">Log in</a></p>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <!-- Doctor -->
+                                            <div class="tab-pane fade" id="bordered-justified-doctor" role="tabpanel"
+                                                aria-labelledby="doctor-tab">
+                                                <form class="row g-3 needs-validation"
+                                                    action="{% url 'signup_doctor' %}" method="post">
+                                                    {% csrf_token %}
+                                                    <div class="col-12">
+                                                        <label for="yourName" class="form-label">Your Name</label>
+                                                        <input type="text" name="name" class="form-control"
+                                                            id="yourName" required>
+                                                        <div class="invalid-feedback">Please, enter your name!</div>
+                                                    </div>
+                                                    <!-- Add additional fields for the doctor form -->
+                                                    <div class="col-12">
+                                                        <label for="yourSurname" class="form-label">Your
+                                                            Surname</label>
+                                                        <input type="text" name="surname" class="form-control"
+                                                            id="yourSurname" required>
+                                                        <div class="invalid-feedback">Please, enter your surname!
+                                                        </div>
+                                                    </div>
+                                                    <!-- Add additional fields for the doctor form -->
+                                                    <div class="col-12">
+                                                        <label for="yourEmail" class="form-label">Your Email</label>
+                                                        <div class="input-group has-validation">
+                                                            <span class="input-group-text"
+                                                                id="inputGroupPrepend">@</span>
+                                                            <input type="email" name="email" class="form-control"
+                                                                id="yourEmail" required>
+                                                            <div class="invalid-feedback">Please enter a valid Email
+                                                                address!</div>
+                                                        </div>
+                                                    </div>
+                                                    {% comment %} <!-- Add additional fields for the doctor form -->
+                                                    <div class="col-12">
+                                                        <label for="yourUsername" class="form-label">Username</label>
+                                                        <div class="input-group has-validation">
+                                                            <span class="input-group-text"
+                                                                id="inputGroupPrepend">@</span>
+                                                            <input type="email" name="username" class="form-control"
+                                                                id="yourUsername" required>
+                                                            <div class="invalid-feedback">Please choose a username.
+                                                            </div>
+                                                        </div>
+                                                    </div> {% endcomment %}
+                                                    <!-- Add additional fields for the doctor form -->
+                                                    <div class="col-12">
+                                                        <label for="yourPassword" class="form-label">Password</label>
+                                                        <input type="password" name="password" class="form-control"
+                                                            id="yourPassword" required>
+                                                        <div class="invalid-feedback">Please enter your password!
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <label for="yourPassword1" class="form-label">Confirm
+                                                            Password</label>
+                                                        <input type="password" name="password1" class="form-control"
+                                                            id="yourPassword1" required>
+                                                        <div class="invalid-feedback">Please re-enter your password!
+                                                        </div>
+                                                    </div>
+                                                    <!-- Add additional fields for the doctor form -->
+                                                    <div class="col-12">
+                                                        <label for="yourDob" class="form-label">Date of
+                                                            Birth</label>
+                                                        <input type="date" name="dob" class="form-control" id="yourDob"
+                                                            required>
+                                                        <div class="invalid-feedback">Please enter your date of
+                                                            birth!</div>
+                                                    </div>
+                                                    <!-- Add additional fields for the doctor form -->
+                                                    <div class="col-12">
+                                                        <label for="yourAddress" class="form-label">Your
+                                                            Address</label>
+                                                        <input type="text" name="address" class="form-control"
+                                                            id="yourAddress" required>
+                                                        <div class="invalid-feedback">Please enter your address!
+                                                        </div>
+                                                    </div>
+                                                    <!-- Add additional fields for the doctor form -->
+                                                    <div class="col-12">
+                                                        <label for="yourMobileNo" class="form-label">Your Mobile
+                                                            Number</label>
+                                                        <input type="text" name="mobile_no" class="form-control"
+                                                            id="yourMobileNo" required>
+                                                        <div class="invalid-feedback">Please enter a valid mobile
+                                                            number!</div>
+                                                    </div>
+                                                    <!-- Add additional fields for the doctor form -->
+                                                    <div class="col-12">
+                                                        <label for="yourGender" class="form-label">Gender</label>
+                                                        <select name="gender" class="form-select" id="yourGender"
+                                                            required>
+                                                            <option value="" selected disabled>Select your gender
+                                                            </option>
+                                                            <option value="Male">Male</option>
+                                                            <option value="Female">Female</option>
+                                                            <option value="Other">Other</option>
+                                                        </select>
+                                                        <div class="invalid-feedback">Please select your gender!
+                                                        </div>
+                                                    </div>
+                                                    <!-- Add additional fields for the doctor form -->
+                                                    <div class="col-12">
+                                                        <label for="yourQualification"
+                                                            class="form-label">Qualification</label>
+                                                        <input type="text" name="qualification" class="form-control"
+                                                            id="yourQualification" required>
+                                                        <div class="invalid-feedback">Please enter your
+                                                            qualification!</div>
+                                                    </div>
+                                                    <!-- Add additional fields for the doctor form -->
+                                                    <div class="col-12">
+                                                        <label for="yourRegistrationNo" class="form-label">Registration
+                                                            Number</label>
+                                                        <input type="text" name="registration_no" class="form-control"
+                                                            id="yourRegistrationNo" required>
+                                                        <div class="invalid-feedback">Please enter your registration
+                                                            number!</div>
+                                                    </div>
+                                                    <!-- Add additional fields for the doctor form -->
+                                                    <div class="col-12">
+                                                        <label for="yourYearOfRegistration" class="form-label">Year
+                                                            of Registration</label>
+                                                        <input type="date" name="year_of_registration"
+                                                            class="form-control" id="yourYearOfRegistration" required>
+                                                        <div class="invalid-feedback">Please enter your year of
+                                                            registration!</div>
+                                                    </div>
+                                                    <!-- Add additional fields for the doctor form -->
+                                                    <div class="col-12">
+                                                        <label for="yourStateMedicalCouncil" class="form-label">State
+                                                            Medical Council</label>
+                                                        <input type="text" name="state_medical_council"
+                                                            class="form-control" id="yourStateMedicalCouncil" required>
+                                                        <div class="invalid-feedback">Please enter your state
+                                                            medical council!</div>
+                                                    </div>
+                                                    <!-- Add additional fields for the doctor form -->
+                                                    <div class="col-12">
+                                                        <label for="yourSpecialization"
+                                                            class="form-label">Specialization</label>
+                                                        <input type="text" name="specialization" class="form-control"
+                                                            id="yourSpecialization" required>
+                                                        <div class="invalid-feedback">Please enter your
+                                                            specialization!</div>
+                                                    </div>
+                                                    <!-- Add additional fields for the doctor form -->
+                                                    <div class="col-12">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" name="terms" type="checkbox"
+                                                                value="" id="acceptTerms" required>
+                                                            <label class="form-check-label" for="acceptTerms">I
+                                                                agree and accept the <a href="#">terms and
+                                                                    conditions</a></label>
+                                                            <div class="invalid-feedback">You must agree before
+                                                                submitting.</div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- Add additional fields for the doctor form -->
+                                                    <div class="col-6 mx-auto">
+                                                        <button class="btn btn-primary w-100" type="submit">Create
+                                                            Account</button>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <p class="small mb-0">Already have an account? <a
+                                                                href="{% url 'login' %}">Log in</a></p>
+                                                    </div>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
@@ -343,25 +363,9 @@
                             </div>
                         </div>
                     </div>
-                </section>
+                </div>
             </div>
-        </main>
-        <!-- End #main -->
-        <footer id="footer" class="footer">
-            <div class="copyright"> &copy; Copyright <strong>
-                    <span>HealthConnect</span>
-                </strong>. All Rights Reserved </div>
-        </footer>
-        <!-- Vendor JS Files -->
-        <script src="{% static 'vendor/apexcharts/apexcharts.min.js' %}"></script>
-        <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-        <script src="{% static 'vendor/chart.js/chart.umd.js' %}"></script>
-        <script src="{% static 'vendor/echarts/echarts.min.js' %}"></script>
-        <script src="{% static 'vendor/quill/quill.min.js' %}"></script>
-        <script src="{% static 'vendor/simple-datatables/simple-datatables.js' %}"></script>
-        <script src="{% static 'vendor/tinymce/tinymce.min.js' %}"></script>
-        <script src="{% static 'vendor/php-email-form/validate.js' %}"></script>
-        <!-- Template Main JS File -->
-        <script src="{% static 'js/main.js' %}"></script>
-    </body>
-</html>
+        </section>
+    </div>
+</main>
+{% endblock %}

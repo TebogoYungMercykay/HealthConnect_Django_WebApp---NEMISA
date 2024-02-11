@@ -1,594 +1,302 @@
+{% extends 'base.html' %}
 {% load static %}
-
-<!DOCTYPE html>
-<html lang="en">
-    {% if not request.session.user_id or not request.session.is_authenticated %}
-        <script type="text/javascript">
-            window.location.href = "{% url 'login' %}";
-        </script>
-    {% endif %}
-    <head>
-        <meta charset="utf-8">
-        <meta content="width=device-width, initial-scale=1.0" name="viewport">
-        <title>Blog Posts</title>
-        <meta content="" name="description">
-        <meta content="" name="keywords">
-        
-        <!-- Favicons -->
-        <link href="{% static 'img/logo.png' %}" rel="icon">
-        <link href="{% static 'img/logo.png' %}" rel="apple-touch-icon">
-        <!-- Google Fonts -->
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Source+Sans+Pro:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&display=swap" rel="stylesheet">
-        <!-- Vendor CSS Files -->
-        <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
-        <link href="{% static 'vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
-        <link href="{% static 'vendor/aos/aos.css' %}" rel="stylesheet">
-        <link href="{% static 'vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
-        <link href="{% static 'vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
-        <link href="{% static 'vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
-        <link href="{% static 'vendor/quill/quill.snow.css' %}" rel="stylesheet">
-        <link href="{% static 'vendor/quill/quill.bubble.css' %}" rel="stylesheet">
-        <link href="{% static 'vendor/remixicon/remixicon.css' %}" rel="stylesheet">
-        <link href="{% static 'vendor/simple-datatables/style.css' %}" rel="stylesheet">
-        <!-- Variables CSS Files. Uncomment your preferred color scheme -->
-        <link href="{% static 'css/variables.css' %}" rel="stylesheet">
-        <link href="{% static 'css/page-styles.css' %}" rel="stylesheet">
-        <link href="{% static 'css/style.css' %}" rel="stylesheet">
-        <link href="{% static 'css/main.css' %}" rel="stylesheet">
-    </head>
-    <body>
-        <div id="topbar" class="d-flex align-items-center fixed-top">
-            <div class="container d-flex justify-content-between">
-                <div class="contact-info d-flex align-items-center">
-                    <i class="bi bi-envelope"></i>
-                    <a href="mailto:healthconnect@nemisa.com">healthconnect@nemisa.com</a>
-                    <i class="bi bi-phone"></i> +27 11 111 1111
+{% block blogs_active %} active  {% endblock %}
+{% block redirect_script %}
+{% if not request.session.user_id or not request.session.is_authenticated %}
+<script type="text/javascript">
+    window.location.href = "{% url 'login' %}";
+</script>
+{% endif %}
+{% endblock %}
+{% block title %}Blog Posts{% endblock %}
+{% block content %}
+<main id="main" class="main">
+    <section id="blog" class="blog">
+        <div class="section-title">
+            <h2>Blog Posts</h2>
+        </div>
+        <div class="container" data-aos="fade-up">
+            <div class="row g-5">
+                <div class="col-lg-8">
+                    <div class="row gy-4 posts-list">
+                        {% for post in all_posts %}
+                        <div class="col-lg-6">
+                            <article class="d-flex flex-column">
+                                <div class="post-img">
+                                    <img src="{% static post.Post.image_link %}" alt="Image Loading.."
+                                        class="img-fluid"> " alt="" class="img-fluid">
+                                </div>
+                                <h2 class="title">
+                                    <a href="{% url 'get_post' post.Post.id %}">{{ post.Post.title }}</a>
+                                </h2>
+                                <div class="meta-top">
+                                    <ul>
+                                        <li class="d-flex align-items-center">
+                                            <i class="bi bi-person"></i>
+                                            <a href="#">Anonymous</a>
+                                        </li>
+                                        <li class="d-flex align-items-center">
+                                            <i class="bi bi-clock"></i>
+                                            <a href="#">
+                                                <time datetime="{{ post.Post.created_at }}">{{ post.Post.created_at
+                                                    }}</time>
+                                            </a>
+                                        </li>
+                                        <li class="d-flex align-items-center">
+                                            <i class="bi bi-chat-dots"></i>
+                                            <a href="#">
+                                                {{ post.replies|length }}
+                                                {% if post.replies|length == 1 %}
+                                                Reply
+                                                {% else %}
+                                                Replies
+                                                {% endif %}
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="content">
+                                    <p>{{ post.Post.content }}</p>
+                                </div>
+                                <div class="read-more mt-auto align-self-end">
+                                    <a href="{% url 'get_post' post.Post.id %}">Read More</a>
+                                </div>
+                            </article>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <!-- End blog posts list -->
+                    <div class="blog-pagination">
+                        <ul class="justify-content-center">
+                            <li>
+                                <a href="#">1</a>
+                            </li>
+                            <li class="active">
+                                <a href="#">2</a>
+                            </li>
+                            <li>
+                                <a href="#">3</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- End blog pagination -->
                 </div>
-                <nav class="header-nav ms-auto">
-                    <ul class="d-flex align-items-center">
-                        <!-- Notification Nav -->
-                        <li class="nav-item dropdown">
-                            <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
-                                <i class="bi bi-bell"></i>
-                                <span class="badge bg-primary badge-number">4</span>
-                            </a>
-                            <!-- Notification Dropdown Items -->
-                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
-                                <li class="dropdown-header"> You have 4 new notifications <a href="#">
-                                        <span class="badge rounded-pill bg-primary p-2 ms-2">View all</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <!-- Notification about a post reply -->
-                                <li class="notification-item">
-                                    <i class="bi bi-reply text-info"></i>
-                                    <div>
-                                        <h4>Post Reply</h4>
-                                        <p>Someone replied to your post on health tips</p>
-                                        <p>30 min. ago</p>
+                <div class="col-lg-4">
+                    <div class="sidebar">
+                        <div class="sidebar-item search-form">
+                            <h3 class="sidebar-title">Search</h3>
+                            <form action="search_posts" method="post" class="mt-3" onsubmit="return validateForm()">
+                                {% csrf_token %}
+                                <input name="search" type="text" id="inputField" placeholder="Search Title.." required
+                                    pattern="[a-zA-Z0-9\s]+" title="Alphanumeric characters only">
+                                <button type="submit" title="Search">
+                                    <i class="bi bi-search"></i>
+                                </button>
+                            </form>
+                        </div>
+                        <!-- End sidebar search formn-->
+                        <div class="card mt-5 mb-5 pt-3 pb-3">
+                            <div class="card-body">
+                                <div class="container pt-3">
+                                    <div class="section-title">
+                                        <h2>Posts</h2>
+                                        <p> Create Post | Post Content </p>
                                     </div>
-                                </li>
-                                <!-- End Notification about a post reply -->
-
-                                <!-- Notification about an open consultation -->
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li class="notification-item">
-                                    <i class="bi bi-calendar-plus text-success"></i>
-                                    <div>
-                                        <h4>New Consultation</h4>
-                                        <p>A new consultation is open for scheduling</p>
-                                        <p>1 hr. ago</p>
+                                </div>
+                                <form class="row g-3 needs-validation" method="post" action="{% url 'create_post' %}">
+                                    {% csrf_token %}
+                                    <div class="col-12 position-relative">
+                                        <label for="validationTooltip01" class="form-label">
+                                            <strong>Title</strong>
+                                        </label>
+                                        <input type="text" class="form-control" id="validationTooltip01" name="title"
+                                            value="" required>
+                                        <div class="valid-tooltip"> Looks good! </div>
+                                        <div class="invalid-tooltip"> Please Enter a Title. </div>
                                     </div>
-                                </li>
-                                <!-- End Notification about an open consultation -->
-
-                                <!-- Notification about a closed consultation -->
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li class="notification-item">
-                                    <i class="bi bi-calendar-check text-danger"></i>
-                                    <div>
-                                        <h4>Closed Consultation</h4>
-                                        <p>Your recent consultation has been closed</p>
-                                        <p>2 hrs. ago</p>
-                                    </div>
-                                </li>
-                                <!-- End Notification about a closed consultation -->
-
-                                <!-- Notification about a post reply -->
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li class="notification-item">
-                                    <i class="bi bi-reply text-info"></i>
-                                    <div>
-                                        <h4>Post Reply</h4>
-                                        <p>Someone replied to your post on healthy recipes</p>
-                                        <p>4 hrs. ago</p>
-                                    </div>
-                                </li>
-                                <!-- End Notification about a post reply -->
-
-                                <!-- Show all notifications link -->
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li class="dropdown-footer">
-                                    <a href="#">Show all notifications</a>
-                                </li>
-                            </ul>
-                            <!-- End Notification Dropdown Items -->
-                        </li>
-                        <!-- End Notification Nav -->
-
-                        <!-- Messages Icon -->
-                        <li class="nav-item dropdown">
-                            <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
-                                <i class="bi bi-chat-left-text"></i>
-                                <span class="badge bg-success badge-number">3</span>
-                            </a>
-                            <!-- Messages Dropdown Items -->
-                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
-                                <li class="dropdown-header"> You have 3 new messages <a href="#">
-                                        <span class="badge rounded-pill bg-primary p-2 ms-2">View all</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <!-- Message about feedback on a consultation -->
-                                <li class="message-item">
-                                    <a href="#">
-                                        <img src="{% static 'img/messages-1.jpg' %}" alt="Image Loading.." class="rounded-circle">
-                                        <div>
-                                            <h4>Maria Hudson</h4>
-                                            <p>Provided feedback on your recent consultation</p>
-                                            <p>4 hrs. ago</p>
+                                    <div class="row col-12 position-relative mt-3">
+                                        <label for="myTextarea" class="form-label">
+                                            <strong>Content</strong>
+                                        </label>
+                                        <div class="col-12">
+                                            <textarea class="form-control textarea-style col-12" id="myTextarea"
+                                                name="content" placeholder="Enter your text here" required
+                                                rows="8"></textarea>
+                                            <div class="valid-tooltip"> Looks good! </div>
+                                            <div class="invalid-tooltip"> Please Enter Post Content. </div>
                                         </div>
-                                    </a>
-                                </li>
-                                <!-- End Message about feedback on a consultation -->
-
-                                <!-- Message about feedback on a consultation -->
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li class="message-item">
-                                    <a href="#">
-                                        <img src="{% static 'img/messages-2.jpg' %}" alt="Image Loading.." class="rounded-circle">
-                                        <div>
-                                            <h4>Anna Nelson</h4>
-                                            <p>Asked for clarification on your recent consultation</p>
-                                            <p>6 hrs. ago</p>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="" id="invalidCheck"
+                                                required>
+                                            <label class="form-check-label" for="invalidCheck"> Agree to terms and
+                                                conditions </label>
+                                            <div class="invalid-feedback"> You must agree before submitting. </div>
                                         </div>
-                                    </a>
-                                </li>
-                                <!-- End Message about feedback on a consultation -->
-
-                                <!-- Message about feedback on a consultation -->
+                                    </div>
+                                    <div class="col-12 text-center">
+                                        <button class="btn btn-primary col-8" type="submit">Post Content</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="sidebar-item categories">
+                            <h3 class="sidebar-title">Health Categories</h3>
+                            <ul class="mt-3">
                                 <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li class="message-item">
-                                    <a href="#">
-                                        <img src="{% static 'img/messages-3.jpg' %}" alt="Image Loading.." class="rounded-circle">
-                                        <div>
-                                            <h4>David Muldon</h4>
-                                            <p>Thanked you for your advice in the last consultation</p>
-                                            <p>8 hrs. ago</p>
-                                        </div>
-                                    </a>
-                                </li>
-                                <!-- End Message about feedback on a consultation -->
-
-                                <!-- Show all messages link -->
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li class="dropdown-footer">
-                                    <a href="#">Show all messages</a>
-                                </li>
-                            </ul>
-                            <!-- End Messages Dropdown Items -->
-                        </li>
-                        <!-- End Messages Nav -->
-                        <li class="nav-item dropdown pe-3">
-                            <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-                                {% if request.session.is_doctor %}
-                                    <img src="{% static 'img/doctors/doctors-3.jpg' %}" alt="Profile" class="rounded-circle">
-                                {% elif request.session.is_patient %}
-                                    <img src="{% static 'img/testimonials/testimonials-4.jpg' %}" alt="Profile" class="rounded-circle">
-                                {% else %}
-                                    <img src="{% static 'img/profile-img.jpg' %}" alt="Profile" class="rounded-circle">
-                                {% endif %}
-                                <span class="d-none d-md-block dropdown-toggle ps-2">{{ request.session.name }}</span>
-                            </a>
-                            <!-- End Profile Iamge Icon -->
-                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
-                                <li class="dropdown-header">
-                                    <h6>{{ request.session.name }}</h6>
-                                    {% if request.session.is_doctor %}
-                                        <span>HealthConnect Doctor</span>
-                                    {% elif request.session.is_patient %}
-                                        <span>HealthConnect Patient</span>
-                                    {% else %}
-                                        <span>HealthConnect Admin</span>
-                                    {% endif %}
-                                </li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li>
-                                    <a class="dropdown-item d-flex align-items-center" href="{% url 'get_user' %}">
-                                        <i class="bi bi-person"></i>
-                                        <span>My Profile</span>
+                                    <a href="#"> Wellness Tips <span>(25)</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li>
-                                    <a class="dropdown-item d-flex align-items-center" href="{% url 'get_user' %}">
-                                        <i class="bi bi-gear"></i>
-                                        <span>Account Settings</span>
+                                    <a href="#"> Mental Health <span>(22)</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li>
-                                    <a class="dropdown-item d-flex align-items-center" href="{% url 'help' %}">
-                                        <i class="bi bi-question-circle"></i>
-                                        <span>Need Help?</span>
+                                    <a href="#"> Disease Prevention <span>(8)</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <hr class="dropdown-divider">
+                                    <a href="#"> Disease Awareness <span>(8)</span>
+                                    </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item d-flex align-items-center" href="{% url 'logout' %}">
-                                        <i class="bi bi-box-arrow-right"></i>
-                                        <span>Sign Out</span>
+                                    <a href="#"> Nutrition <span>(12)</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#"> Fitness <span>(5)</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#"> Health Education <span>(14)</span>
                                     </a>
                                 </li>
                             </ul>
-                            <!-- End Profile Dropdown Items -->
-                        </li>
-                        <!-- End Profile Nav -->
-                    </ul>
-                </nav>
+                        </div>
+                        <!-- End sidebar categories-->
+                        <div class="sidebar-item recent-posts">
+                            <h3 class="sidebar-title">Recent Health Updates</h3>
+                            <div class="mt-3">
+                                <div class="post-item mt-3">
+                                    <img src="{% static 'img/blog/blog-recent-1.jpg' %}" alt="" class="flex-shrink-0">
+                                    <div>
+                                        <h4>
+                                            <a href="#">Managing Diabetes</a>
+                                        </h4>
+                                        <time datetime="2022-02-15">Feb 15, 2022</time>
+                                    </div>
+                                </div>
+                                <!-- End recent health update item-->
+                                <div class="post-item">
+                                    <img src="{% static 'img/blog/blog-recent-2.jpg' %}" alt="" class="flex-shrink-0">
+                                    <div>
+                                        <h4>
+                                            <a href="#">Cancer Awareness</a>
+                                        </h4>
+                                        <time datetime="2022-02-10">Feb 10, 2022</time>
+                                    </div>
+                                </div>
+                                <!-- End recent health update item-->
+                                <div class="post-item">
+                                    <img src="{% static 'img/blog/blog-recent-3.jpg' %}" alt="" class="flex-shrink-0">
+                                    <div>
+                                        <h4>
+                                            <a href="#">Cardiovascular Health</a>
+                                        </h4>
+                                        <time datetime="2022-02-05">Feb 5, 2022</time>
+                                    </div>
+                                </div>
+                                <!-- End recent health update item-->
+                                <div class="post-item">
+                                    <img src="{% static 'img/blog/blog-recent-4.jpg' %}" alt="" class="flex-shrink-0">
+                                    <div>
+                                        <h4>
+                                            <a href="#">Alzheimer's Awareness</a>
+                                        </h4>
+                                        <time datetime="2022-01-28">Jan 28, 2022</time>
+                                    </div>
+                                </div>
+                                <!-- End recent health update item-->
+                                <div class="post-item">
+                                    <img src="{% static 'img/blog/blog-recent-5.jpg' %}" alt="" class="flex-shrink-0">
+                                    <div>
+                                        <h4>
+                                            <a href="#">Respiratory Health</a>
+                                        </h4>
+                                        <time datetime="2022-01-20">Jan 20, 2022</time>
+                                    </div>
+                                </div>
+                                <!-- End recent health update item-->
+                            </div>
+                        </div>
+                        <!-- End sidebar recent health updates -->
+                        <div class="sidebar-item tags">
+                            <h3 class="sidebar-title">Health Tags</h3>
+                            <ul class="mt-3">
+                                <li>
+                                    <a href="#">Cardiovascular Health</a>
+                                </li>
+                                <li>
+                                    <a href="#">Cancer Prevention</a>
+                                </li>
+                                <li>
+                                    <a href="#">Respiratory Health</a>
+                                </li>
+                                <li>
+                                    <a href="#">Healthy Living</a>
+                                </li>
+                                <li>
+                                    <a href="#">Wellness Tips</a>
+                                </li>
+                                <li>
+                                    <a href="#">Preventive Care</a>
+                                </li>
+                                <li>
+                                    <a href="#">Disease Awareness</a>
+                                </li>
+                                <li>
+                                    <a href="#">Health Education</a>
+                                </li>
+                                <li>
+                                    <a href="#">Diabetes Management</a>
+                                </li>
+                                <li>
+                                    <a href="#">Alzheimer's</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- End sidebar tags-->
+                    </div>
+                    <!-- End Blog Sidebar -->
+                </div>
             </div>
         </div>
-        <header id="header" class="header fixed-top bg-white">
-            <div class="container d-flex align-items-center">
-                <h1 class="logo me-auto">
-                    <a href="#" class="logo me-auto">
-                        <img src="{% static 'img/logo.png' %}" alt="" class="img-fluid">
-                    </a>HealthConnect
-                </h1>
-                <nav id="navbar" class="navbar order-last order-lg-0">
-                    <ul>
-                        <li>
-                            <a class="nav-link scrollto active" href="#">Blogs</a>
-                        </li>
-                        <li>
-                            <a class="nav-link scrollto" href="{% url 'consultation' %}">Consultations</a>
-                        </li>
-                        <li>
-                            <a class="nav-link scrollto" href="{% url 'calendar' %}">Schedule</a>
-                        </li>
-                        <li>
-                            <a class="nav-link scrollto" href="{% url 'contact' %}">Contact</a>
-                        </li>
-                    </ul>
-                    <i class="bi bi-list mobile-nav-toggle"></i>
-                </nav>
-                <a href="{% url 'logout' %}" class="appointment-btn scrollto">Logout</a>
-            </div>
-        </header>
-        <main id="main" class="main">
-            <section id="blog" class="blog">
-                <div class="section-title">
-                    <h2>Blog Posts</h2>
-                </div>
-                <div class="container" data-aos="fade-up">
-                    <div class="row g-5">
-                        <div class="col-lg-8">
-                            <div class="row gy-4 posts-list">
-                                {% for post in all_posts %}
-                                    <div class="col-lg-6">
-                                        <article class="d-flex flex-column">
-                                            <div class="post-img">
-                                                <img src="{% static post.Post.image_link %}" alt="Image Loading.." class="img-fluid">                                                " alt="" class="img-fluid">
-                                            </div>
-                                            <h2 class="title">
-                                                <a href="{% url 'get_post' post.Post.id %}">{{ post.Post.title }}</a>
-                                            </h2>
-                                            <div class="meta-top">
-                                                <ul>
-                                                    <li class="d-flex align-items-center">
-                                                        <i class="bi bi-person"></i>
-                                                        <a href="#">Anonymous</a>
-                                                    </li>
-                                                    <li class="d-flex align-items-center">
-                                                        <i class="bi bi-clock"></i>
-                                                        <a href="#">
-                                                            <time datetime="{{ post.Post.created_at }}">{{ post.Post.created_at }}</time>
-                                                        </a>
-                                                    </li>
-                                                    <li class="d-flex align-items-center">
-                                                        <i class="bi bi-chat-dots"></i>
-                                                        <a href="#">
-                                                            {{ post.replies|length }} 
-                                                            {% if post.replies|length == 1 %}
-                                                                Reply
-                                                            {% else %}
-                                                                Replies
-                                                            {% endif %}
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <div class="content">
-                                                <p>{{ post.Post.content }}</p>
-                                            </div>
-                                            <div class="read-more mt-auto align-self-end">
-                                                <a href="{% url 'get_post' post.Post.id %}">Read More</a>
-                                            </div>
-                                        </article>
-                                    </div>
-                                {% endfor %}
-                            </div>
-                            <!-- End blog posts list -->
-                            <div class="blog-pagination">
-                                <ul class="justify-content-center">
-                                    <li>
-                                        <a href="#">1</a>
-                                    </li>
-                                    <li class="active">
-                                        <a href="#">2</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">3</a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <!-- End blog pagination -->
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="sidebar">
-                                <div class="sidebar-item search-form">
-                                    <h3 class="sidebar-title">Search</h3>
-                                    <form action="search_posts" method="post" class="mt-3" onsubmit="return validateForm()">
-                                        {% csrf_token %}
-                                        <input name="search" type="text" id="inputField" placeholder="Search Title.." required pattern="[a-zA-Z0-9\s]+" title="Alphanumeric characters only">
-                                        <button type="submit" title="Search">
-                                            <i class="bi bi-search"></i>
-                                        </button>
-                                    </form>
-                                </div>
-                                <!-- End sidebar search formn-->
-                                <div class="card mt-5 mb-5 pt-3 pb-3">
-                                    <div class="card-body">
-                                        <div class="container pt-3">
-                                            <div class="section-title">
-                                                <h2>Posts</h2>
-                                                <p> Create Post | Post Content </p>
-                                            </div>
-                                        </div>
-                                        <form class="row g-3 needs-validation" method="post" action="{% url 'create_post' %}">
-                                            {% csrf_token %}
-                                            <div class="col-12 position-relative">
-                                                <label for="validationTooltip01" class="form-label">
-                                                    <strong>Title</strong>
-                                                </label>
-                                                <input type="text" class="form-control" id="validationTooltip01" name="title" value="" required>
-                                                <div class="valid-tooltip"> Looks good! </div>
-                                                <div class="invalid-tooltip"> Please Enter a Title. </div>
-                                            </div>
-                                            <div class="row col-12 position-relative mt-3">
-                                                <label for="myTextarea" class="form-label">
-                                                    <strong>Content</strong>
-                                                </label>
-                                                <div class="col-12">
-                                                    <textarea class="form-control textarea-style col-12" id="myTextarea" name="content" placeholder="Enter your text here" required rows="8"></textarea>
-                                                    <div class="valid-tooltip"> Looks good! </div>
-                                                    <div class="invalid-tooltip"> Please Enter Post Content. </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-12">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
-                                                    <label class="form-check-label" for="invalidCheck"> Agree to terms and conditions </label>
-                                                    <div class="invalid-feedback"> You must agree before submitting. </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-12 text-center">
-                                                <button class="btn btn-primary col-8" type="submit">Post Content</button>
-                                            </div>
-                                        </form>                                        
-                                    </div>
-                                </div>
-                                <div class="sidebar-item categories">
-                                    <h3 class="sidebar-title">Health Categories</h3>
-                                    <ul class="mt-3">
-                                        <li>
-                                            <a href="#"> Wellness Tips <span>(25)</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#"> Mental Health <span>(22)</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#"> Disease Prevention <span>(8)</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#"> Disease Awareness <span>(8)</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#"> Nutrition <span>(12)</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#"> Fitness <span>(5)</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#"> Health Education <span>(14)</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>                                
-                                <!-- End sidebar categories-->
-                                <div class="sidebar-item recent-posts">
-                                    <h3 class="sidebar-title">Recent Health Updates</h3>
-                                    <div class="mt-3">
-                                        <div class="post-item mt-3">
-                                            <img src="{% static 'img/blog/blog-recent-1.jpg' %}" alt="" class="flex-shrink-0">
-                                            <div>
-                                                <h4>
-                                                    <a href="#">Managing Diabetes</a>
-                                                </h4>
-                                                <time datetime="2022-02-15">Feb 15, 2022</time>
-                                            </div>
-                                        </div>
-                                        <!-- End recent health update item-->
-                                        <div class="post-item">
-                                            <img src="{% static 'img/blog/blog-recent-2.jpg' %}" alt="" class="flex-shrink-0">
-                                            <div>
-                                                <h4>
-                                                    <a href="#">Cancer Awareness</a>
-                                                </h4>
-                                                <time datetime="2022-02-10">Feb 10, 2022</time>
-                                            </div>
-                                        </div>
-                                        <!-- End recent health update item-->
-                                        <div class="post-item">
-                                            <img src="{% static 'img/blog/blog-recent-3.jpg' %}" alt="" class="flex-shrink-0">
-                                            <div>
-                                                <h4>
-                                                    <a href="#">Cardiovascular Health</a>
-                                                </h4>
-                                                <time datetime="2022-02-05">Feb 5, 2022</time>
-                                            </div>
-                                        </div>
-                                        <!-- End recent health update item-->
-                                        <div class="post-item">
-                                            <img src="{% static 'img/blog/blog-recent-4.jpg' %}" alt="" class="flex-shrink-0">
-                                            <div>
-                                                <h4>
-                                                    <a href="#">Alzheimer's Awareness</a>
-                                                </h4>
-                                                <time datetime="2022-01-28">Jan 28, 2022</time>
-                                            </div>
-                                        </div>
-                                        <!-- End recent health update item-->
-                                        <div class="post-item">
-                                            <img src="{% static 'img/blog/blog-recent-5.jpg' %}" alt="" class="flex-shrink-0">
-                                            <div>
-                                                <h4>
-                                                    <a href="#">Respiratory Health</a>
-                                                </h4>
-                                                <time datetime="2022-01-20">Jan 20, 2022</time>
-                                            </div>
-                                        </div>
-                                        <!-- End recent health update item-->
-                                    </div>
-                                </div>
-                                <!-- End sidebar recent health updates -->
-                                <div class="sidebar-item tags">
-                                    <h3 class="sidebar-title">Health Tags</h3>
-                                    <ul class="mt-3">
-                                        <li>
-                                            <a href="#">Cardiovascular Health</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Cancer Prevention</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Respiratory Health</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Healthy Living</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Wellness Tips</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Preventive Care</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Disease Awareness</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Health Education</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Diabetes Management</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Alzheimer's</a>
-                                        </li>
-                                    </ul>
-                                </div>                                
-                                <!-- End sidebar tags-->
-                            </div>
-                            <!-- End Blog Sidebar -->
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <!-- End Blog Section -->
-        </main>
-        <!-- End #main -->
-        <footer id="footer" class="footer">
-            <div class="copyright"> &copy; Copyright <strong>
-                    <span>HealthConnect</span>
-                </strong>. All Rights Reserved </div>
-        </footer>
-        <!-- Vendor JS Files -->
-        <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-        <script src="{% static 'vendor/aos/aos.js' %}"></script>
-        <script src="{% static 'vendor/glightbox/js/glightbox.min.js' %}"></script>
-        <script src="{% static 'vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
-        <script src="{% static 'vendor/swiper/swiper-bundle.min.js' %}"></script>
-        <script src="{% static 'vendor/php-email-form/validate.js' %}"></script>
-        <!-- Template Main JS File -->
-        <script src="{% static 'js/main.js' %}"></script>
-        <script>
-            function validateForm() {
-                var searchInput = document.getElementById('inputField');
-                var pattern = /[a-zA-Z0-9\s]+/;
-                if (!pattern.test(searchInput.value)) {
-                    alert('Please enter alphanumeric characters only.');
-                    return false;
-                }
-                return true;
-            }
-        </script>
+    </section>
+    <!-- End Blog Section -->
+</main>
+{% endblock %}
+{% block pagespecificjs %}
+<script>
+    function validateForm() {
+        var searchInput = document.getElementById('inputField');
+        var pattern = /[a-zA-Z0-9\s]+/;
+        if (!pattern.test(searchInput.value)) {
+            alert('Please enter alphanumeric characters only.');
+            return false;
+        }
+        return true;
+    }
+</script>
 
-        <!-- ChatBot -->
-        <script>
-            window.embeddedChatbotConfig = {
-                chatbotId: "{{ request.session.chatbot_id }}",
-                domain: "www.chatbase.co"
-            }
-        </script>
-        <script
-            src = "https://www.chatbase.co/embed.min.js"
-            chatbotId = "{{ request.session.chatbot_id }}"
-            domain = "www.chatbase.co"
-            defer>
-        </script>
-    </body>
-</html>
+<!-- ChatBot -->
+<script>
+    window.embeddedChatbotConfig = {
+        chatbotId: "{{ request.session.chatbot_id }}",
+        domain: "www.chatbase.co"
+    }
+</script>
+<script src="https://www.chatbase.co/embed.min.js" chatbotId="{{ request.session.chatbot_id }}" domain="www.chatbase.co"
+    defer>
+    </script>
+{% endblock %}

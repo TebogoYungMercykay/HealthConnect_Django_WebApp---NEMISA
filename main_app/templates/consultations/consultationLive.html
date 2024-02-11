@@ -1,0 +1,287 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block consultation_active %} active  {% endblock %}
+{% block redirect_script %}
+{% if not request.session.user_id or not request.session.is_authenticated %}
+<script type="text/javascript">
+    window.location.href = "{% url 'login' %}";
+</script>
+{% endif %}
+{% endblock %}
+{% block title %}Consultations{% endblock %}
+{% block pagespecificstyle %}
+<link href="{% static 'css/chat.css' %}" rel="stylesheet">
+{% endblock %}
+{% block content %}
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>Consultation</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{% url 'consulation_home' %}">
+                        <i class="ri-home-line"></i>
+                    </a>
+                </li>
+                <li class="breadcrumb-item active">Chats</li>
+            </ol>
+        </nav>
+    </div>
+
+    <section>
+        <div class="container" id="consultation_chat">
+            <div class="section-title mt-4">
+                <h2>Consultation Chats</h2>
+            </div>
+        </div>
+        <!-- Chat Here -->
+        {% if consultation_chats %}
+        <div class="container-fluid h-100">
+            <div class="row justify-content-center h-100">
+                <div class="col-md-8 col-xl-8 chat">
+                    <div class="card">
+                        <div class="card-header msg_head">
+                            <div class="d-flex bd-highlight">
+                                {% if request.session.is_doctor %}
+                                <div class="img_cont">
+                                    <img src="{% static 'img/testimonials/testimonials-4.jpg' %}"
+                                        class="rounded-circle user_img" alt="Profile Picture">
+                                    <span class="online_icon"></span>
+                                </div>
+                                <div class="user_info">
+                                    <span>{{ consultation_info.patient.surname }} {{ consultation_info.patient.name
+                                        }}</span>
+                                    <p>{{ consultation_chats.length }} Messages</p>
+                                </div>
+                                {% else %}
+                                <div class="img_cont">
+                                    <img src="{% static 'img/doctors/doctors-3.jpg' %}" class="rounded-circle user_img"
+                                        alt="Profile Picture">
+                                    <span class="online_icon"></span>
+                                </div>
+                                <div class="user_info">
+                                    <span>Dr {{ consultation_info.doctor.surname }} {{ consultation_info.doctor.name
+                                        }}</span>
+                                    <p>{{ consultation_chats.length }} Messages</p>
+                                </div>
+                                {% endif %}
+                                <div class="ms-auto">
+                                    <div class="video_cam" id="action_menu_btn">
+                                        <span>
+                                            <i class="fas fa-video"></i>
+                                        </span>
+                                        {% if request.session.is_patient %}
+                                        <span class="star-icon" onclick="openRatingModal()">
+                                            <i class="fas fa-star"></i>
+                                        </span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body msg_card_body pt-4">
+                            {% for sent_message in consultation_chats.chats %}
+                            {% if request.session.is_doctor %}
+                            {% if sent_message.sender_id == request.session.user_id %}
+                            <div class="d-flex justify-content-end mb-4">
+                                <div class="msg_cotainer_send col-8"> {{ sent_message.message }} <span
+                                        class="msg_time_send">{{ sent_message.created_at }}</span>
+                                </div>
+                                <div class="img_cont_msg">
+                                    <img src="{% static 'img/doctors/doctors-3.jpg' %}" class="rounded-circle user_img"
+                                        alt="Profile Picture">
+                                </div>
+                            </div>
+                            {% else %}
+                            <div class="d-flex justify-content-start mb-4">
+                                <div class="img_cont_msg">
+                                    <img src="{% static 'img/testimonials/testimonials-4.jpg' %}"
+                                        class="rounded-circle user_img" alt="Profile Picture">
+                                </div>
+                                <div class="msg_cotainer col-8"> {{ sent_message.message }} <span class="msg_time">{{
+                                        sent_message.created_at }}</span>
+                                </div>
+                            </div>
+                            {% endif %}
+                            {% else %}
+                            {% if sent_message.sender_id == request.session.user_id %}
+                            <div class="d-flex justify-content-end mb-4">
+                                <div class="msg_cotainer_send col-8"> {{ sent_message.message }} <span
+                                        class="msg_time_send">{{ sent_message.created_at }}</span>
+                                </div>
+                                <div class="img_cont_msg">
+                                    <img src="{% static 'img/testimonials/testimonials-4.jpg' %}"
+                                        class="rounded-circle user_img" alt="Profile Picture">
+                                </div>
+                            </div>
+                            {% else %}
+                            <div class="d-flex justify-content-start mb-4">
+                                <div class="img_cont_msg">
+                                    <img src="{% static 'img/doctors/doctors-3.jpg' %}" class="rounded-circle user_img"
+                                        alt="Profile Picture">
+                                </div>
+                                <div class="msg_cotainer col-8"> {{ sent_message.message }} <span class="msg_time">{{
+                                        sent_message.created_at }}</span>
+                                </div>
+                            </div>
+                            {% endif %}
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                        <div class="card-footer">
+                            {% if consultation_chats.status != 'closed' %}
+                            <form action="{% url 'send_message' consultation_id=consultation_info.consultation_id %}"
+                                method="post" class="message-form">
+                                {% csrf_token %}
+                                <div class="input-group">
+                                    <textarea name="message" class="form-control type_msg"
+                                        placeholder="Type your message..."></textarea>
+                                    <div class="input-group-append">
+                                        <button type="submit" class="input-group-text send_btn" id="send_btn"
+                                            title="Send Message">
+                                            <i class="fas fa-location-arrow"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                            {% else %}
+                            <div class="input-group">
+                                <textarea name="" class="form-control type_msg" placeholder="Closed Consultation"
+                                    disabled></textarea>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% if consultation_chats.status != 'closed' %}
+        <form action="{% url 'close_consultation' consultation_id=consultation_info.consultation_id %}" method="post">
+            {% csrf_token %}
+            <input type="submit" value="Close Consultation" class="close-button">
+        </form>
+        {% endif %}
+        {% endif %}
+    </section>
+    <!-- Modal -->
+    {% if consultation_info %}
+    <div class="modal fade" id="ratingModal" tabindex="-1" role="dialog" aria-labelledby="ratingModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="ratingModalLabel">Rate and Provide Feedback</h5>
+                </div>
+                <div class="modal-body">
+                    <form
+                        action="{% url 'post_feedback' doctor_id=consultation_info.doctor.doctor_id consultation_id=consultation_info.consultation_id %}"
+                        method="post">
+                        {% csrf_token %}
+                        <div class="text-center">
+                            <span class="fa fa-star fa-2x" id="star1"></span>
+                            <span class="fa fa-star fa-2x" id="star2"></span>
+                            <span class="fa fa-star fa-2x" id="star3"></span>
+                            <span class="fa fa-star fa-2x" id="star4"></span>
+                            <span class="fa fa-star fa-2x" id="star5"></span>
+                        </div>
+                        <div class="form-group mt-3">
+                            <label for="rating">Rating:</label>
+                            <select class="form-control" id="rating" name="rating">
+                                <option value="" disabled selected>Select Rating</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="feedback">Feedback:</label>
+                            <textarea class="form-control" id="feedback" name="feedback" rows="3"></textarea>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                                id="closeBtn">Close</button>
+                            <button type="submit" class="btn btn-primary" id="submitBtn">Submit Feedback</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</main>
+{% endblock %}
+{% block pagespecificjs %}
+<script type="text/javascript" src="{% static 'js/chat.js' %}"></script>
+<script>
+    function openRatingModal() {
+        $('#ratingModal').modal('show');
+    }
+    $(document).ready(function () {
+        $('#submitBtn').click(function () {
+            var rating = $('#rating').val();
+            var feedback = $('#feedback').val();
+            console.log('Rating:', rating, ' - Feedback: ', feedback);
+            $.ajax({
+                url: 'api/feedback',
+                type: 'POST',
+                data: {
+                    rating: rating,
+                    feedback: feedback
+                },
+                success: function (response) {
+                    console.log('Feedback submitted successfully:', response);
+                },
+                error: function (error) {
+                    console.error('Error submitting feedback:', error);
+                }
+            });
+            $('#ratingModal').modal('hide');
+        });
+        $('#closeBtn').click(function () {
+            $('#ratingModal').modal('hide');
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        {% if request.session.message_successful %}
+        var message_sent = true;
+        {% else %}
+        var message_sent = false;
+        {% endif %}
+
+        if (message_sent) {
+            var resultPredictionDiv = document.getElementById('consultation_chat');
+            if (resultPredictionDiv) {
+                var topOffset = resultPredictionDiv.offsetTop - 150;
+                window.scrollTo({
+                    top: topOffset,
+                    behavior: 'smooth'
+                });
+            }
+        }
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var msgCardBody = document.querySelector('.msg_card_body');
+        var hasHorizontalScrollbar = msgCardBody.scrollWidth > msgCardBody.clientWidth;
+
+        if (hasHorizontalScrollbar) {
+            msgCardBody.classList.add('msg_card_body_with_scrollbar');
+        }
+    });
+</script>
+
+
+{% comment %} ChatBot {% endcomment %}
+<script>
+    window.embeddedChatbotConfig = {
+        chatbotId: "{{ request.session.chatbot_id }}",
+        domain: "www.chatbase.co"
+    }
+</script>
+<script src="https://www.chatbase.co/embed.min.js" chatbotId="{{ request.session.chatbot_id }}" domain="www.chatbase.co"
+    defer>
+    </script>
+{% endblock %}

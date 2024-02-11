@@ -28,8 +28,27 @@ def home_id(request, fragment):
         return redirect(url)
     else:
         return redirect('')
+#@Tebogo please help,move this as needed
+def consultation_home(request):
 
+    if request.method == 'GET':
+    
+            return render(request, 'consultations/consultation.html')
 
+    else:
+        return redirect('home')
+    
+def self_diagnose(request):
+
+    if request.method == 'GET':
+    
+            return render(request, 'consultations/selfdiagnose.html')
+
+    else:
+        return redirect('home')
+    
+
+    
 #--------------------------------------------#
 # TEMPORARY ROUTES FOR TESTING PURPOSES ONLY
 #--------------------------------------------#
@@ -48,6 +67,14 @@ def calendar(request):
     else:
         return redirect('home')
 
+def page(request):
+
+    if request.method == 'GET':
+    
+            return render(request, 'consultation-chats.html')
+
+    else:
+        return redirect('home')
 
 def help(request):
 

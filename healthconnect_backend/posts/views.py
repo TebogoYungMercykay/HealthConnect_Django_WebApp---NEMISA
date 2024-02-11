@@ -203,6 +203,7 @@ def get_post(request, post_id):
             
             if user_id is not None:
                 
+                
                 jwt_token = request.session.get('access_token')
                 token_type = request.session.get('token_type')
 
