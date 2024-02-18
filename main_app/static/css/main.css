@@ -79,7 +79,7 @@
 --------------------------------------------------------------*/
 
 .blog .posts-list article {
-    box-shadow: 0 4px 16px rgba(var(--color-black-rgb), 0.1);
+    box-shadow: 0 4px 16px rgba(var(--color-black-rgb), 0.2);
     padding: 30px;
     height: 100%;
 }
@@ -501,6 +501,7 @@
 /*--------------------------------------------------------------
 # Blog Comments
 --------------------------------------------------------------*/
+
 .blog .comments {
     margin-top: 30px;
 }
@@ -602,10 +603,16 @@
     padding: 10px 20px;
     border: 0;
     background-color: var(--color-secondary);
+    align-self: center;
 }
 
 .blog .comments .reply-form .btn-primary:hover {
     background-color: rgba(var(--color-secondary-rgb), 0.8);
+}
+
+.blog .comments .reply-form textarea {
+    min-width: 100%;
+    min-height: 100px;
 }
 
 /*--------------------------------------------------------------
@@ -644,4 +651,36 @@
 .blog .blog-pagination li.active a,
 .blog .blog-pagination li:hover a {
     color: var(--color-white);
+}
+
+#bottom_post {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+}
+
+#bottom_post div {
+    margin: 0 20px;
+    transition: 0.3s;
+}
+
+#bottom_post .like .cats {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+    margin-right: 30px;
+}
+
+
+#bottom_post .like .cats a {
+    display: inline-block;
+    margin-right: 5px;
+    font-size: 20px;
+    color: rgba(239, 47, 47, 0.722);
 }

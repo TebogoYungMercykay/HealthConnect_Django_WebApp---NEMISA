@@ -16,6 +16,10 @@ METHOD_ERROR = "Incorrect Method Used, Please Try Again."
 
 def get_disease(request, user_id):
     
+    stored_messages = messages.get_messages(request)
+    for message in stored_messages:
+        pass
+    
     if request.method == 'GET' or request.method == 'POST':
         
         try:
@@ -59,6 +63,10 @@ def get_disease(request, user_id):
 
 
 def check_disease(request, user_id, disease_id):
+    
+    stored_messages = messages.get_messages(request)
+    for message in stored_messages:
+        pass
     
     request.session['prediction_successful'] = False
     request.session['message_successful'] = False
@@ -106,6 +114,10 @@ def check_disease(request, user_id, disease_id):
 
 
 def create_disease(request):
+    
+    stored_messages = messages.get_messages(request)
+    for message in stored_messages:
+        pass
     
     request.session['prediction_successful'] = False
     request.session['message_successful'] = False

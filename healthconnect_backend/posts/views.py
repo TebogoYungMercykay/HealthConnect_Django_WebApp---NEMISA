@@ -15,6 +15,10 @@ REMOVED = "[Removed]"
 
 def all_posts(request):
     
+    stored_messages = messages.get_messages(request)
+    for message in stored_messages:
+        pass
+    
     request.session['prediction_successful'] = False
     request.session['message_successful'] = False
     
@@ -22,7 +26,7 @@ def all_posts(request):
         
         try:
             user_id = request.session.get('user_id')
-            limit = 8
+            limit = 12
             
             if user_id is not None:
                 
@@ -63,7 +67,7 @@ def all_posts(request):
                 messages.error(request, USER_MESSAGE)
       
         except requests.RequestException as e:
-            logging.error(f"Error Occured When Requesting Posts Data: {e}, User Id: {user_id}")
+            logging.error(f"Error Occured When Requesting Posts Data, User Id: {user_id}")
 
     else:
         messages.error(request, METHOD_ERROR)
@@ -72,6 +76,10 @@ def all_posts(request):
 
 
 def articles(request):
+    
+    stored_messages = messages.get_messages(request)
+    for message in stored_messages:
+        pass
     
     articles_slice = None
     
@@ -122,6 +130,10 @@ def articles(request):
 
 
 def search_posts(request):
+    
+    stored_messages = messages.get_messages(request)
+    for message in stored_messages:
+        pass
     
     request.session['prediction_successful'] = False
     request.session['message_successful'] = False
@@ -179,7 +191,7 @@ def search_posts(request):
                 messages.error(request, USER_MESSAGE)
       
         except requests.RequestException as e:
-            logging.error(f"Error Occured When Requesting Posts Data: {e}, User Id: {user_id}")
+            logging.error(f"Error Occured When Requesting Posts Data, User Id: {user_id}")
 
     else:
         messages.error(request, METHOD_ERROR)
@@ -188,6 +200,10 @@ def search_posts(request):
 
 
 def create_post(request):
+    
+    stored_messages = messages.get_messages(request)
+    for message in stored_messages:
+        pass
     
     request.session['prediction_successful'] = False
     request.session['message_successful'] = False
@@ -219,30 +235,38 @@ def create_post(request):
                         api_response = response.json()
                         if api_response.get('status') == "success":
 
-                            messages.info(request, "Successfully Created a Post")
+                            messages.success(request, "Successfully Created a Post")
                             return redirect('all_posts')
                     
-                    logging.error(f"Error Occured When Creating Post, User Id: {user_id}")
                     messages.error(request, "Failed to Create a Post")
                 
                 else:
                     messages.error(request, USER_MESSAGE)
         
             except requests.RequestException as e:
-                logging.error(f"Error Occured When Creating Post: {e}, User Id: {user_id}")
-                messages.error(request, "Error Occurred While Creating a Post")
+                temp_message = ""
+                try:
+                    api_response = response.json()
+                    temp_message = api_response.get('data')
+                except Exception as e:
+                    temp_message = "Error Occurred While Creating a Post"
+                    
+                messages.error(request, temp_message)
 
         else:
             messages.error(request, MESSAGE)
 
     else:
-        messages.error(request, METHOD_ERROR)
         messages.error(request, "Failed to Create a Post")
         
     return redirect(reverse('all_posts'))
 
 
 def get_post(request, post_id):
+    
+    stored_messages = messages.get_messages(request)
+    for message in stored_messages:
+        pass
     
     request.session['prediction_successful'] = False
     request.session['message_successful'] = False
@@ -294,7 +318,9 @@ def get_post(request, post_id):
                             reply_date = reply["created_at"]
                             reply["created_at"] = utils.format_date(reply_date)
                             reply["image_link"] = replies_images[index % len(replies_images)]
-                            
+                        
+                        # print("Post Response: ", api_response_data)
+                        
                         return render(request, POST_TEMPLATE, {'post_details': api_response_data})
                 
                 logging.error(f"Error Occured When Requesting Post Data, Post ID: {post_id}, User ID: {user_id}")
@@ -303,7 +329,7 @@ def get_post(request, post_id):
                 messages.error(request, USER_MESSAGE)
       
         except requests.RequestException as e:
-            logging.error(f"Error Occured When Requesting Post Data: {e}, Post ID: {post_id}, User ID: {user_id}")
+            logging.error(f"Error Occured When Requesting Post Data, Post ID: {post_id}, User ID: {user_id}")
 
     else:
         messages.error(request, METHOD_ERROR)
@@ -312,6 +338,10 @@ def get_post(request, post_id):
 
 
 def update_post(request, post_id):
+    
+    stored_messages = messages.get_messages(request)
+    for message in stored_messages:
+        pass
     
     request.session['prediction_successful'] = False
     request.session['message_successful'] = False
@@ -356,7 +386,7 @@ def update_post(request, post_id):
                     messages.error(request, USER_MESSAGE)
         
             except requests.RequestException as e:
-                logging.error(f"Error Occured When Requesting Post Data: {e}, Post ID: {post_id}, User ID: {user_id}")
+                logging.error(f"Error Occured When Requesting Post Data, Post ID: {post_id}, User ID: {user_id}")
 
         else:
             messages.error(request, "Missing Data, Please Try Again")
@@ -368,6 +398,10 @@ def update_post(request, post_id):
     
 
 def delete_post(request, post_id):
+    
+    stored_messages = messages.get_messages(request)
+    for message in stored_messages:
+        pass
     
     request.session['prediction_successful'] = False
     request.session['message_successful'] = False
@@ -405,7 +439,7 @@ def delete_post(request, post_id):
                 messages.error(request, USER_MESSAGE)
       
         except requests.RequestException as e:
-            logging.error(f"Error Occured When Requesting Post Data: {e}, Post ID: {post_id}, User ID: {user_id}")
+            logging.error(f"Error Occured When Requesting Post Data, Post ID: {post_id}, User ID: {user_id}")
 
     else:
         messages.error(request, METHOD_ERROR)
@@ -414,6 +448,10 @@ def delete_post(request, post_id):
 
 
 def create_reply(request):
+    
+    stored_messages = messages.get_messages(request)
+    for message in stored_messages:
+        pass
     
     request.session['prediction_successful'] = False
     request.session['message_successful'] = False
@@ -456,7 +494,7 @@ def create_reply(request):
                     messages.error(request, USER_MESSAGE)
         
             except requests.RequestException as e:
-                logging.error(f"Error Occured When Creating Reply: {e}, Post ID: {post_id}, User ID: {user_id}")
+                logging.error(f"Error Occured When Creating Reply, Post ID: {post_id}, User ID: {user_id}")
 
         else:
             messages.error(request, MESSAGE)
@@ -467,58 +505,64 @@ def create_reply(request):
     return redirect(reverse('all_posts'))
 
 
-def vote(request):
+def react_to_post(request, post_id):
+    
+    stored_messages = messages.get_messages(request)
+    for message in stored_messages:
+        pass
     
     request.session['prediction_successful'] = False
     request.session['message_successful'] = False
     
-    if request.method == 'POST':
-        
-        if request.POST['post_id']: # and request.POST['dir']:
-        
-            try:
-                user_id = request.session.get('user_id')
+    if request.method == 'POST' or request.method == 'GET':
+    
+        try:
+            user_id = request.session.get('user_id')
+            
+            if user_id is not None and post_id is not None:
                 
-                if user_id is not None:
-                    
-                    jwt_token = request.session.get('access_token')
-                    token_type = request.session.get('token_type')
+                jwt_token = request.session.get('access_token')
+                token_type = request.session.get('token_type')
 
-                    api_url = os.getenv("API_ENDPOINT") + '/posts/vote'
+                api_url = os.getenv("API_ENDPOINT") + '/posts/vote'
 
-                    post_data = {
-                        "post_id": request.POST['post_id'],
-                        "dir": 1,    
-                    }
-                    
-                    headers = {
-                        "Content-Type": JSON_DATA,
-                        "Authorization": f"{token_type} {jwt_token}",
-                    }
+                post_data = {
+                    "post_id": post_id,
+                    "dir": "1",    
+                }
+                
+                post_data = json.dumps(post_data, indent=4, ensure_ascii=False)
+                headers = { "Content-Type": JSON_DATA, "Authorization": f"{token_type} {jwt_token}",}
 
-                    response = requests.post(api_url, data=post_data, headers=headers)
-                    response.raise_for_status()
-                    
-                    if response.status_code == 200:
-                        api_response = response.json()
-                        if api_response.get('status') == "success":
-
-                            messages.info(request, "Successfully Created a Reply")
-                            return api_response.get('data')
-                    
-                    logging.error(f"Error Occured When Creating Reply, User Id: {user_id}")
+                response = requests.post(api_url, data=post_data, headers=headers)
+                response.raise_for_status()
+                
+                if response.status_code == 201:
+                    api_response = response.json()
+                    if api_response.get('status') == "success":
+                        
+                        messages.success(request, "Successfully Reacted to a Post")
                 
                 else:
-                    messages.error(request, USER_MESSAGE)
-        
-            except requests.RequestException as e:
-                logging.error(f"Error Occured When Creating Reply: {e}, User Id: {user_id}")
-
-        else:
-            messages.error(request, MESSAGE)
-            return redirect(reverse(POSTS_TEMPLATE))
+                    messages.error("Error Occured While Reacting to Post")
+            
+            else:
+                messages.error(request, USER_MESSAGE)
+    
+        except requests.RequestException as e:
+            temp_message = ""
+            try:
+                api_response = response.json()
+                temp_message = api_response.get('data')
+            except Exception as e:
+                temp_message = "Error Occured While Reacting to Post"
+            
+            print("Exception: ", temp_message)
+            print("Exception: ", e)
+            messages.error(request, temp_message)
 
     else:
-        messages.error(request, METHOD_ERROR)
+        messages.error(request, MESSAGE)
         
-    return None
+    return redirect(reverse('all_posts'))
+

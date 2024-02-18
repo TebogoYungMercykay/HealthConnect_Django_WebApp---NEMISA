@@ -13,6 +13,11 @@ JSON_DATA = 'application/json'
 
 
 def login_patient(request):
+    
+    stored_messages = messages.get_messages(request)
+    for message in stored_messages:
+        pass
+    
     if request.method == 'POST':
         
         try:
@@ -73,6 +78,11 @@ def login_patient(request):
 
 
 def login_doctor(request):
+    
+    stored_messages = messages.get_messages(request)
+    for message in stored_messages:
+        pass
+    
     if request.method == 'POST':
         
         try:
@@ -133,6 +143,11 @@ def login_doctor(request):
 
 
 def login_admin(request):
+    
+    stored_messages = messages.get_messages(request)
+    for message in stored_messages:
+        pass
+    
     if request.method == 'POST':
         
         try:
@@ -193,7 +208,11 @@ def login_admin(request):
 
 
 def logout(request):
-
+    
+    stored_messages = messages.get_messages(request)
+    for message in stored_messages:
+        pass
+    
     if request.method == 'POST':
         
         try:
