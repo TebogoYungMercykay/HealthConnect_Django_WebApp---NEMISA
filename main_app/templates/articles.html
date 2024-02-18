@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block articles_active %} active  {% endblock %}
+{% block admin_articles_active %} active {% endblock %}
 {% block redirect_script %}
 {% if not request.session.user_id or not request.session.is_authenticated %}
     <script type="text/javascript">
@@ -207,7 +208,6 @@
     </main>
 {% endblock %}
 {% block pagespecificjs %}
-    <script src="{% static 'js/table-data.js' %}"></script>
     <script>
         window.embeddedChatbotConfig = {
             chatbotId: "{{ request.session.chatbot_id }}",
