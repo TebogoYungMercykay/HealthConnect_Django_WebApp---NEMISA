@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block admin_articles_active %} active  {% endblock %}
+{% block diseaseinfos_active %} active  {% endblock %}
 {% block redirect_script %}
 {% if not request.session.user_id or not request.session.is_authenticated %}
     <script type="text/javascript">
