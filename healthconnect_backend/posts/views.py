@@ -118,11 +118,7 @@ def articles(request):
         
         article_data['publishedAt'] = utils.format_date(article_data['publishedAt'])
     
-    if request.session.get('is_admin') and request.session.get('name') in 'Admin User':
-        return render(request, 'admin-blog.html', { "articles": articles_slice })
-    
-    else:
-        return render(request, 'articles.html', { "articles": articles_slice })
+    return render(request, 'articles.html', { "articles": articles_slice })
 
 
 def search_posts(request):
