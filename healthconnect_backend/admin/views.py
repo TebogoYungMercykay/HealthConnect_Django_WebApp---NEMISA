@@ -13,7 +13,10 @@ CONTACT_EMAIL = 'contact.html'
 
 def dashboard(request):
     
-    messages.clear()
+    stored_messages = messages.get_messages(request)
+    for message in stored_messages:
+        pass
+    
     if request.method == 'GET':
 
         return render(request, 'admin-dashboard.html', {
@@ -30,7 +33,10 @@ def dashboard(request):
 
 def diseaseinfos(request):
     
-    messages.clear()
+    stored_messages = messages.get_messages(request)
+    for message in stored_messages:
+        pass
+    
     table_data = None
     
     if request.method == 'GET' or request.method == 'POST':
@@ -95,5 +101,9 @@ def diseaseinfos(request):
 
 
 def sendmail(request):
+    stored_messages = messages.get_messages(request)
+    for message in stored_messages:
+        pass
+    
     messages.info(request, "Contact Query Sent successfully.")
     return render(request, CONTACT_EMAIL, {'status': "success", 'data': "Contact Query Sent successfully."})

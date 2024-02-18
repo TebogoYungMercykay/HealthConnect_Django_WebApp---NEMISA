@@ -15,7 +15,10 @@ REMOVED = "[Removed]"
 
 def all_posts(request):
     
-    messages.clear()
+    stored_messages = messages.get_messages(request)
+    for message in stored_messages:
+        pass
+    
     request.session['prediction_successful'] = False
     request.session['message_successful'] = False
     
@@ -23,7 +26,7 @@ def all_posts(request):
         
         try:
             user_id = request.session.get('user_id')
-            limit = 8
+            limit = 12
             
             if user_id is not None:
                 
@@ -74,7 +77,10 @@ def all_posts(request):
 
 def articles(request):
     
-    messages.clear()
+    stored_messages = messages.get_messages(request)
+    for message in stored_messages:
+        pass
+    
     articles_slice = None
     
     try:
@@ -125,7 +131,10 @@ def articles(request):
 
 def search_posts(request):
     
-    messages.clear()
+    stored_messages = messages.get_messages(request)
+    for message in stored_messages:
+        pass
+    
     request.session['prediction_successful'] = False
     request.session['message_successful'] = False
     
@@ -192,7 +201,10 @@ def search_posts(request):
 
 def create_post(request):
     
-    messages.clear()
+    stored_messages = messages.get_messages(request)
+    for message in stored_messages:
+        pass
+    
     request.session['prediction_successful'] = False
     request.session['message_successful'] = False
     
@@ -252,7 +264,10 @@ def create_post(request):
 
 def get_post(request, post_id):
     
-    messages.clear()
+    stored_messages = messages.get_messages(request)
+    for message in stored_messages:
+        pass
+    
     request.session['prediction_successful'] = False
     request.session['message_successful'] = False
     
@@ -324,7 +339,10 @@ def get_post(request, post_id):
 
 def update_post(request, post_id):
     
-    messages.clear()
+    stored_messages = messages.get_messages(request)
+    for message in stored_messages:
+        pass
+    
     request.session['prediction_successful'] = False
     request.session['message_successful'] = False
     
@@ -381,7 +399,10 @@ def update_post(request, post_id):
 
 def delete_post(request, post_id):
     
-    messages.clear()
+    stored_messages = messages.get_messages(request)
+    for message in stored_messages:
+        pass
+    
     request.session['prediction_successful'] = False
     request.session['message_successful'] = False
     
@@ -428,7 +449,10 @@ def delete_post(request, post_id):
 
 def create_reply(request):
     
-    messages.clear()
+    stored_messages = messages.get_messages(request)
+    for message in stored_messages:
+        pass
+    
     request.session['prediction_successful'] = False
     request.session['message_successful'] = False
     post_id = 1
@@ -483,7 +507,10 @@ def create_reply(request):
 
 def react_to_post(request, post_id):
     
-    messages.clear()
+    stored_messages = messages.get_messages(request)
+    for message in stored_messages:
+        pass
+    
     request.session['prediction_successful'] = False
     request.session['message_successful'] = False
     

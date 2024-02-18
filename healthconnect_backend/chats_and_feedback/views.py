@@ -15,7 +15,10 @@ METHOD_ERROR = "Incorrect Method Used, Please Try Again."
 
 def post_feedback(request, doctor_id, consultation_id):
     
-    messages.clear()
+    stored_messages = messages.get_messages(request)
+    for message in stored_messages:
+        pass
+    
     request.session['prediction_successful'] = False
     request.session['message_successful'] = False
     
@@ -69,7 +72,10 @@ def post_feedback(request, doctor_id, consultation_id):
 
 def user_feedback(request, user_id):
     
-    messages.clear()
+    stored_messages = messages.get_messages(request)
+    for message in stored_messages:
+        pass
+    
     request.session['prediction_successful'] = False
     request.session['message_successful'] = False
     
@@ -120,7 +126,10 @@ def user_feedback(request, user_id):
 
 def chat_messages(request, consultation_id, sender_id = None):
     
-    messages.clear()
+    stored_messages = messages.get_messages(request)
+    for message in stored_messages:
+        pass
+    
     request.session['prediction_successful'] = False
     request.session['message_successful'] = request.session.get('message_successful')
     
@@ -155,7 +164,10 @@ def chat_messages(request, consultation_id, sender_id = None):
 
 def create_chat(request, consultation_id, message, sender_id = None):
     
-    messages.clear()
+    stored_messages = messages.get_messages(request)
+    for message in stored_messages:
+        pass
+    
     request.session['prediction_successful'] = False
     request.session['message_successful'] = False
     
@@ -192,7 +204,10 @@ def create_chat(request, consultation_id, message, sender_id = None):
 
 def send_message(request, consultation_id):
     
-    messages.clear()
+    stored_messages = messages.get_messages(request)
+    for message in stored_messages:
+        pass
+    
     request.session['prediction_successful'] = False
     request.session['message_successful'] = False
     
@@ -228,7 +243,10 @@ def send_message(request, consultation_id):
 
 def whatsapp(request):
 
-    messages.clear()
+    stored_messages = messages.get_messages(request)
+    for message in stored_messages:
+        pass
+    
     if request.method == 'POST':
 
         account_sid = os.getenv('TWIILO_ACCOUNT_SID')
@@ -247,5 +265,8 @@ def whatsapp(request):
 
 
 def meeting(request):
-    messages.clear()
+    stored_messages = messages.get_messages(request)
+    for message in stored_messages:
+        pass
+    
     return render(request, 'consultation/videocall.html', {'name': request.user.first_name + " " + request.user.last_name})
