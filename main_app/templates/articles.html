@@ -1,0 +1,220 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block articles_active %} active  {% endblock %}
+{% block redirect_script %}
+{% if not request.session.user_id or not request.session.is_authenticated %}
+    <script type="text/javascript">
+        window.location.href = "{% url 'login' %}";
+    </script>
+{% endif %}
+{% endblock %}
+{% block title %} Health Articles {% endblock %}
+{% block content %}
+    <main id="main" class="main">
+        <section id="recent-blog-posts" class="section recent-blog-posts">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Health Articles</h2>
+                    <p>Trending Health Articles around the Globe</p>
+                </div>
+            </div>
+
+            {% if articles %}
+                <div class="container" data-aos="fade-up">        
+                    <div class="row">
+                        {% for article_data in articles %}
+                            <div class="news_data col-lg-4 mt-3 mb-5" data-aos="fade-up" data-aos-delay="200">
+                                <div class="post-box">
+                                    <div class="post-img">
+                                        <img src="{{ article_data.urlToImage }}" class="img-fluid" alt="Article Image">
+                                    </div>
+                                    <div class="meta">
+                                        <span class="post-date">{{ article_data.publishedAt }}</span>
+                                        <span class="post-author"> / {{ article_data.author }}</span>
+                                    </div>
+                                    <h3 class="post-title">{{ article_data.title }}</h3>
+                                    <p>{{ article_data.description }}.</p>
+                                    <a href="{{ article_data.url }}" class="readmore stretched-link"  target="_blank">
+                                        <span>View from Source</span>
+                                        <i class="bi bi-arrow-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% else %}
+                <div class="container" data-aos="fade-up">
+                    <div class="row">
+                        <div class="news_data col-lg-4 mt-3 mb-5" data-aos="fade-up" data-aos-delay="200">
+                            <div class="post-box">
+                                <div class="post-img">
+                                    <img src="{% static 'img/blog/blog-1.jpg' %}" class="img-fluid" alt="">
+                                </div>
+                                <div class="meta">
+                                    <span class="post-date">Tue, December 12</span>
+                                    <span class="post-author"> / Julia Parker</span>
+                                </div>
+                                <h3 class="post-title">Eum ad dolor et. Autem aut fugiat debitis voluptatem consequuntur sit</h3>
+                                <p>Illum voluptas ab enim placeat. Adipisci enim velit nulla. Vel omnis laudantium. Asperiores eum ipsa est officiis. Modi cupiditate exercitationem qui magni est...</p>
+                                <a href="#" class="readmore stretched-link">
+                                    <span>View from Source</span>
+                                    <i class="bi bi-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="news_data col-lg-4 mt-3 mb-5" data-aos="fade-up" data-aos-delay="400">
+                            <div class="post-box">
+                                <div class="post-img">
+                                    <img src="{% static 'img/blog/blog-1.jpg' %}" class="img-fluid" alt="">
+                                </div>
+                                <div class="meta">
+                                    <span class="post-date">Fri, September 05</span>
+                                    <span class="post-author"> / Mario Douglas</span>
+                                </div>
+                                <h3 class="post-title">Et repellendus molestiae qui est sed omnis voluptates magnam</h3>
+                                <p>Voluptatem nesciunt omnis libero autem tempora enim ut ipsam id. Odit quia ab eum assumenda. Quisquam omnis aliquid necessitatibus tempora consectetur doloribus...</p>
+                                <a href="#" class="readmore stretched-link">
+                                    <span>View from Source</span>
+                                    <i class="bi bi-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="news_data col-lg-4 mt-3 mb-5" data-aos="fade-up" data-aos-delay="600">
+                            <div class="post-box">
+                                <div class="post-img">
+                                    <img src="{% static 'img/blog/blog-1.jpg' %}" class="img-fluid" alt="">
+                                </div>
+                                <div class="meta">
+                                    <span class="post-date">Tue, July 27</span>
+                                    <span class="post-author"> / Lisa Hunter</span>
+                                </div>
+                                <h3 class="post-title">Quia assumenda est et veritatis aut quae</h3>
+                                <p>Quia nam eaque omnis explicabo similique eum quaerat similique laboriosam. Quis omnis repellat sed quae consectetur magnam veritatis dicta nihil...</p>
+                                <a href="#" class="readmore stretched-link">
+                                    <span>View from Source</span>
+                                    <i class="bi bi-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="news_data col-lg-4 mt-3 mb-5" data-aos="fade-up" data-aos-delay="200">
+                            <div class="post-box">
+                                <div class="post-img">
+                                    <img src="{% static 'img/blog/blog-1.jpg' %}" class="img-fluid" alt="">
+                                </div>
+                                <div class="meta">
+                                    <span class="post-date">Tue, December 12</span>
+                                    <span class="post-author"> / Julia Parker</span>
+                                </div>
+                                <h3 class="post-title">Eum ad dolor et. Autem aut fugiat debitis voluptatem consequuntur sit</h3>
+                                <p>Illum voluptas ab enim placeat. Adipisci enim velit nulla. Vel omnis laudantium. Asperiores eum ipsa est officiis. Modi cupiditate exercitationem qui magni est...</p>
+                                <a href="#" class="readmore stretched-link">
+                                    <span>View from Source</span>
+                                    <i class="bi bi-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="news_data col-lg-4 mt-3 mb-5" data-aos="fade-up" data-aos-delay="400">
+                            <div class="post-box">
+                                <div class="post-img">
+                                    <img src="{% static 'img/blog/blog-1.jpg' %}" class="img-fluid" alt="">
+                                </div>
+                                <div class="meta">
+                                    <span class="post-date">Fri, September 05</span>
+                                    <span class="post-author"> / Mario Douglas</span>
+                                </div>
+                                <h3 class="post-title">Et repellendus molestiae qui est sed omnis voluptates magnam</h3>
+                                <p>Voluptatem nesciunt omnis libero autem tempora enim ut ipsam id. Odit quia ab eum assumenda. Quisquam omnis aliquid necessitatibus tempora consectetur doloribus...</p>
+                                <a href="#" class="readmore stretched-link">
+                                    <span>View from Source</span>
+                                    <i class="bi bi-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="news_data col-lg-4 mt-3 mb-5" data-aos="fade-up" data-aos-delay="600">
+                            <div class="post-box">
+                                <div class="post-img">
+                                    <img src="{% static 'img/blog/blog-1.jpg' %}" class="img-fluid" alt="">
+                                </div>
+                                <div class="meta">
+                                    <span class="post-date">Tue, July 27</span>
+                                    <span class="post-author"> / Lisa Hunter</span>
+                                </div>
+                                <h3 class="post-title">Quia assumenda est et veritatis aut quae</h3>
+                                <p>Quia nam eaque omnis explicabo similique eum quaerat similique laboriosam. Quis omnis repellat sed quae consectetur magnam veritatis dicta nihil...</p>
+                                <a href="#" class="readmore stretched-link">
+                                    <span>View from Source</span>
+                                    <i class="bi bi-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="news_data col-lg-4 mt-3 mb-5" data-aos="fade-up" data-aos-delay="200">
+                            <div class="post-box">
+                                <div class="post-img">
+                                    <img src="{% static 'img/blog/blog-1.jpg' %}" class="img-fluid" alt="">
+                                </div>
+                                <div class="meta">
+                                    <span class="post-date">Tue, December 12</span>
+                                    <span class="post-author"> / Julia Parker</span>
+                                </div>
+                                <h3 class="post-title">Eum ad dolor et. Autem aut fugiat debitis voluptatem consequuntur sit</h3>
+                                <p>Illum voluptas ab enim placeat. Adipisci enim velit nulla. Vel omnis laudantium. Asperiores eum ipsa est officiis. Modi cupiditate exercitationem qui magni est...</p>
+                                <a href="#" class="readmore stretched-link">
+                                    <span>View from Source</span>
+                                    <i class="bi bi-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="news_data col-lg-4 mt-3 mb-5" data-aos="fade-up" data-aos-delay="400">
+                            <div class="post-box">
+                                <div class="post-img">
+                                    <img src="{% static 'img/blog/blog-1.jpg' %}" class="img-fluid" alt="">
+                                </div>
+                                <div class="meta">
+                                    <span class="post-date">Fri, September 05</span>
+                                    <span class="post-author"> / Mario Douglas</span>
+                                </div>
+                                <h3 class="post-title">Et repellendus molestiae qui est sed omnis voluptates magnam</h3>
+                                <p>Voluptatem nesciunt omnis libero autem tempora enim ut ipsam id. Odit quia ab eum assumenda. Quisquam omnis aliquid necessitatibus tempora consectetur doloribus...</p>
+                                <a href="#" class="readmore stretched-link">
+                                    <span>View from Source</span>
+                                    <i class="bi bi-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="news_data col-lg-4 mt-3 mb-5" data-aos="fade-up" data-aos-delay="600">
+                            <div class="post-box">
+                                <div class="post-img">
+                                    <img src="{% static 'img/blog/blog-1.jpg' %}" class="img-fluid" alt="">
+                                </div>
+                                <div class="meta">
+                                    <span class="post-date">Tue, July 27</span>
+                                    <span class="post-author"> / Lisa Hunter</span>
+                                </div>
+                                <h3 class="post-title">Quia assumenda est et veritatis aut quae</h3>
+                                <p>Quia nam eaque omnis explicabo similique eum quaerat similique laboriosam. Quis omnis repellat sed quae consectetur magnam veritatis dicta nihil...</p>
+                                <a href="#" class="readmore stretched-link">
+                                    <span>View from Source</span>
+                                    <i class="bi bi-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        
+        </section>
+    </main>
+{% endblock %}
+{% block pagespecificjs %}
+    <script src="{% static 'js/table-data.js' %}"></script>
+    <script>
+        window.embeddedChatbotConfig = {
+            chatbotId: "{{ request.session.chatbot_id }}",
+            domain: "www.chatbase.co"
+        }
+    </script>
+    <script src="https://www.chatbase.co/embed.min.js" chatbotId="{{ request.session.chatbot_id }}" domain="www.chatbase.co"
+        defer>
+    </script>
+{% endblock %}
