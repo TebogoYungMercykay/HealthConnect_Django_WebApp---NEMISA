@@ -389,16 +389,13 @@
                 <nav id="navbar" class="navbar order-last order-lg-0">
                     <ul>
                         <li>
-                            <a class="nav-link scrollto {{doctors_active}}" href="#">Doctors</a>
+                            <a class="nav-link scrollto {% block diseaseinfos_active %}   {% endblock %}" href="{% url 'diseaseinfos' %}">DiseasesInfo</a>
                         </li>
                         <li>
-                            <a class="nav-link scrollto {{diseases_active}}" href="#">Diseases</a>
+                            <a class="nav-link scrollto {% block admin_articles_active %}   {% endblock %}" href="{% url 'articles' %}">Articles</a>
                         </li>
                         <li>
-                            <a class="nav-link scrollto {{patients_active}}" href="#">Patients</a>
-                        </li>
-                        <li>
-                            <a class="nav-link scrollto {{dashb_active}}" href="#">Dashboard</a>
+                            <a class="nav-link scrollto {% block dashb_active %}   {% endblock %}" href="{% url 'dashboard' %}">Dashboard</a>
                         </li>
                     </ul>
                     <i class="bi bi-list mobile-nav-toggle"></i>
