@@ -148,6 +148,128 @@
 
     </section>
     {% endif %}
+    {% if consultation_chats %}
+    <section>
+        <div class="container" id="consultation_chat">
+            <div class="section-title mt-4">
+                <h2>Consultation Chats</h2>
+            </div>
+        </div>
+        <!-- Chat Here -->
+
+            <div class="container-fluid h-100">
+                <div class="row justify-content-center h-100">
+                    <div class="col-md-8 col-xl-8 chat">
+                        <div class="card">
+                            <div class="card-header msg_head">
+                                <div class="d-flex bd-highlight">
+                                    {% if request.session.is_doctor %}
+                                        <div class="img_cont">
+                                            <img src="{% static 'img/testimonials/testimonials-4.jpg' %}" class="rounded-circle user_img" alt="Profile Picture">
+                                            <span class="online_icon"></span>
+                                        </div>
+                                        <div class="user_info">
+                                            <span>{{ consultation_info.patient.surname }} {{ consultation_info.patient.name }}</span>
+                                            <p>{{ consultation_chats.length }} Messages</p>
+                                        </div>
+                                    {% else %}
+                                        <div class="img_cont">
+                                            <img src="{% static 'img/doctors/doctors-3.jpg' %}" class="rounded-circle user_img" alt="Profile Picture">
+                                            <span class="online_icon"></span>
+                                        </div>
+                                        <div class="user_info">
+                                            <span>Dr {{ consultation_info.doctor.surname }} {{ consultation_info.doctor.name }}</span>
+                                            <p>{{ consultation_chats.length }} Messages</p>
+                                        </div>
+                                    {% endif %}
+                                    <div class="ms-auto">
+                                        <div class="video_cam" id="action_menu_btn">
+                                            <span>
+                                                <a href="{% url 'consultation_call' consultation_id=consultation_info.consultation_id %}">
+                                                <i class="fas fa-video"></i>
+                                                </a>
+                                            </span>
+                                            {% if request.session.is_patient %}
+                                                <span class="star-icon" onclick="openRatingModal()">
+                                                    <i class="fas fa-star"></i>
+                                                </span>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body msg_card_body pt-4">
+                                {% for sent_message in consultation_chats.chats %}
+                                    {% if request.session.is_doctor %}
+                                        {% if sent_message.sender_id == request.session.user_id %}
+                                            <div class="d-flex justify-content-end mb-4">
+                                                <div class="msg_cotainer_send col-8"> {{ sent_message.message }} <span class="msg_time_send">{{ sent_message.created_at }}</span>
+                                                </div>
+                                                <div class="img_cont_msg">
+                                                    <img src="{% static 'img/doctors/doctors-3.jpg' %}" class="rounded-circle user_img" alt="Profile Picture">
+                                                </div>
+                                            </div>
+                                        {% else %}
+                                            <div class="d-flex justify-content-start mb-4">
+                                                <div class="img_cont_msg">
+                                                    <img src="{% static 'img/testimonials/testimonials-4.jpg' %}" class="rounded-circle user_img" alt="Profile Picture">
+                                                </div>
+                                                <div class="msg_cotainer col-8"> {{ sent_message.message }} <span class="msg_time">{{ sent_message.created_at }}</span>
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                    {% else %}
+                                        {% if sent_message.sender_id == request.session.user_id %}
+                                            <div class="d-flex justify-content-end mb-4">
+                                                <div class="msg_cotainer_send col-8"> {{ sent_message.message }} <span class="msg_time_send">{{ sent_message.created_at }}</span>
+                                                </div>
+                                                <div class="img_cont_msg">
+                                                    <img src="{% static 'img/testimonials/testimonials-4.jpg' %}" class="rounded-circle user_img" alt="Profile Picture">
+                                                </div>
+                                            </div>
+                                        {% else %}
+                                            <div class="d-flex justify-content-start mb-4">
+                                                <div class="img_cont_msg">
+                                                    <img src="{% static 'img/doctors/doctors-3.jpg' %}" class="rounded-circle user_img" alt="Profile Picture">
+                                                </div>
+                                                <div class="msg_cotainer col-8"> {{ sent_message.message }} <span class="msg_time">{{ sent_message.created_at }}</span>
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                            <div class="card-footer">
+                                {% if consultation_chats.status != 'closed' %}
+                                    <form action="{% url 'send_message' consultation_id=consultation_info.consultation_id %}" method="post" class="message-form">
+                                        {% csrf_token %}
+                                        <div class="input-group">
+                                            <textarea name="message" class="form-control type_msg" placeholder="Type your message..."></textarea>
+                                            <div class="input-group-append">
+                                                <button type="submit" class="input-group-text send_btn" id="send_btn" title="Send Message">
+                                                    <i class="fas fa-location-arrow"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                {% else %}
+                                    <div class="input-group">
+                                        <textarea name="" class="form-control type_msg" placeholder="Closed Consultation" disabled></textarea>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% if consultation_chats.status != 'closed' %}
+                <form action="{% url 'close_consultation' consultation_id=consultation_info.consultation_id %}" method="post">
+                    {% csrf_token %}
+                    <input type="submit" value="Close Consultation" class="close-button">
+                </form>
+            {% endif %}
+    </section>
+    {% endif %}
 
     <section class="section">
         <div class="section-title">
@@ -227,6 +349,7 @@
     {% endblock %}
 
     {% block pagespecificjs %}
+    {%if not request.session.is_doctor or request.session.is_admin %}
     <script>
         document.addEventListener('DOMContentLoaded', function () {
 
@@ -240,4 +363,5 @@
 
         });
     </script>
+    {% endif %}
     {% endblock %}
