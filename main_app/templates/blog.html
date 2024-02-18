@@ -15,6 +15,29 @@
             <div class="section-title">
                 <h2>Health Posts</h2>
             </div>
+            {% comment %}
+            {% for message in messages %}
+                {% if message.tags == 'success' %}
+                    <div class="alert alert-success alert-dismissible fade show col-6 mx-auto" role="alert">
+                        <i class="bi bi-exclamation-octagon me-1"></i>
+                        {{ message }} 
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% elif message.tags == 'info' %}
+                    <div class="alert alert-info alert-dismissible fade show col-6 mx-auto" role="alert">
+                        <i class="bi bi-exclamation-octagon me-1"></i>
+                        {{ message }} 
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% else %}
+                    <div class="alert alert-danger alert-dismissible fade show col-6 mx-auto" role="alert">
+                        <i class="bi bi-exclamation-octagon me-1"></i>
+                        {{ message }} 
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endif %}
+            {% endfor %}
+            {% endcomment %}
             <div class="container" data-aos="fade-up">
                 <div class="row g-5">
                     <div class="col-lg-8">
@@ -22,10 +45,6 @@
                             {% for post in all_posts %}
                             <div class="col-lg-6">
                                 <article class="d-flex flex-column">
-                                    <div class="post-img">
-                                        <img src="{% static post.Post.image_link %}" alt="Image Loading.."
-                                            class="img-fluid">
-                                    </div>
                                     <h2 class="title">
                                         <a href="{% url 'get_post' post.Post.id %}">{{ post.Post.title }}</a>
                                     </h2>
@@ -57,8 +76,25 @@
                                     <div class="content">
                                         <p>{{ post.Post.content }}</p>
                                     </div>
-                                    <div class="read-more mt-auto align-self-end">
-                                        <a href="{% url 'get_post' post.Post.id %}">Read More</a>
+                                    <div class="mt-auto" id="bottom_post">
+                                        <div class="like align-self-start">
+                                            <ul class="cats">
+                                                <a href="{% url 'react_to_post' post.Post.id %}">
+                                                    <i class="bi bi-heart-fill"></i>
+                                                </a>
+                                                <li>
+                                                    {{ post.votes }}
+                                                    {% if post.votes == 1 %}
+                                                        Like
+                                                    {% else %}
+                                                        Likes
+                                                    {% endif %}
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="read-more align-self-end">
+                                            <a href="{% url 'get_post' post.Post.id %}"><i class="bi bi-eye"></i> Read More</a>
+                                        </div>
                                     </div>
                                 </article>
                             </div>

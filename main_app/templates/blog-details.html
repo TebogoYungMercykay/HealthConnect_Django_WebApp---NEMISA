@@ -76,14 +76,24 @@
                             </div>
                             <!-- End post content -->
                             <div class="meta-bottom">
-                                <i class="bi bi-folder"></i>
+                                <i class="bi bi-heart"></i>
                                 <ul class="cats">
                                     <li>
-                                        <a href="#">HealthConnect</a>
+                                        <a href="#">
+                                            {{ post_details.votes }}
+                                            {% if post_details.votes == 1 %}
+                                                Like
+                                            {% else %}
+                                                Likes
+                                            {% endif %}
+                                        </a>
                                     </li>
                                 </ul>
                                 <i class="bi bi-tags"></i>
                                 <ul class="tags">
+                                    <li>
+                                        <a href="#">HealthConnect</a>
+                                    </li>
                                     <li>
                                         <a href="#">Mental Health</a>
                                     </li>
@@ -418,128 +428,127 @@
                             </div>
                             <!-- End sidebar search formn-->
                             <div class="sidebar-item categories">
-                                <h3 class="sidebar-title">Categories</h3>
+                                <h3 class="sidebar-title">Health Categories</h3>
                                 <ul class="mt-3">
                                     <li>
-                                        <a href="#">General <span>(25)</span>
+                                        <a href="#"> Wellness Tips <span>(25)</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#">Lifestyle <span>(12)</span>
+                                        <a href="#"> Mental Health <span>(22)</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#">Travel <span>(5)</span>
+                                        <a href="#"> Disease Prevention <span>(8)</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#">Design <span>(22)</span>
+                                        <a href="#"> Disease Awareness <span>(8)</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#">Creative <span>(8)</span>
+                                        <a href="#"> Nutrition <span>(12)</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#">Educaion <span>(14)</span>
+                                        <a href="#"> Fitness <span>(5)</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#"> Health Education <span>(14)</span>
                                         </a>
                                     </li>
                                 </ul>
                             </div>
                             <!-- End sidebar categories-->
                             <div class="sidebar-item recent-posts">
-                                <h3 class="sidebar-title">Recent Posts</h3>
+                                <h3 class="sidebar-title">Recent Health Updates</h3>
                                 <div class="mt-3">
                                     <div class="post-item mt-3">
                                         <img src="{% static 'img/blog/blog-recent-1.jpg' %}" alt="" class="flex-shrink-0">
                                         <div>
                                             <h4>
-                                                <a href="blog-post_details.html">Nihil blanditiis at in nihil autem</a>
+                                                <a href="#">Managing Diabetes</a>
                                             </h4>
-                                            <time datetime="2020-01-01">Jan 1, 2020</time>
+                                            <time datetime="2022-02-15">Feb 15, 2022</time>
                                         </div>
                                     </div>
-                                    <!-- End recent post item-->
+                                    <!-- End recent health update item-->
                                     <div class="post-item">
                                         <img src="{% static 'img/blog/blog-recent-2.jpg' %}" alt="" class="flex-shrink-0">
                                         <div>
                                             <h4>
-                                                <a href="blog-post_details.html">Quidem autem et impedit</a>
+                                                <a href="#">Cancer Awareness</a>
                                             </h4>
-                                            <time datetime="2020-01-01">Jan 1, 2020</time>
+                                            <time datetime="2022-02-10">Feb 10, 2022</time>
                                         </div>
                                     </div>
-                                    <!-- End recent post item-->
+                                    <!-- End recent health update item-->
                                     <div class="post-item">
                                         <img src="{% static 'img/blog/blog-recent-3.jpg' %}" alt="" class="flex-shrink-0">
                                         <div>
                                             <h4>
-                                                <a href="blog-post_details.html">Id quia et et ut maxime similique occaecati
-                                                    ut</a>
+                                                <a href="#">Cardiovascular Health</a>
                                             </h4>
-                                            <time datetime="2020-01-01">Jan 1, 2020</time>
+                                            <time datetime="2022-02-05">Feb 5, 2022</time>
                                         </div>
                                     </div>
-                                    <!-- End recent post item-->
+                                    <!-- End recent health update item-->
                                     <div class="post-item">
                                         <img src="{% static 'img/blog/blog-recent-4.jpg' %}" alt="" class="flex-shrink-0">
                                         <div>
                                             <h4>
-                                                <a href="blog-post_details.html">Laborum corporis quo dara net para</a>
+                                                <a href="#">Alzheimer's Awareness</a>
                                             </h4>
-                                            <time datetime="2020-01-01">Jan 1, 2020</time>
+                                            <time datetime="2022-01-28">Jan 28, 2022</time>
                                         </div>
                                     </div>
-                                    <!-- End recent post item-->
+                                    <!-- End recent health update item-->
                                     <div class="post-item">
                                         <img src="{% static 'img/blog/blog-recent-5.jpg' %}" alt="" class="flex-shrink-0">
                                         <div>
                                             <h4>
-                                                <a href="blog-post_details.html">Et dolores corrupti quae illo quod
-                                                    dolor</a>
+                                                <a href="#">Respiratory Health</a>
                                             </h4>
-                                            <time datetime="2020-01-01">Jan 1, 2020</time>
+                                            <time datetime="2022-01-20">Jan 20, 2022</time>
                                         </div>
                                     </div>
-                                    <!-- End recent post item-->
+                                    <!-- End recent health update item-->
                                 </div>
                             </div>
-                            <!-- End sidebar recent posts-->
+                            <!-- End sidebar recent health updates -->
                             <div class="sidebar-item tags">
-                                <h3 class="sidebar-title">Tags</h3>
+                                <h3 class="sidebar-title">Health Tags</h3>
                                 <ul class="mt-3">
                                     <li>
-                                        <a href="#">App</a>
+                                        <a href="#">Cardiovascular Health</a>
                                     </li>
                                     <li>
-                                        <a href="#">IT</a>
+                                        <a href="#">Cancer Prevention</a>
                                     </li>
                                     <li>
-                                        <a href="#">Business</a>
+                                        <a href="#">Respiratory Health</a>
                                     </li>
                                     <li>
-                                        <a href="#">Mac</a>
+                                        <a href="#">Healthy Living</a>
                                     </li>
                                     <li>
-                                        <a href="#">Design</a>
+                                        <a href="#">Wellness Tips</a>
                                     </li>
                                     <li>
-                                        <a href="#">Office</a>
+                                        <a href="#">Preventive Care</a>
                                     </li>
                                     <li>
-                                        <a href="#">Creative</a>
+                                        <a href="#">Disease Awareness</a>
                                     </li>
                                     <li>
-                                        <a href="#">Studio</a>
+                                        <a href="#">Health Education</a>
                                     </li>
                                     <li>
-                                        <a href="#">Smart</a>
+                                        <a href="#">Diabetes Management</a>
                                     </li>
                                     <li>
-                                        <a href="#">Tips</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Marketing</a>
+                                        <a href="#">Alzheimer's</a>
                                     </li>
                                 </ul>
                             </div>
