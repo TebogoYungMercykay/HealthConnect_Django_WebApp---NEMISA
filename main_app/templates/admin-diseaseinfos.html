@@ -1,0 +1,210 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block admin_articles_active %} active  {% endblock %}
+{% block redirect_script %}
+{% if not request.session.user_id or not request.session.is_authenticated %}
+    <script type="text/javascript">
+        window.location.href = "{% url 'login' %}";
+    </script>
+{% endif %}
+{% endblock %}
+{% block title %} Disease Info {% endblock %}
+{% block content %}
+    <main id="main" class="main">
+        <section class="section dashboard">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Consultations & Disease Info</h2>
+                </div>
+            </div>
+            <div class="row">
+                <!-- Left side columns -->
+                <div class="col-lg-11 mx-auto">
+                    <div class="row">
+                        <!-- Sales Card -->
+                        {% if admin_card %}
+                            <div class="col-xxl-4 col-md-6">
+                                <div class="card info-card sales-card">
+                                    <div class="filter">
+                                        <a class="icon" href="#" data-bs-toggle="dropdown">
+                                            <i class="bi bi-three-dots"></i>
+                                        </a>
+                                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                            <li class="dropdown-header text-start">
+                                                <h6>Filter</h6>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="#">Today</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="#">This Month</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="#">This Year</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="card-body">
+                                        <h5 class="card-title">Consultations <span>| This Year</span>
+                                        </h5>
+                                        <div class="d-flex align-items-center">
+                                            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                                <i class="{{ admin_card.0.icon }}"></i>
+                                            </div>
+                                            <div class="ps-3">
+                                                <h6>{{ admin_card.0.value }}</h6>
+                                                <span class="text-success small pt-1 fw-bold">{{ admin_card.0.status.count }} {{ admin_card.0.status.label }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xxl-4 col-md-6">
+                                <div class="card info-card revenue-card">
+                                    <div class="filter">
+                                        <a class="icon" href="#" data-bs-toggle="dropdown">
+                                            <i class="bi bi-three-dots"></i>
+                                        </a>
+                                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                            <li class="dropdown-header text-start">
+                                                <h6>Filter</h6>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="#">Today</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="#">This Month</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="#">This Year</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="card-body">
+                                        <h5 class="card-title">Active <span>| This Year</span>
+                                        </h5>
+                                        <div class="d-flex align-items-center">
+                                            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                                <i class="{{ admin_card.1.icon }}"></i>
+                                            </div>
+                                            <div class="ps-3">
+                                                <h6>{{ admin_card.1.value }}</h6>
+                                                <span class="text-success small pt-1 fw-bold">{{ admin_card.1.status.count }} {{ admin_card.1.status.label }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xxl-4 col-xl-12">
+                                <div class="card info-card customers-card">
+                                    <div class="filter">
+                                        <a class="icon" href="#" data-bs-toggle="dropdown">
+                                            <i class="bi bi-three-dots"></i>
+                                        </a>
+                                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                            <li class="dropdown-header text-start">
+                                                <h6>Filter</h6>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="#">Today</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="#">This Month</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="#">This Year</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="card-body">
+                                        <h5 class="card-title">Closed <span>| This Year</span>
+                                        </h5>
+                                        <div class="d-flex align-items-center">
+                                            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                                <i class="{{ admin_card.2.icon }}"></i>
+                                            </div>
+                                            <div class="ps-3">
+                                                <h6>{{ admin_card.2.value }}</h6>
+                                                <span class="text-success small pt-1 fw-bold">{{ admin_card.2.status.count }} {{ admin_card.2.status.label }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                        <!-- Table Data -->
+                        {% if admin_table %}
+                            <div class="col-12">
+                                <div class="card recent-sales overflow-auto">
+                                    <div class="filter">
+                                        <a class="icon" href="#" data-bs-toggle="dropdown">
+                                            <i class="bi bi-three-dots"></i>
+                                        </a>
+                                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                            <li class="dropdown-header text-start">
+                                                <h6>Filter</h6>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="#">Today</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="#">This Month</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="#">This Year</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="card-body">
+                                        <h5 class="card-title">Recent Consultation <span>| Today</span>
+                                        </h5>
+                                        <table class="table table-borderless datatable">
+                                            <caption>Consultations</caption>
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Info ID</th>
+                                                    <th scope="col">Disease Name</th>
+                                                    <th scope="col">Confidence</th>
+                                                    <th scope="col">Consult Doctor</th>
+                                                    <th scope="col">Symptoms</th>
+                                                    <th scope="col">No Symptoms</th>
+                                                    <th scope="col">Date Started</th>
+                                                    <th scope="col">Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for table_row in admin_table %}
+                                                    <tr>
+                                                        <td>{{ table_row.id }}</td>
+                                                        <td>{{ table_row.diseasename }}</td>
+                                                        <td>{{ table_row.confidence }}%</td>
+                                                        <td>{{ table_row.consultdoctor }}</td>
+                                                        <td>{{ table_row.list_symptoms }}</td>
+                                                        <td>{{ table_row.no_of_symp }}</td>
+                                                        <td>{{ table_row.consultation_date }}</td>
+                                                        <td>{{ table_row.status }}</td>
+                                                    </tr>
+                                                {% endfor %}                                             
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+{% endblock %}
+{% block pagespecificjs %}
+    <script>
+        window.embeddedChatbotConfig = {
+            chatbotId: "{{ request.session.chatbot_id }}",
+            domain: "www.chatbase.co"
+        }
+    </script>
+    <script src="https://www.chatbase.co/embed.min.js" chatbotId="{{ request.session.chatbot_id }}" domain="www.chatbase.co"
+        defer>
+    </script>
+{% endblock %}
