@@ -15,6 +15,7 @@ JSON_DATA = 'application/json'
 
 def signup_patient(request):
     
+    messages.clear()
     if request.method == 'POST':
         
         try:
@@ -69,6 +70,7 @@ def signup_patient(request):
 
 def signup_doctor(request):
     
+    messages.clear()
     if request.method == 'POST':
         
         try:
@@ -131,6 +133,7 @@ def signup_doctor(request):
 
 def get_user(request):
 
+    messages.clear()
     if (request.method == 'GET' or request.method == 'POST') and not request.session.get('is_admin'):
         
         try:
@@ -178,6 +181,7 @@ def get_user(request):
 
 def savedata(request, user_id):
     
+    messages.clear()
     if request.method == 'POST':
         
         try:

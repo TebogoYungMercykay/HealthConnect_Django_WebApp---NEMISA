@@ -16,6 +16,7 @@ METHOD_ERROR = "Incorrect Method Used, Please Try Again."
 
 def get_disease(request, user_id):
     
+    messages.clear()
     if request.method == 'GET' or request.method == 'POST':
         
         try:
@@ -60,6 +61,7 @@ def get_disease(request, user_id):
 
 def check_disease(request, user_id, disease_id):
     
+    messages.clear()
     request.session['prediction_successful'] = False
     request.session['message_successful'] = False
     
@@ -107,6 +109,7 @@ def check_disease(request, user_id, disease_id):
 
 def create_disease(request):
     
+    messages.clear()
     request.session['prediction_successful'] = False
     request.session['message_successful'] = False
     

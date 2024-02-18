@@ -13,6 +13,7 @@ CONTACT_EMAIL = 'contact.html'
 
 def dashboard(request):
     
+    messages.clear()
     if request.method == 'GET':
 
         return render(request, 'admin-dashboard.html', {
@@ -29,6 +30,7 @@ def dashboard(request):
 
 def diseaseinfos(request):
     
+    messages.clear()
     table_data = None
     
     if request.method == 'GET' or request.method == 'POST':
