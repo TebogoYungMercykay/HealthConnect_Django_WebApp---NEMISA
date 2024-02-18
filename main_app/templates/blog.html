@@ -8,12 +8,12 @@
 </script>
 {% endif %}
 {% endblock %}
-{% block title %}Blog Posts{% endblock %}
+{% block title %}Health Posts{% endblock %}
 {% block content %}
 <main id="main" class="main">
     <section id="blog" class="blog">
         <div class="section-title">
-            <h2>Blog Posts</h2>
+            <h2>Health Posts</h2>
         </div>
         <div class="container" data-aos="fade-up">
             <div class="row g-5">
@@ -24,7 +24,7 @@
                             <article class="d-flex flex-column">
                                 <div class="post-img">
                                     <img src="{% static post.Post.image_link %}" alt="Image Loading.."
-                                        class="img-fluid"> " alt="" class="img-fluid">
+                                        class="img-fluid">
                                 </div>
                                 <h2 class="title">
                                     <a href="{% url 'get_post' post.Post.id %}">{{ post.Post.title }}</a>
@@ -38,8 +38,7 @@
                                         <li class="d-flex align-items-center">
                                             <i class="bi bi-clock"></i>
                                             <a href="#">
-                                                <time datetime="{{ post.Post.created_at }}">{{ post.Post.created_at
-                                                    }}</time>
+                                                <time datetime="{{ post.Post.created_at }}">{{ post.Post.created_at }}</time>
                                             </a>
                                         </li>
                                         <li class="d-flex align-items-center">
