@@ -8,7 +8,7 @@
 </script>
 {% endif %}
 {% endblock %}
-{% block title %}Blog Posts{% endblock %}
+{% block title %}health Posts{% endblock %}
 {% block content %}
 <main id="main" class="main">
     <div class="pagetitle">
@@ -20,7 +20,7 @@
                         <i class="ri-home-line"></i>
                     </a>
                 </li>
-                <li class="breadcrumb-item active">Blog Post</li>
+                <li class="breadcrumb-item active">Health Post</li>
             </ol>
         </nav>
     </div>
@@ -45,8 +45,7 @@
                                 <li class="d-flex align-items-center">
                                     <i class="bi bi-clock"></i>
                                     <a href="blog-details.html">
-                                        <time datetime="{{ post_details.Post.created_at }}">{{
-                                            post_details.Post.created_at }}</time>
+                                        <time datetime="{{ post_details.Post.created_at }}">{{ post_details.Post.created_at }}</time>
                                     </a>
                                 </li>
                                 <li class="d-flex align-items-center">
