@@ -160,17 +160,17 @@
                             {% if request.session.is_doctor %}
                             <div class="reply-form">
                                 <h4>Leave a Professional Reply</h4>
-                                <form id="replyForm" action="{% url 'create_reply' %}" method="post">
+                                <form id="replyForm" action="{% url 'create_reply' %}" method="post" class="mx-auto col-12">
                                     {% csrf_token %}
                                     <div class="row">
                                         <div class="col form-group">
                                             <input type="hidden" name="post_id" id="postId"
                                                 value="{{ post_details.Post.id }}">
-                                            <textarea name="content" class="form-control"
+                                            <textarea name="content" class="form-control col-12"
                                                 placeholder="Your Reply*"></textarea>
                                         </div>
                                     </div>
-                                    <button type="submit" class="btn btn-primary">Post Reply</button>
+                                    <button type="submit" class="btn btn-primary mx-auto">Reply Now</button>
                                 </form>
                             </div>
                             {% endif %}

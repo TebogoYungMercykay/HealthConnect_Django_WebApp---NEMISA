@@ -79,7 +79,7 @@
 --------------------------------------------------------------*/
 
 .blog .posts-list article {
-    box-shadow: 0 4px 16px rgba(var(--color-black-rgb), 0.1);
+    box-shadow: 0 4px 16px rgba(var(--color-black-rgb), 0.2);
     padding: 30px;
     height: 100%;
 }
@@ -501,6 +501,7 @@
 /*--------------------------------------------------------------
 # Blog Comments
 --------------------------------------------------------------*/
+
 .blog .comments {
     margin-top: 30px;
 }
@@ -602,10 +603,16 @@
     padding: 10px 20px;
     border: 0;
     background-color: var(--color-secondary);
+    align-self: center;
 }
 
 .blog .comments .reply-form .btn-primary:hover {
     background-color: rgba(var(--color-secondary-rgb), 0.8);
+}
+
+.blog .comments .reply-form textarea {
+    min-width: 100%;
+    min-height: 100px;
 }
 
 /*--------------------------------------------------------------
