@@ -202,6 +202,168 @@ def get_symptoms():
     ])
 
 
+
+def news_retrieval_error():
+    return [
+        {
+            "source": {
+                "id": None,
+                "name": "Netmeds.com"
+            },
+            "author": "Sowmya Binu",
+            "title": "Diabetes Care: Manage Blood Sugar Levels With Smart Carbohydrate Choices - Netmeds.com",
+            "description": "Read about carbohydrates and diabetes type 2 and how this ailment can be managed and blood sugar levels be kept in check by smart carbohydrate choices in daily life in the feature.",
+            "url": "https://www.netmeds.com/health-library/post/diabetes-care-manage-blood-sugar-levels-with-smart-carbohydrate-choices",
+            "urlToImage": "https://www.netmeds.com/images/cms/magefan_blog/nmslite/1706519863_Diabetes-care_480x180.jpg",
+            "publishedAt": "2024-01-29T18:30:00Z",
+            "content": "Diabetes is a chronic metabolic disorder categorised by elevated blood sugar levels and requires careful management to avert complications and maintain overall health. One key aspect of diabetes mana… [+4961 chars]"
+        },
+        {
+            "source": {
+                "id": None,
+                "name": "YouTube"
+            },
+            "author": None,
+            "title": "Connection between Covid & diabetes - WSMV 4 Nashville",
+            "description": "As Covid cases exploded across the country, doctors realized another virus was skyrocketing at the same time.   For more Local News from WSMV:  https://www.w...",
+            "url": "https://www.youtube.com/watch?v=8zyuP8ETIzo",
+            "urlToImage": "https://i.ytimg.com/vi/8zyuP8ETIzo/maxresdefault.jpg",
+            "publishedAt": "2024-01-29T18:28:13Z",
+            "content": None
+        },
+        {
+            "source": {
+                "id": None,
+                "name": "Futurity: Research News"
+            },
+            "author": "National University of Singapore",
+            "title": "Mosquito protein could block dengue virus infection - Futurity: Research News",
+            "description": "A protein found in a mosquito's exoskeleton could offer protection against dengue virus, a new study shows.",
+            "url": "https://www.futurity.org/mosquitos-protein-dengue-fever-viruses-317214/",
+            "urlToImage": "https://www.futurity.org/wp/wp-content/uploads/2024/01/mosquito-dengue-1600.jpg",
+            "publishedAt": "2024-01-29T18:27:02Z",
+            "content": "Despite its role as a carrier of the dengue virus, the female Aedes aegypti mosquito could possess the key to discovering new anti-viral strategies to control dengue virus infection, researchers repo… [+3444 chars]"
+        },
+        {
+            "source": {
+                "id": None,
+                "name": "YouTube"
+            },
+            "author": None,
+            "title": "How to navigate the different symptoms during cold and flu season - ABC11",
+            "description": "The are certain questions to ask yourself to understand what you're body is dealing with.Story: https://abc11.com/covid-symptoms-common-cold-flu-season-how-t...",
+            "url": "https://www.youtube.com/watch?v=5lri9KNmZlU",
+            "urlToImage": "https://i.ytimg.com/vi/5lri9KNmZlU/maxresdefault.jpg?sqp=-oaymwEmCIAKENAF8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGGUgZShlMA8=&rs=AOn4CLAdYpZR9g26zfL9BNlG03DU_I0d8g",
+            "publishedAt": "2024-01-29T18:22:38Z",
+            "content": None
+        },
+        {
+            "source": {
+                "id": None,
+                "name": "Nature.com"
+            },
+            "author": None,
+            "title": "Signs of 'transmissible' Alzheimer's seen in people who received growth hormone - Nature.com",
+            "description": "The findings support a controversial hypothesis that proteins related to the neurodegenerative disease can be ‘seeded’ in the brain through material taken from cadavers.",
+            "url": "https://www.nature.com/articles/d41586-024-00268-5",
+            "urlToImage": "https://media.nature.com/lw1024/magazine-assets/d41586-024-00268-5/d41586-024-00268-5_26671396.jpg",
+            "publishedAt": "2024-01-29T17:18:19Z",
+            "content": None
+        },
+        {
+            "source": {
+                "id": None,
+                "name": "[Removed]"
+            },
+            "author": None,
+            "title": "[Removed]",
+            "description": "[Removed]",
+            "url": "https://removed.com",
+            "urlToImage": None,
+            "publishedAt": "1970-01-01T00:00:00Z",
+            "content": "[Removed]"
+        },
+        {
+            "source": {
+                "id": None,
+                "name": "NDTV News"
+            },
+            "author": None,
+            "title": "Haircare Tips: Nutritionist Explains Why Certain Vitamins Are Essential For Hair Health - NDTV",
+            "description": "It's recommended to maintain a balanced diet, consult a healthcare professional, and follow their advice for personalised guidance on vitamin intake for hair health.",
+            "url": "https://www.ndtv.com/health/haircare-tips-nutritionist-explains-why-certain-vitamins-are-essential-for-hair-health-4955316",
+            "urlToImage": "https://c.ndtvimg.com/2022-06/p0hm464_haircare650_625x300_30_June_22.jpg",
+            "publishedAt": "2024-01-29T15:33:00Z",
+            "content": "Vitamin B5 strengthens hair follicles, reduces hair loss, and adds shine and softness to the hair strands\r\nVitamins play a crucial role in maintaining overall hair health. Nutritionist Anjali Mukerje… [+2467 chars]"
+        },
+        {
+            "source": {
+                "id": None,
+                "name": "The Indian Express"
+            },
+            "author": "Lifestyle Desk",
+            "title": "Does switching from polished to unpolished rice control diabetes and weight? - The Indian Express",
+            "description": "For weight management and diabetes control, consuming foods low in calories, fat, and sugar is key. This is where fibre shines, said Dr Vikas Jindal, consultant, dept of gastroenterology, CK Birla Hospital, Delhi",
+            "url": "https://indianexpress.com/article/lifestyle/life-style/switch-polished-unpolished-rice-benefits-control-diabetes-weight-nutrients-how-to-cook-9123061/",
+            "urlToImage": "https://images.indianexpress.com/2024/01/rice_types_1600_freepik.jpg",
+            "publishedAt": "2024-01-29T15:32:59Z",
+            "content": "There are so many theories floating around that the consumption of polished rice may not be good for individuals who are watching their weight or trying to lower their blood sugar levels. As such, ce… [+4309 chars]"
+        },
+        {
+            "source": {
+                "id": None,
+                "name": "[Removed]"
+            },
+            "author": None,
+            "title": "[Removed]",
+            "description": "[Removed]",
+            "url": "https://removed.com",
+            "urlToImage": None,
+            "publishedAt": "1970-01-01T00:00:00Z",
+            "content": "[Removed]"
+        },
+        {
+            "source": {
+                "id": None,
+                "name": "[Removed]"
+            },
+            "author": None,
+            "title": "[Removed]",
+            "description": "[Removed]",
+            "url": "https://removed.com",
+            "urlToImage": None,
+            "publishedAt": "1970-01-01T00:00:00Z",
+            "content": "[Removed]"
+        },
+        {
+            "source": {
+                "id": None,
+                "name": "KCRA Sacramento"
+            },
+            "author": None,
+            "title": "Avian flu is devastating farms in California's 'Egg Basket' as outbreaks roil poultry industry - KCRA Sacramento",
+            "description": "Last month, Mike Weber got the news every poultry farmer fears: His chickens tested positive for avian flu.",
+            "url": "https://www.kcra.com/article/avian-flu-is-devastating-farms-in-californias-egg-basket-as-outbreaks-roil-poultry-industry/46569691",
+            "urlToImage": "https://kubrick.htvapps.com/htv-prod-media.s3.amazonaws.com/images/gettyimages-1408473972-65b7bccc70eb1.jpg?crop=1.00xw:0.846xh;0,0.0711xh&resize=1200:*",
+            "publishedAt": "2024-01-29T15:05:00Z",
+            "content": "PETALUMA, Calif. —Last month, Mike Weber got the news every poultry farmer fears: His chickens tested positive for avian flu.\r\nFollowing government rules, Weber's company, Sunrise Farms, had to slaug… [+5546 chars]"
+        },
+        {
+            "source": {
+                "id": None,
+                "name": "CNET"
+            },
+            "author": None,
+            "title": "What's Causing the Ringing in Your Ears and How to Stop It - CNET",
+            "description": "That ringing in your ears is called tinnitus, and there are ways to make it less bothersome.",
+            "url": "https://www.cnet.com/health/medical/whats-causing-the-ringing-in-your-ears-and-how-to-stop-it/",
+            "urlToImage": "https://www.cnet.com/a/img/resize/eca08691fb77e5ee6f05819765b73d442253127b/hub/2024/01/25/54176717-d34e-44af-a3ac-c342396cf11e/gettyimages-1777374318.jpg?auto=webp&fit=crop&height=675&width=1200",
+            "publishedAt": "2024-01-29T15:00:00Z",
+            "content": "A ringing in your ears that comes and goes isn't just an annoyance that makes it difficult to concentrate, it could be a sign that you have tinnitus. Tinnitus can sound like a soft or loud buzzing, w… [+5113 chars]"
+        }
+    ]
+
+
 def post_retrieval_error():
     shuffled_image = shuffled_images()
     
@@ -349,5 +511,397 @@ def post_retrieval_error():
                     "created_at": TEMP_DATETIME
                 }
             ]
+        }
+    ]
+
+
+
+
+def cards():
+    cards = [
+        {
+            "period": "Today",
+            "value": (1415 + random.randint(-105, 105)),
+            "percentage": (10 + random.randint(-8, 8)),
+        },
+        {
+            "period": "This Month",
+            "value": f"R{(1455 + random.randint(-500, 500))}",
+            "percentage": (10 + random.randint(-8, 8)),
+        },
+        {
+            "period": "This Year",
+            "value": (1245 + random.randint(10, 50)),
+            "percentage": (10 + random.randint(-8, 8)),
+        },
+    ]
+
+    random.shuffle(cards)
+
+    return cards
+
+
+def recent_activity():
+    recent_activity = [
+        {
+            "time": f"{random.randint(2, 9)} mins ago",
+            "badge": "text-success",
+            "type": "update",
+            "link": "#",
+            "text": "Posted a new update on the feed",
+        },
+        {
+            "time": f"{random.randint(2, 9)} mins ago",
+            "badge": "text-danger",
+            "type": "consultation",
+            "link": "#",
+            "text": "Had a consultation with Dr. Smith",
+        },
+        {
+            "time": f"{random.randint(4, 9)} mins ago",
+            "badge": "text-primary",
+            "type": "health tip",
+            "link": "#",
+            "text": "Shared a health tip on the feed",
+        },
+        {
+            "time": f"{random.randint(2, 6)} mins ago",
+            "badge": "text-info",
+            "type": "follow-up consultation",
+            "link": "#",
+            "text": "Scheduled a follow-up consultation",
+        },
+        {
+            "time": f"{random.randint(5, 9)} mins ago",
+            "badge": "text-warning",
+            "type": "disease post",
+            "link": "#",
+            "text": "Liked a disease post on the feed",
+        },
+        {
+            "time": f"{random.randint(2, 9)} mins ago",
+            "badge": "text-muted",
+            "type": "virtual consultation",
+            "link": "#",
+            "text": "Attended a virtual consultation",
+        },
+        {
+            "time": f"{random.randint(2, 9)} mins ago",
+            "badge": "text-success",
+            "type": "update",
+            "link": "#",
+            "text": "Posted another update on the feed",
+        },
+        {
+            "time": f"{random.randint(1, 8)} mins ago",
+            "badge": "text-warning",
+            "type": "discussion",
+            "link": "#",
+            "text": "Participated in a discussion",
+        },
+        {
+            "time": f"{random.randint(3, 6)} mins ago",
+            "badge": "text-info",
+            "type": "tip",
+            "link": "#",
+            "text": "Shared a useful tip",
+        },
+        {
+            "time": f"{random.randint(2, 8)} mins ago",
+            "badge": "text-muted",
+            "type": "webinar",
+            "link": "#",
+            "text": "Joined a medical webinar",
+        }
+    ]
+    
+    processed_activities = []
+    for activity in recent_activity:
+        text_parts = activity["text"].split(" ")
+        text_b = " ".join(text_parts[:-2])
+        type_verb = text_parts[-2]
+        text_a = text_parts[-1]
+
+        processed_activity = {
+            "time": activity["time"],
+            "badge": activity["badge"],
+            "type": activity["type"],
+            "link": activity["link"],
+            "text_b": text_b,
+            "type_verb": type_verb,
+            "text_a": text_a,
+        }
+
+        processed_activities.append(processed_activity)
+
+    random.shuffle(processed_activities)
+
+    return processed_activities
+
+
+def top_selling_medication():
+    random_number = random.randint(30, 50)
+    top_selling_medication = [
+        {
+            "preview": "https://media.biogen.co.za/wp-content/uploads/6009544945475-multi-vitamin-50plus-advanced-value-pack.jpg",
+            "product": {
+                "name": "Vitamin Supplements",
+                "link": "#",
+                "class": "text-primary fw-bold",
+            },
+            "price": "R64",
+            "sold": random_number + 23,
+            "revenue": f"R{(random_number + 23) * 64}",
+        },
+        {
+            "preview": "https://www.firstaider.co.za/wp-content/uploads/2021/08/electrical-kit.jpg",
+            "product": {
+                "name": "First Aid Kit",
+                "link": "#",
+                "class": "text-primary fw-bold",
+            },
+            "price": "R46",
+            "sold": random_number + 67,
+            "revenue": f"R{(random_number + 67) * 46}",
+        },
+        {
+            "preview": "https://www.dischem.co.za/media/catalog/product/cache/41fea429c8575e0d68f148c3fb0cdd35/6/2/62a343f0085e2_8006540339169.jpg",
+            "product": {
+                "name": "Cough Syrup",
+                "link": "#",
+                "class": "text-primary fw-bold",
+            },
+            "price": "R59",
+            "sold": random_number + 10,
+            "revenue": f"R{(random_number + 10) + 59}",
+        },
+        {
+            "preview": "https://images.apollo247.in/pub/media/catalog/product/c/r/cro0007_1.jpg",
+            "product": {
+                "name": "Pain Relief Tablets",
+                "link": "#",
+                "class": "text-primary fw-bold",
+            },
+            "price": "R32",
+            "sold": random_number + 20,
+            "revenue": f"R{(random_number + 20) * 32}",
+        },
+        {
+            "preview": "https://www.capricorn-scientific.com/capricorn/product%20pictures/Cell%20Culture%20Reagents/Antibiotics/AAS-B%20Zweitbild.jpg",
+            "product": {
+                "name": "Antibiotic Solution",
+                "link": "#",
+                "class": "text-primary fw-bold",
+            },
+            "price": "R79",
+            "sold": random_number + 5,
+            "revenue": f"R{(random_number + 5) * 79}",
+        },
+    ]
+
+    random.shuffle(top_selling_medication)
+
+    return top_selling_medication
+
+
+def recent_consultations():
+    recent_consultations = [
+        {
+            "consultationId": "#2457",
+            "patient": "None",
+            "diseasename": "None",
+            "consultationCostPrice": "R64",
+            "status": "Open",
+            "badge": "success"
+        },
+        {
+            "consultationId": "#2147",
+            "patient": "None",
+            "diseasename": "None",
+            "consultationCostPrice": "R47",
+            "status": "Pending",
+            "badge": "warning"
+        },
+        {
+            "consultationId": "#2049",
+            "patient": "None",
+            "diseasename": "None",
+            "consultationCostPrice": "R147",
+            "status": "Open",
+            "badge": "success"
+        },
+        {
+            "consultationId": "#2644",
+            "patient": "None",
+            "diseasename": "None",
+            "consultationCostPrice": "R67",
+            "status": "Closed",
+            "badge": "danger"
+        },
+        {
+            "consultationId": "#2644",
+            "patient": "None",
+            "diseasename": "None",
+            "consultationCostPrice": "R165",
+            "status": "Open",
+            "badge": "success"
+        },
+    ]
+    
+    disease_names = [
+        "COVID-19",
+        "Malaria",
+        "Influenza",
+        "Diabetes",
+        "Hypertension",
+        "Alzheimer's disease",
+        "Cancer",
+        "Heart disease",
+        "Stroke",
+        "Osteoporosis",
+    ]
+
+    for consultation in recent_consultations:
+        consultation["patient"] = " ".join([random.choice(["John", "Jane", "Alice", "Bob", "Eva", "Mike", "Sophie", "Chris", "Olivia", "Daniel"]),
+                                        random.choice(["Smith", "Doe", "Johnson", "Williams", "Brown", "Jones", "Garcia", "Davis", "Rodriguez", "Martinez"])])
+        
+        consultation["diseasename"] = random.choice(disease_names)
+
+    random.shuffle(recent_consultations)
+
+    return recent_consultations
+
+
+def admin_table():
+    return [
+        {
+            "id": 1,
+            "diseasename": "Common Cold",
+            "confidence": 75,
+            "consultdoctor": "DOCTOR",
+            "symptoms": ["Fever", "Runny Nose", "Cough"],
+            "no_of_symp": 3,
+            "consultation_date": "2023-03-15",
+            "status": "closed"
+        },
+        {
+            "id": 2,
+            "diseasename": "Flu",
+            "confidence": 80,
+            "consultdoctor": "DOCTOR",
+            "symptoms": ["Fever", "Body Aches", "Fatigue"],
+            "no_of_symp": 3,
+            "consultation_date": "2023-02-20",
+            "status": "active"
+        },
+        {
+            "id": 3,
+            "diseasename": "Allergies",
+            "confidence": 60,
+            "consultdoctor": "DOCTOR",
+            "symptoms": ["Sneezing", "Itchy Eyes"],
+            "no_of_symp": 2,
+            "consultation_date": "2023-04-10",
+            "status": "closed"
+        },
+        {
+            "id": 4,
+            "diseasename": "COVID-19",
+            "confidence": 90,
+            "consultdoctor": "DOCTOR",
+            "symptoms": ["Fever", "Shortness of Breath", "Loss of Taste"],
+            "no_of_symp": 4,
+            "consultation_date": "2023-01-05",
+            "status": "active"
+        },
+        {
+            "id": 5,
+            "diseasename": "Migraine",
+            "confidence": 70,
+            "consultdoctor": "DOCTOR",
+            "symptoms": ["Headache", "Nausea"],
+            "no_of_symp": 2,
+            "consultation_date": "2023-06-02",
+            "status": "closed"
+        },
+        {
+            "id": 6,
+            "diseasename": "Stomach Flu",
+            "confidence": 85,
+            "consultdoctor": "DOCTOR",
+            "symptoms": ["Nausea", "Vomiting", "Diarrhea"],
+            "no_of_symp": 3,
+            "consultation_date": "2023-03-28",
+            "status": "active"
+        },
+        {
+            "id": 7,
+            "diseasename": "Hay Fever",
+            "confidence": 55,
+            "consultdoctor": "DOCTOR",
+            "symptoms": ["Sneezing", "Runny Nose"],
+            "no_of_symp": 2,
+            "consultation_date": "2023-07-15",
+            "status": "closed"
+        },
+        {
+            "id": 8,
+            "diseasename": "Chickenpox",
+            "confidence": 80,
+            "consultdoctor": "DOCTOR",
+            "symptoms": ["Fever", "Itchy Rash"],
+            "no_of_symp": 2,
+            "consultation_date": "2023-09-10",
+            "status": "closed"
+        },
+        {
+            "id": 9,
+            "diseasename": "Diabetes",
+            "confidence": 65,
+            "consultdoctor": "DOCTOR",
+            "symptoms": ["Frequent Urination", "Increased Thirst"],
+            "no_of_symp": 2,
+            "consultation_date": "2023-11-03",
+            "status": "active"
+        },
+        {
+            "id": 10,
+            "diseasename": "Asthma",
+            "confidence": 75,
+            "consultdoctor": "DOCTOR",
+            "symptoms": ["Shortness of Breath", "Wheezing"],
+            "no_of_symp": 2,
+            "consultation_date": "2023-08-20",
+            "status": "active"
+        }
+    ]
+
+
+def admin_card():
+    
+    return [
+        {
+            "icon": "bi bi-chat-square-quote",
+            "value": 2000,
+            "status": {
+                "label": "increase",
+                "count": 1
+            }
+        },
+        {
+            "icon": "bi bi-check-circle",
+            "value": 2000,
+            "status": {
+                "label": "increase",
+                "count": 1
+            }
+        },
+        {
+            "icon": "bi bi-x-circle",
+            "value": 2000,
+            "status": {
+                "label": "increase",
+                "count": 1
+            }
         }
     ]

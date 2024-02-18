@@ -6,7 +6,7 @@
 {% if request.session.user_id and request.session.is_authenticated %}
 {% if request.session.is_admin %}
 <script>
-    window.location.href = "{% url 'admin_page' %}";
+    window.location.href = "{% url 'dashboard' %}";
 </script>
 {% elif request.session.is_doctor or request.session.is_patient %}
 <script>

@@ -3,22 +3,22 @@
 {% block consultation_active %} active {% endblock %}
 {% block redirect_script %}
 {% if not request.session.user_id or not request.session.is_authenticated %}
-<script type="text/javascript">
-    window.location.href = "{% url 'login' %}";
-</script>
+    <script type="text/javascript">
+        window.location.href = "{% url 'login' %}";
+    </script>
 {% endif %}
 {% endblock %}
 {% block title %}Consultations{% endblock %}
 {% block pagespecificstyle %}
-<link href="{% static 'css/chat.css' %}" rel="stylesheet">
-<link href="{% static 'css/datatable.css' %}" rel="stylesheet">
-<link href="{% static 'css/consultations.css' %}" rel="stylesheet">
-<link href="{% static 'css/variables.css' %}" rel="stylesheet">
+    <link href="{% static 'css/chat.css' %}" rel="stylesheet">
+    <link href="{% static 'css/datatable.css' %}" rel="stylesheet">
+    <link href="{% static 'css/consultations.css' %}" rel="stylesheet">
+    <link href="{% static 'css/variables.css' %}" rel="stylesheet">
 {% endblock %}
 {% block content %}
 <main id="main" class="main">
     <div class="pagetitle">
-
+        <h1>Consultations</h1>
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
@@ -26,10 +26,11 @@
                         <i class="ri-home-line"></i>
                     </a>
                 </li>
-
+                <li class="breadcrumb-item active">Consultation Manager</li>
             </ol>
         </nav>
     </div>
+
     {% if consultation_info %}
 
     <section id="services">
@@ -346,9 +347,9 @@
     {% endif %}
     {% endif %}
     {% endif %}
-    {% endblock %}
+{% endblock %}
 
-    {% block pagespecificjs %}
+{% block pagespecificjs %}
     {%if not request.session.is_doctor or request.session.is_admin %}
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -364,4 +365,4 @@
         });
     </script>
     {% endif %}
-    {% endblock %}
+{% endblock %}

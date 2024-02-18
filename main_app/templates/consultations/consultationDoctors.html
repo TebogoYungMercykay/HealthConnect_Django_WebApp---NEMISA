@@ -19,7 +19,7 @@
 {% block content %}
 <main id="main" class="main">
     <div class="pagetitle">
-
+        <h1>Consultations</h1>
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
@@ -27,7 +27,7 @@
                         <i class="ri-home-line"></i>
                     </a>
                 </li>
-                
+                <li class="breadcrumb-item active">Find a Doctor</li>
             </ol>
         </nav>
     </div>
@@ -37,8 +37,8 @@
         <div class="section-title">
             <h2>Consult a Doctor</h2>
         </div>
-        <span>Would want to prepopulate filters if from self diagnosis, ex->
-            specialist={{prediction_data.consultation_dr}}</span>
+        {% comment %} <span>Would want to prepopulate filters if from self diagnosis, ex->
+            specialist={{prediction_data.consultation_dr}}</span> {% endcomment %}
         <div class="row">
             <div class="col-10 mx-auto">
                 <div class="card">
