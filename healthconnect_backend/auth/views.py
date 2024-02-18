@@ -52,14 +52,21 @@ def login_patient(request):
                         
                     else:
                         messages.info(request, api_response.get('data'))
-                        return redirect(reverse('login'))
+                        return render(request, 'pages-login.html')
                         
             messages.info(request, MESSAGE)
-            return redirect(reverse('login'))
+            return render(request, 'pages-login.html')
 
         except requests.RequestException as e:
-            logging.error(f"Error Occured During Login Request: {e}: Patient")
-            return redirect(reverse('login'))
+            temp_message = ""
+            try:
+                api_response = response.json()
+                temp_message = api_response.get('data')
+            except Exception as e:
+                temp_message = "Error Occured During Login Request"
+                
+            messages.error(request, temp_message)
+            return render(request, 'pages-login.html')
         
     else:
         return render(request,'index.html')
@@ -105,14 +112,21 @@ def login_doctor(request):
         
                     else:
                         messages.info(request, api_response.get('data'))
-                        return redirect(reverse('login'))
+                        return render(request, 'pages-login.html')
                         
             messages.info(request, MESSAGE)
-            return redirect(reverse('login'))
+            return render(request, 'pages-login.html')
 
         except requests.RequestException as e:
-            logging.error(f"Error Occured During Login Request: {e}: Doctor")
-            return redirect(reverse('login'))
+            temp_message = ""
+            try:
+                api_response = response.json()
+                temp_message = api_response.get('data')
+            except Exception as e:
+                temp_message = "Error Occured During Login Request"
+                
+            messages.error(request, temp_message)
+            return render(request, 'pages-login.html')
 
     else:
         return render(request,'pages-login.html')
@@ -158,14 +172,21 @@ def login_admin(request):
         
                     else:
                         messages.info(request, api_response.get('data'))
-                        return redirect(reverse('login'))
+                        return render(request, 'pages-login.html')
                         
             messages.info(request, MESSAGE)
-            return redirect(reverse('login'))
+            return render(request, 'pages-login.html')
         
         except requests.RequestException as e:
-            logging.error(f"Error Occured During Login Request: {e}: Admin")
-            return redirect(reverse('login'))
+            temp_message = ""
+            try:
+                api_response = response.json()
+                temp_message = api_response.get('data')
+            except Exception as e:
+                temp_message = "Error Occured During Login Request"
+                
+            messages.error(request, temp_message)
+            return render(request, 'pages-login.html')
 
     else:
         return render(request,'pages-login.html')
@@ -211,7 +232,14 @@ def logout(request):
             return redirect(reverse('home'))
             
         except requests.RequestException as e:
-            logging.error(f"Error Occured During Logout Request: {e}: User Id: {user_id}")
+            temp_message = ""
+            try:
+                api_response = response.json()
+                temp_message = api_response.get('data')
+            except Exception as e:
+                temp_message = f"Error Occured During Logout Request: User Id: {user_id}"
+                
+            messages.error(request, temp_message)
             request.session.clear()
             return redirect(reverse('home'))
 
