@@ -26,12 +26,12 @@ HealthConnect is a revolutionary healthcare platform that transcends traditional
         - **Uvicorn ASGI Web Server:** Uses Uvicorn as the ASGI (Asynchronous Server Gateway Interface) web server for FastAPI.
         - **GitHub Jobs:** Example routes that demonstrate fetching data from the GitHub Jobs API.
         - **SQLAlchemy:** An SQL toolkit and Object-Relational Mapping (ORM) library for Python, used for database interaction.
-        - ###### **Link:** [HealthConnect FastAPI](https://github.com/TebogoYungMercykay/Python_API_Development_Booth_FASTAPI)
-        - ###### **Documentation:** [Live Documentation](https://healthconnect-python-fastapi-9b23b53a9ae4.herokuapp.com/docs)
+        - > **Link:** [HealthConnect FastAPI](https://github.com/TebogoYungMercykay/Python_API_Development_Booth_FASTAPI)
+        - > **Documentation:** [Live Documentation](https://healthconnect-python-fastapi-9b23b53a9ae4.herokuapp.com/docs)
     - ##### NewsAPI:
         - **Health Articles:** The News API provides us with access to latest and finest articles about health around the Globe.
-        - ###### **Link:** [The NewsAPI](https://newsapi.org)
-        - ###### **Documentation:** [Live Documentation](https://newsapi.org/docs)
+        - > **Link:** [The NewsAPI](https://newsapi.org)
+        - > **Documentation:** [Live Documentation](https://newsapi.org/docs)
 
 ## PROJECT STRUCTURE
 
