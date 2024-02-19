@@ -15,6 +15,7 @@
 <link href="{% static 'css/datatable.css' %}" rel="stylesheet">
 <link href="{% static 'css/consultations.css' %}" rel="stylesheet">
 <link href="{% static 'css/variables.css' %}" rel="stylesheet">
+<link href="{% static 'css/conslt.css' %}" rel="stylesheet">
 {% endblock %}
 {% block content %}
 <main id="main" class="main">
@@ -65,7 +66,7 @@
                         </div>
                     </div>
                 </div>
-                <a class="btn btn-outline-success predict-button m-5" id="predictButton">Predict</a>
+                <a class="btn-get-started btn consltbtn" id="predictButton">Predict</a>
             </div>
         </div>
         <form id="hiddenForm" style="display: none;" method="post" action="{% url 'create_disease' %}">
@@ -100,7 +101,7 @@
                         value="{{predicted_disesse.diseasename}}">
 
                 </form>
-                <button id="consultNowBtn" class="btn btn-success">Consult Now</button>
+                <button id="consultNowBtn" class="btn-get-started btn consltbtn">Consult Now</button>
             </div>
         </div>
         {% endif %}

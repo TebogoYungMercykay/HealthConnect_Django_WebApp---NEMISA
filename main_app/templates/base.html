@@ -339,7 +339,7 @@
 
         </div>
     </div>
-
+    {% if 'videoconsultation_live' not in request.path %}
     <!-- Header -->
     {% if not request.session.user_id and not request.session.is_authenticated %}
     <header id="header" class="fixed-top">
@@ -434,6 +434,7 @@
             <a href="{% url 'logout' %}" class="appointment-btn scrollto">Logout</a>
         </div>
     </header>
+    {% endif %}
     {% endif %}
     {% endif %}
     <!-- Main Content  -->

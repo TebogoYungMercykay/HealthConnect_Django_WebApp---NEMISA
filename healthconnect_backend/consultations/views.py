@@ -150,7 +150,7 @@ def get_doctors(request):
                         doctors_data = api_response.get('data')
                         for doctor in doctors_data:
                             doctor['activity'] = random.randint(3, 6)
-                        print(doctors_data)
+                        
                         return render(request, CONSULTATION_DOCTORS_TEMPLATE, {"doctors_data": doctors_data, "prediction_data": post_data})
 
                 logging.error(
@@ -190,7 +190,7 @@ def consultation(request):
                             consultation_history = [consultation for consultation in consultation_history if consultation.get(
                                 'consultation_date') <= utils.date_now()]
                         elif filter == 'Upcoming':
-                            print("########", utils.date_now())
+                            
                             consultation_history = [consultation for consultation in consultation_history if consultation.get(
                                 'consultation_date') > utils.date_now()]
 
@@ -198,7 +198,7 @@ def consultation(request):
                     for c in consultation_history:
                         # should be and
                         if c.get('consultation_date') <= utils.date_now() or c.get('status') == 'approved':
-                            print("%%%%%%%%%")
+                            
                             c['status'] = 'missed'
 
                     return render(request, CONSULTATION_MANAGE_TEMPLATE, {"consultation_history": consultation_history})
@@ -224,7 +224,7 @@ def make_consultation(request):
     request.session['message_successful'] = False
 
     if request.method == 'POST':
-        print(request.POST)
+        
         if not (request.POST['doctor_id'] and request.POST['diseaseinfo_id'] and request.POST['consultation_date'] and request.POST['status']):
 
             messages.error(request, METHOD_ERROR)
@@ -462,7 +462,7 @@ def create_review(request, doctor_id):
                         return redirect('consultation_view', consultationID)
 
                         # title = request.session.get('token_type')[:2]
-                        # print(title)
+                        # 
                         # if title == 'dr':
                         #     return redirect('consultation_view_patient', consultationID)
                         # else:
@@ -615,19 +615,21 @@ def lauchvideocaller(request, consultation_id):
                                   consultation_info['consultation_date'])
                             roomName = generate_channel_name(
                                 patientname, doctorName, consultation_info['consultation_date'])
-                            print(roomName)
+                            
                             roomNameDisplay = f"{consultation_info['patient']['name']}_Dr{consultation_info['doctor']['name']}_consultation"
                             clientName = f"{consultation_info['patient']['name']} {consultation_info['patient']['surname']}" if is_patient else f"{consultation_info['doctor']['name']} {consultation_info['doctor']['surname']}"
+                            otherUser= f"{consultation_info['patient']['name']} {consultation_info['patient']['surname']}" if not is_patient else f"{consultation_info['doctor']['name']} {consultation_info['doctor']['surname']}"
                             lobbyInfo = {
                                 "clientName": clientName,
                                 "roomNameDisplay": roomNameDisplay,
                                 "roomName":roomName,
-                                "consultation_id":consultation_id
+                                "consultation_id":consultation_id,
+                                "otherUser":otherUser
                             }
                             return render(request, CONSULTATION_VIDEO_TEMPLATE, {'lobbyInfo': lobbyInfo})
 
                 # create roomname or channelname for this consultation
-                print("####", consultation_id)
+                
 
                 return render(request, CONSULTATION_VIDEO_TEMPLATE, {"lobby": 24})
 
@@ -658,6 +660,7 @@ def getToken(request,consultation_id):
                 chanel_for_agora = request.POST['room']
                 username= request.POST['name']
                 roomDisplay = request.POST['roomName']
+                otherUser =  request.POST['otheruser']
                 
                 jwt_token = request.session.get('access_token')
                 token_type = request.session.get('token_type')
@@ -681,8 +684,8 @@ def getToken(request,consultation_id):
                 if response.status_code == 200:
                         api_response = response.json()
                         response_data = api_response.get('data')
-                        print(response_data)
-                        print("CHANEL",response_data['channel'])
+                        
+                        
                         appId = os.getenv("APP_ID")
                         appCertificate = os.getenv("APP_CERT")
                         # channelName = request.GET.get('channel')
@@ -697,7 +700,7 @@ def getToken(request,consultation_id):
 
                         token = RtcTokenBuilder.buildTokenWithUid(
                             appId, appCertificate, channelName, uid, role, privilegeExpiredTs)
-                        print(token)
+                        
                         # create roomname or channelname for this consultation
                         videocall_data= {
                                     'UID': uid,
@@ -705,9 +708,10 @@ def getToken(request,consultation_id):
                                     'room': channelName,
                                     'room_display':roomDisplay,
                                     'name': username,
-                                    'app_id':appId
+                                    'app_id':appId,
+                                    'other_user':otherUser
                                 }
-
+                        print(videocall_data)
                         return render(request, CONSULTATION_VIDEO_TEMPLATE, {"videocall_data": videocall_data})
                 logging.error(
                     f"Error Occurred When Launching consultation : {e}, User Id: {user_id}")
@@ -759,16 +763,16 @@ def createMember(request):
     return JsonResponse({'name': data['name']}, safe=False)
 
 
-def getMember(request):
-    uid = request.GET.get('UID')
-    room_name = request.GET.get('room_name')
+# def getMember(request):
+#     uid = request.GET.get('UID')
+#     room_name = request.GET.get('room_name')
 
-    member = RoomMember.objects.get(
-        uid=uid,
-        room_name=room_name,
-    )
-    name = member.name
-    return JsonResponse({'name': member.name}, safe=False)
+#     member = RoomMember.objects.get(
+#         uid=uid,
+#         room_name=room_name,
+#     )
+#     name = member.name
+#     return JsonResponse({'name': member.name}, safe=False)
 
 
 @csrf_exempt

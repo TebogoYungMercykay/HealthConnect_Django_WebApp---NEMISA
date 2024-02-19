@@ -15,6 +15,7 @@
 <link href="{% static 'css/datatable.css' %}" rel="stylesheet">
 <link href="{% static 'css/consultations.css' %}" rel="stylesheet">
 <link href="{% static 'css/variables.css' %}" rel="stylesheet">
+<link href="{% static 'css/conslt.css' %}" rel="stylesheet">
 {% endblock %}
 {% block content %}
 <main id="main" class="main">
@@ -37,8 +38,8 @@
         <div class="section-title">
             <h2>Consult a Doctor</h2>
         </div>
-        <span>Would want to prepopulate filters if from self diagnosis, ex->
-            specialist={{prediction_data.consultation_dr}}</span>
+        <!-- <span>Would want to prepopulate filters if from self diagnosis, ex->
+            specialist={{prediction_data.consultation_dr}}</span> -->
         <div class="row">
             <div class="col-10 mx-auto">
                 <div class="card">
@@ -159,11 +160,11 @@
     {% endif %}
     <section class="section " id="book_consultation" style="display: none;">
         <div class="section-title">
-            <h2>Book Consultatiom</h2>
+            <h2>Book Consultation</h2>
         </div>
-        <div class="container mt-4">
-            <h2>Consultation Form</h2>
-            <form method="post" action="{% url 'make_consultation' %}" id="make_consultation">
+        <div class="container consltcontainer mt-4">
+            <h2 class="heading">Consultation Form</h2>
+            <form method="post" action="{% url 'make_consultation' %}" id="make_consultation" class="consltform">
                 {% csrf_token %}
 
                 <div class="form-group">
@@ -171,7 +172,7 @@
                     <input type="hidden" id="doctor_id" name="doctor_id">
 
                     
-                    <input type="text" class="form-control" id="consultation_dr" name="consultation_dr" required
+                    <input type="text" class="input" id="consultation_dr" name="consultation_dr" required
                         readonly>
 
                 </div>
@@ -179,19 +180,19 @@
                 <div class="form-group">
                     <label for="diseaseinfo_id">Predicted Disease Info </label>
                     <input type="hidden" id="diseaseinfo_id" name="diseaseinfo_id">
-                    <input type="{% if prediction_data %}text{% else %}hidden{% endif %}" class="form-control"
+                    <input type="{% if prediction_data %}text{% else %}hidden{% endif %}" class="input"
                         id="diseaseinfo_name" name="diseaseinfo_name" required>
                 </div>
 
                 <div class="form-group">
                     <label for="consultation_date">Consultation Date</label>
-                    <input type="datetime-local" class="form-control" id="consultation_date" name="consultation_date"
+                    <input type="datetime-local" class="input" id="consultation_date" name="consultation_date"
                         required>
                 </div>
 
                 <div class="form-group d-none">
                     <label for="status">Status</label>
-                    <select class="form-control" id="status" name="status" required>
+                    <select class="input" id="status" name="status" required>
                         <option value="New" selected>New</option>
                         <option value="Pending">Pending</option>
                         <option value="Pending">Approved</option>
@@ -201,12 +202,12 @@
                     </select>
                 </div>
 
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn-get-started btn consltbtn">Submit</button>
             </form>
         </div>
         <hr>
 
-        <button id="back_to_docs" class="btn btn-primary">Choose Another Doctor</button>
+        <button id="back_to_docs" class="btn-get-started btn consltbtn">Choose Another Doctor</button>
     </section>
 </main>
 {% endblock %}
@@ -261,8 +262,20 @@
         document.getElementById('back_to_docs').addEventListener('click', function (event) {
             toggleSections();
         });
+
+        
     });
+
+
 </script>
+{% if prediction_data%}
+<script>
+    $(document).ready(function() {
 
-
+        // Set default value for the search input
+        $('.datatable-input').val('{{prediction_data.consultation_dr}}');
+        $('.datatable-input').focus();
+    });
+  </script>
+{% endif %}
 {% endblock %}
