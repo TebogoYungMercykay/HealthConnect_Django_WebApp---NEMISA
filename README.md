@@ -5,33 +5,33 @@
 HealthConnect is a revolutionary healthcare platform that transcends traditional boundaries, offering accessible care anytime, anywhere. Our commitment to providing round-the-clock access to caring doctors ensures that you can receive assistance whenever you need it, be it day or night. What sets HealthConnect apart is its personalized healthcare experience, featuring one-on-one video sessions and secure prescriptions tailored to your specific needs. We believe in inclusive communication, delivering diagnosis letters in all South African languages to facilitate clear and understanding conversations between patients and healthcare providers. Through proactive wellness management and sentiment analysis, we prioritize your well-being by staying ahead of potential health issues and addressing concerns before they escalate. HealthConnect is not just a healthcare platform; it's a community-centric approach to well-being. We prioritize your health, ensuring your voice is heard and fostering a sense of community and mutual support among our users. Step into a world where healthcare revolves around you – join HealthConnect today and experience accessible, personalized, and proactive healthcare like never before.
 
 ## TECHNOLOGIES USED
-    - ### Main Application:
-        - This is the Application in this Repository
-        - **Backend:**
-            - Django Web Framework: We chose this for additional backend capabilities and enhanced functionality using the MVC model.
-            - FastAPI Integration: Utilizes FastAPI for a singleton connection to the database and all necessary queries as well as Auth.
-            - NewsAPI Integration: Utilizes NewsAPI to enrich content and provide up-to-date information.
-        - **Frontend:**
-            - Python Jinja2 Syntax: Employs Python Jinja2 syntax for dynamic content rendering on the frontend.
-            - Bootstrap: Uses Bootstrap, a front-end framework, to ensure a responsive and visually appealing design.
-    - ### Application Interfaces
-        - ##### HealthConnect FastAPI:
-            - **FastAPI:** A modern, fast (high-performance), web framework for building APIs with Python 3.7+ based on standard Python type hints.
-            - **Unit Testing:** Demonstrates the importance of testing through unit tests for different components of the API.
-            - **CI/CD (Docker, Heroku):** Implements continuous integration and deployment using Docker for containerization and Heroku for cloud hosting.
-            - **Database Migration Tools (Alembic):** Incorporates Alembic for managing database schema migrations.
-            - **Authentication (JWT Tokens):** Implements token-based authentication using JWT (JSON Web Tokens).
-            - **Virtual Environment:** Utilizes virtual environments for dependency isolation and management.
-            - **Relational Databases (Postgres):** Integrates with Postgres as a relational database to store and manage data.
-            - **Uvicorn ASGI Web Server:** Uses Uvicorn as the ASGI (Asynchronous Server Gateway Interface) web server for FastAPI.
-            - **GitHub Jobs:** Example routes that demonstrate fetching data from the GitHub Jobs API.
-            - **SQLAlchemy:** An SQL toolkit and Object-Relational Mapping (ORM) library for Python, used for database interaction.
-            - ###### **Link:** [HealthConnect FastAPI](https://github.com/TebogoYungMercykay/Python_API_Development_Booth_FASTAPI)
-            - ###### **Documentation:** [Live Documentation](https://healthconnect-python-fastapi-9b23b53a9ae4.herokuapp.com/docs)
-        - ##### NewsAPI:
-            - **Health Articles:** The News API provides us with access to latest and finest articles about health around the Globe.
-            - ###### **Link:** [The NewsAPI](https://newsapi.org)
-            - ###### **Documentation:** [Live Documentation](https://newsapi.org/docs)
+- ### Main Application:
+    - This is the Application in this Repository
+    - **Backend:**
+        - Django Web Framework: We chose this for additional backend capabilities and enhanced functionality using the MVC model.
+        - FastAPI Integration: Utilizes FastAPI for a singleton connection to the database and all necessary queries as well as Auth.
+        - NewsAPI Integration: Utilizes NewsAPI to enrich content and provide up-to-date information.
+    - **Frontend:**
+        - Python Jinja2 Syntax: Employs Python Jinja2 syntax for dynamic content rendering on the frontend.
+        - Bootstrap: Uses Bootstrap, a front-end framework, to ensure a responsive and visually appealing design.
+- ### Application Interfaces
+    - ##### HealthConnect FastAPI:
+        - **FastAPI:** A modern, fast (high-performance), web framework for building APIs with Python 3.7+ based on standard Python type hints.
+        - **Unit Testing:** Demonstrates the importance of testing through unit tests for different components of the API.
+        - **CI/CD (Docker, Heroku):** Implements continuous integration and deployment using Docker for containerization and Heroku for cloud hosting.
+        - **Database Migration Tools (Alembic):** Incorporates Alembic for managing database schema migrations.
+        - **Authentication (JWT Tokens):** Implements token-based authentication using JWT (JSON Web Tokens).
+        - **Virtual Environment:** Utilizes virtual environments for dependency isolation and management.
+        - **Relational Databases (Postgres):** Integrates with Postgres as a relational database to store and manage data.
+        - **Uvicorn ASGI Web Server:** Uses Uvicorn as the ASGI (Asynchronous Server Gateway Interface) web server for FastAPI.
+        - **GitHub Jobs:** Example routes that demonstrate fetching data from the GitHub Jobs API.
+        - **SQLAlchemy:** An SQL toolkit and Object-Relational Mapping (ORM) library for Python, used for database interaction.
+        - ###### **Link:** [HealthConnect FastAPI](https://github.com/TebogoYungMercykay/Python_API_Development_Booth_FASTAPI)
+        - ###### **Documentation:** [Live Documentation](https://healthconnect-python-fastapi-9b23b53a9ae4.herokuapp.com/docs)
+    - ##### NewsAPI:
+        - **Health Articles:** The News API provides us with access to latest and finest articles about health around the Globe.
+        - ###### **Link:** [The NewsAPI](https://newsapi.org)
+        - ###### **Documentation:** [Live Documentation](https://newsapi.org/docs)
 
 ## PROJECT STRUCTURE
 
