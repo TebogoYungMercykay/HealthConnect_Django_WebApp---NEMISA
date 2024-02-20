@@ -32,6 +32,10 @@ HealthConnect is a revolutionary healthcare platform that transcends traditional
         - **Health Articles:** The News API provides us with access to latest and finest articles about health around the Globe.
         - > **Link:** [The NewsAPI](https://newsapi.org)
         - > **Documentation:** [Live Documentation](https://newsapi.org/docs)
+- ### Database & Tools:
+    - PostgreSQL Database (AWS RDS Database)
+    - PgMyAdmin 4, Orange
+    - 
 
 ## PROJECT STRUCTURE
 
@@ -45,9 +49,17 @@ HealthConnect is a revolutionary healthcare platform that transcends traditional
 - **`project-diagrams/`:** Directory housing visual representations such as system architecture diagrams, database schemas, or any relevant visualizations to aid in understanding the project's structure.
 - **`README.md`:** Comprehensive documentation providing an overview of the project, including setup instructions, deployment guidelines, and any other pertinent information for developers and users alike.
 
-## DATABASE TABLES DESIGN & RELATIONSHIPS
+## DISEASE PREDICTION ARCHITECTURE
 
-![ERD Diagramn](./project-diagramns/database-erd-diagramn-healthconnect.drawio.svg)
+![ERD Diagramn](./project-diagramns/Disease_Prediction_Diagram.jpg)
+
+- #### Dataset Used:
+
+> https://www.kaggle.com/neelima98/disease-prediction-using-machine-learning
+
+- ####  Data collection 
+
+Data collection has been done from the internet to identify the disease here the real symptoms of the disease are collected i.e. no dummy values are entered. The symptoms of the disease are health related websites. This csv file contain 5000 rows of record of the patients with their symptoms(132 types of different symptoms) and their corresponding disease(40 class of general disease).
 
 ### REQUIREMENTS: Quick Setup/Guidelines for Running the Python API
 
@@ -99,7 +111,8 @@ HealthConnect is a revolutionary healthcare platform that transcends traditional
     ```
 ---
 
-### Running the Django Application:
+### RUNNING THE DJANGO APPLICATION:
+
 - **Clone the Repository:**
    ```bash
    git clone https://github.com/DanPhala/HealthConnect---NEMISA.git
@@ -124,14 +137,6 @@ HealthConnect is a revolutionary healthcare platform that transcends traditional
     python manage.py runserver
     ```
 
----
-
-### Dataset Used:
-
-https://www.kaggle.com/neelima98/disease-prediction-using-machine-learning
-
-
----
 ---
 
 <p align="center">The End, Thank You!</p>
