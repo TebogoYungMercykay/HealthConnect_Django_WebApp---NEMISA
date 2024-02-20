@@ -15,262 +15,262 @@
 <link href="{% static 'css/datatable.css' %}" rel="stylesheet">
 <link href="{% static 'css/consultations.css' %}" rel="stylesheet">
 <link href="{% static 'css/variables.css' %}" rel="stylesheet">
+<link href="{% static 'css/conslt.css' %}" rel="stylesheet">
 {% endblock %}
 {% block content %}
-    <main id="main" class="main">
-        <div class="pagetitle">
-            <h1>Consultations</h1>
-            <nav>
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item">
-                        <a href="{% url 'consulation_home' %}">
-                            <i class="ri-home-line"></i>
-                        </a>
-                    </li>
-                    <li class="breadcrumb-item active">Self Diagnose</li>
-                </ol>
-            </nav>
+<main id="main" class="main">
+    <div class="pagetitle">
+
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{% url 'consulation_home' %}">
+                        <i class="ri-home-line"></i>
+                    </a>
+                </li>
+                
+            </ol>
+        </nav>
+    </div>
+    {% if request.session.is_patient %}
+    <section class="section">
+        <div class="section-title">
+            <h2>Check Disease</h2>
         </div>
-        
-        {% if request.session.is_patient %}
-        <section class="section">
-            <div class="section-title">
-                <h2>Check Disease</h2>
-            </div>
-            <div id="check_disease">
-                <div class="container mx-auto text-center">
-                    <h2 id="symptoms_lists">Select Symptoms from List Bellow</h2>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <input type="text" class="form-control search-input" placeholder="Search for Symptoms Here..."
-                                id="searchInput">
-                        </div>
+        <div id="check_disease">
+            <div class="container mx-auto text-center">
+                <h2 id="symptoms_lists">Select Symptoms from List Bellow</h2>
+                <div class="row">
+                    <div class="col-md-12">
+                        <input type="text" class="form-control search-input" placeholder="Search for Symptoms Here..."
+                            id="searchInput">
                     </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="card pt-4 pb-4">
-                                <div class="card-body scrollable-list">
-                                    <ul class="word-list" id="availableList">
-                                        <!-- Created Using JavaScript DOM -->
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="card pt-4 pb-4">
-                                <div class="card-body">
-                                    <ul class="word-list" id="selectedList">
-                                        <!-- Created Using JavaScript DOM -->
-                                    </ul>
-                                </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card pt-4 pb-4">
+                            <div class="card-body scrollable-list">
+                                <ul class="word-list" id="availableList">
+                                    <!-- Created Using JavaScript DOM -->
+                                </ul>
                             </div>
                         </div>
                     </div>
-                    <a class="btn btn-outline-success predict-button m-5" id="predictButton">Predict</a>
+                    <div class="col-md-6">
+                        <div class="card pt-4 pb-4">
+                            <div class="card-body">
+                                <ul class="word-list" id="selectedList">
+                                    <!-- Created Using JavaScript DOM -->
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+                <a class="btn-get-started btn consltbtn" id="predictButton">Predict</a>
             </div>
-            <form id="hiddenForm" style="display: none;" method="post" action="{% url 'create_disease' %}">
-                <input type="hidden" name="no_of_symptoms" id="hiddenNoOfSymptoms">
-                <input type="hidden" name="symptoms" id="hiddenSymptoms">
-                {% csrf_token %}
+        </div>
+        <form id="hiddenForm" style="display: none;" method="post" action="{% url 'create_disease' %}">
+            <input type="hidden" name="no_of_symptoms" id="hiddenNoOfSymptoms">
+            <input type="hidden" name="symptoms" id="hiddenSymptoms">
+            {% csrf_token %}
 
-                <button type="button" id="predictButton">Predict</button>
-            </form>
-            <!-- Consult a Doctor -->
-            {% if predicted_disesse %}
-            <div class="blog-card" id="result_prediction">
-                <div class="meta">
-                    <div class="photo" style="background-image: url('{% static 'img/blog/blog-1.jpg' %}')"></div>
-                </div>
-                <div class="description">
-                    <h4>Get more insights by opening a consultation</h4>
-                    <h1>Disease Info</h1>
-                    <p id="disease_id" style="display: none;">{{ predicted_disesse.id }}</p>
-                    <p id="predicted"><strong>Predicted Disease</strong>: {{ predicted_disesse.diseasename }}</p>
-                    <p id="consult_doc"><strong>Consult Doctor</strong>: {{ predicted_disesse.consultdoctor }}</p>
-                    <p id="confidence"><strong>Confidence Score</strong>: {{ predicted_disesse.confidence }}</p>
-
-                    <form id="find_doctor" style="display: none;" method="post" action="{% url 'find_doctor' %}">
-                        {% csrf_token %}
-
-                        <input type="hidden" name="diseaseinfo_id" id="hiddenDiseaseinfo_id"
-                            value="{{predicted_disesse.id}}">
-                        <input type="hidden" name="consultation_dr" id="hiddenConsultation_dr"
-                            value="{{predicted_disesse.consultdoctor}}">
-                        <input type="hidden" name="diseaseinfo_name" id="hiddenDiseaseinfo_name"
-                            value="{{predicted_disesse.diseasename}}">
-
-                    </form>
-                    <button id="consultNowBtn" class="btn btn-success">Consult Now</button>
-                </div>
+            <button type="button" id="predictButton">Predict</button>
+        </form>
+        <!-- Consult a Doctor -->
+        {% if predicted_disesse %}
+        <div class="blog-card" id="result_prediction">
+            <div class="meta">
+                <div class="photo" style="background-image: url('{% static 'img/blog/blog-1.jpg' %}')"></div>
             </div>
-            {% endif %}
-        </section>
+            <div class="description">
+                <h4>Get more insights by opening a consultation</h4>
+                <h1>Disease Info</h1>
+                <p id="disease_id" style="display: none;">{{ predicted_disesse.id }}</p>
+                <p id="predicted"><strong>Predicted Disease</strong>: {{ predicted_disesse.diseasename }}</p>
+                <p id="consult_doc"><strong>Consult Doctor</strong>: {{ predicted_disesse.consultdoctor }}</p>
+                <p id="confidence"><strong>Confidence Score</strong>: {{ predicted_disesse.confidence }}</p>
+
+                <form id="find_doctor" style="display: none;" method="post" action="{% url 'find_doctor' %}">
+                    {% csrf_token %}
+
+                    <input type="hidden" name="diseaseinfo_id" id="hiddenDiseaseinfo_id"
+                        value="{{predicted_disesse.id}}">
+                    <input type="hidden" name="consultation_dr" id="hiddenConsultation_dr"
+                        value="{{predicted_disesse.consultdoctor}}">
+                    <input type="hidden" name="diseaseinfo_name" id="hiddenDiseaseinfo_name"
+                        value="{{predicted_disesse.diseasename}}">
+
+                </form>
+                <button id="consultNowBtn" class="btn-get-started btn consltbtn">Consult Now</button>
+            </div>
+        </div>
         {% endif %}
-    </main>
+    </section>
+    {% endif %}
+</main>
 
 {% endblock %}
 {% block pagespecificjs %}
 
 {% if request.session.is_patient %}
-    <script>
+<script>
 
-        document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function () {
 
-            function generateWordList() {
-                let availableList = document.getElementById('availableList');
-                let selectedList = document.getElementById('selectedList');
+        function generateWordList() {
+            let availableList = document.getElementById('availableList');
+            let selectedList = document.getElementById('selectedList');
 
-                let words = [
-                    'itching', 'skin_rash', 'nodal_skin_eruptions', 'continuous_sneezing', 'shivering', 'chills', 'joint_pain',
-                    'stomach_pain', 'acidity', 'ulcers_on_tongue', 'muscle_wasting', 'vomiting', 'burning_micturition', 'spotting_ urination',
-                    'fatigue', 'weight_gain', 'anxiety', 'cold_hands_and_feets', 'mood_swings', 'weight_loss', 'restlessness', 'lethargy',
-                    'patches_in_throat', 'irregular_sugar_level', 'cough', 'high_fever', 'sunken_eyes', 'breathlessness', 'sweating',
-                    'dehydration', 'indigestion', 'headache', 'yellowish_skin', 'dark_urine', 'nausea', 'loss_of_appetite', 'pain_behind_the_eyes',
-                    'back_pain', 'constipation', 'abdominal_pain', 'diarrhoea', 'mild_fever', 'yellow_urine',
-                    'yellowing_of_eyes', 'acute_liver_failure', 'fluid_overload', 'swelling_of_stomach',
-                    'swelled_lymph_nodes', 'malaise', 'blurred_and_distorted_vision', 'phlegm', 'throat_irritation',
-                    'redness_of_eyes', 'sinus_pressure', 'runny_nose', 'congestion', 'chest_pain', 'weakness_in_limbs',
-                    'fast_heart_rate', 'pain_during_bowel_movements', 'pain_in_anal_region', 'bloody_stool',
-                    'irritation_in_anus', 'neck_pain', 'dizziness', 'cramps', 'bruising', 'obesity', 'swollen_legs',
-                    'swollen_blood_vessels', 'puffy_face_and_eyes', 'enlarged_thyroid', 'brittle_nails',
-                    'swollen_extremeties', 'excessive_hunger', 'extra_marital_contacts', 'drying_and_tingling_lips',
-                    'slurred_speech', 'knee_pain', 'hip_joint_pain', 'muscle_weakness', 'stiff_neck', 'swelling_joints',
-                    'movement_stiffness', 'spinning_movements', 'loss_of_balance', 'unsteadiness',
-                    'weakness_of_one_body_side', 'loss_of_smell', 'bladder_discomfort', 'foul_smell_of urine',
-                    'continuous_feel_of_urine', 'passage_of_gases', 'internal_itching', 'toxic_look_(typhos)',
-                    'depression', 'irritability', 'muscle_pain', 'altered_sensorium', 'red_spots_over_body', 'belly_pain',
-                    'abnormal_menstruation', 'dischromic _patches', 'watering_from_eyes', 'increased_appetite', 'polyuria', 'family_history', 'mucoid_sputum',
-                    'rusty_sputum', 'lack_of_concentration', 'visual_disturbances', 'receiving_blood_transfusion',
-                    'receiving_unsterile_injections', 'coma', 'stomach_bleeding', 'distention_of_abdomen',
-                    'history_of_alcohol_consumption', 'fluid_overload', 'blood_in_sputum', 'prominent_veins_on_calf',
-                    'palpitations', 'painful_walking', 'pus_filled_pimples', 'blackheads', 'scurring', 'skin_peeling',
-                    'silver_like_dusting', 'small_dents_in_nails', 'inflammatory_nails', 'blister', 'red_sore_around_nose',
-                    'yellow_crust_ooze'
-                ];
+            let words = [
+                'itching', 'skin_rash', 'nodal_skin_eruptions', 'continuous_sneezing', 'shivering', 'chills', 'joint_pain',
+                'stomach_pain', 'acidity', 'ulcers_on_tongue', 'muscle_wasting', 'vomiting', 'burning_micturition', 'spotting_ urination',
+                'fatigue', 'weight_gain', 'anxiety', 'cold_hands_and_feets', 'mood_swings', 'weight_loss', 'restlessness', 'lethargy',
+                'patches_in_throat', 'irregular_sugar_level', 'cough', 'high_fever', 'sunken_eyes', 'breathlessness', 'sweating',
+                'dehydration', 'indigestion', 'headache', 'yellowish_skin', 'dark_urine', 'nausea', 'loss_of_appetite', 'pain_behind_the_eyes',
+                'back_pain', 'constipation', 'abdominal_pain', 'diarrhoea', 'mild_fever', 'yellow_urine',
+                'yellowing_of_eyes', 'acute_liver_failure', 'fluid_overload', 'swelling_of_stomach',
+                'swelled_lymph_nodes', 'malaise', 'blurred_and_distorted_vision', 'phlegm', 'throat_irritation',
+                'redness_of_eyes', 'sinus_pressure', 'runny_nose', 'congestion', 'chest_pain', 'weakness_in_limbs',
+                'fast_heart_rate', 'pain_during_bowel_movements', 'pain_in_anal_region', 'bloody_stool',
+                'irritation_in_anus', 'neck_pain', 'dizziness', 'cramps', 'bruising', 'obesity', 'swollen_legs',
+                'swollen_blood_vessels', 'puffy_face_and_eyes', 'enlarged_thyroid', 'brittle_nails',
+                'swollen_extremeties', 'excessive_hunger', 'extra_marital_contacts', 'drying_and_tingling_lips',
+                'slurred_speech', 'knee_pain', 'hip_joint_pain', 'muscle_weakness', 'stiff_neck', 'swelling_joints',
+                'movement_stiffness', 'spinning_movements', 'loss_of_balance', 'unsteadiness',
+                'weakness_of_one_body_side', 'loss_of_smell', 'bladder_discomfort', 'foul_smell_of urine',
+                'continuous_feel_of_urine', 'passage_of_gases', 'internal_itching', 'toxic_look_(typhos)',
+                'depression', 'irritability', 'muscle_pain', 'altered_sensorium', 'red_spots_over_body', 'belly_pain',
+                'abnormal_menstruation', 'dischromic _patches', 'watering_from_eyes', 'increased_appetite', 'polyuria', 'family_history', 'mucoid_sputum',
+                'rusty_sputum', 'lack_of_concentration', 'visual_disturbances', 'receiving_blood_transfusion',
+                'receiving_unsterile_injections', 'coma', 'stomach_bleeding', 'distention_of_abdomen',
+                'history_of_alcohol_consumption', 'fluid_overload', 'blood_in_sputum', 'prominent_veins_on_calf',
+                'palpitations', 'painful_walking', 'pus_filled_pimples', 'blackheads', 'scurring', 'skin_peeling',
+                'silver_like_dusting', 'small_dents_in_nails', 'inflammatory_nails', 'blister', 'red_sore_around_nose',
+                'yellow_crust_ooze'
+            ];
 
-                for (let word of words.sort()) {
-                    let listItem = document.createElement('li');
-                    listItem.textContent = word;
-                    listItem.classList.add('word-list-item');
-                    listItem.addEventListener('click', function () {
-                        let currentList = this.parentNode.id;
-                        if (currentList === 'availableList') {
-                            let selectedWord = this.cloneNode(true);
-                            selectedList.appendChild(selectedWord);
-                            this.remove();
-                        } else if (currentList === 'selectedList') {
-                            let availableWord = this.cloneNode(true);
-                            availableList.appendChild(availableWord);
-                            this.remove();
-                        }
-                    });
-                    availableList.appendChild(listItem);
-                }
+            for (let word of words.sort()) {
+                let listItem = document.createElement('li');
+                listItem.textContent = word;
+                listItem.classList.add('word-list-item');
+                listItem.addEventListener('click', function () {
+                    let currentList = this.parentNode.id;
+                    if (currentList === 'availableList') {
+                        let selectedWord = this.cloneNode(true);
+                        selectedList.appendChild(selectedWord);
+                        this.remove();
+                    } else if (currentList === 'selectedList') {
+                        let availableWord = this.cloneNode(true);
+                        availableList.appendChild(availableWord);
+                        this.remove();
+                    }
+                });
+                availableList.appendChild(listItem);
             }
-
-            // Disease Prediction
-            document.getElementById('predictButton').addEventListener('click', function () {
-                let selectedListItems = document.querySelectorAll('#selectedList .word-list-item');
-                let selectedWordsArray = Array.from(selectedListItems).map(function (item) {
-                    return item.textContent;
-                });
-
-                if (selectedWordsArray.length > 0) {
-                    document.getElementById('hiddenNoOfSymptoms').value = selectedWordsArray.length;
-                    document.getElementById('hiddenSymptoms').value = JSON.stringify(selectedWordsArray);
-
-                    document.getElementById('hiddenForm').submit();
-                } else {
-                    alert('Please select At Least One Symptom before Predicting.');
-                }
-            });
-
-            generateWordList();
-
-            document.getElementById('selectedList').addEventListener('click', function (event) {
-                if (event.target.tagName === 'LI') {
-                    event.target.remove();
-                    availableList.appendChild(event.target);
-                }
-            });
-            document.getElementById('searchInput').addEventListener('input', function () {
-                let searchInput = this.value.toLowerCase();
-                let availableListItems = document.querySelectorAll('#availableList .word-list-item');
-                availableListItems.forEach(function (item) {
-                    let word = item.textContent.toLowerCase();
-                    item.style.display = word.includes(searchInput) ? 'block' : 'none';
-                });
-            });
-        });
-    </script>
-    {% else %}
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            equalizeDetailsHeight();
-        });
-
-        function equalizeDetailsHeight() {
-            var detailsElements = document.querySelectorAll('.details');
-            var maxHeight = 0;
-
-            detailsElements.forEach(function (details) {
-                maxHeight = Math.max(maxHeight, details.clientHeight);
-            });
-
-            detailsElements.forEach(function (details) {
-                details.style.height = maxHeight + 'px';
-            });
         }
 
-    </script>
-    {% endif %}
+        // Disease Prediction
+        document.getElementById('predictButton').addEventListener('click', function () {
+            let selectedListItems = document.querySelectorAll('#selectedList .word-list-item');
+            let selectedWordsArray = Array.from(selectedListItems).map(function (item) {
+                return item.textContent;
+            });
 
+            if (selectedWordsArray.length > 0) {
+                document.getElementById('hiddenNoOfSymptoms').value = selectedWordsArray.length;
+                document.getElementById('hiddenSymptoms').value = JSON.stringify(selectedWordsArray);
 
-    <script>
-
-        document.addEventListener('DOMContentLoaded', function () {
-
-            var consultBtn = document.getElementById('consultNowBtn');
-
-            console.log(consultBtn);
-
-            
-            if (consultBtn) {
-
-                consultBtn.addEventListener('click', function () {
-                    event.preventDefault();
-                    document.getElementById('find_doctor').submit();
-                });
-            }
-            {% if request.session.prediction_successful %}
-            var predictedDisease = true;
-            {% else %}
-            var predictedDisease = false;
-            {% endif %}
-
-            if (predictedDisease) {
-                var resultPredictionDiv = document.getElementById('result_prediction');
-                if (resultPredictionDiv) {
-                    var topOffset = resultPredictionDiv.offsetTop - 160;
-                    window.scrollTo({
-                        top: topOffset,
-                        behavior: 'smooth'
-                    });
-                }
+                document.getElementById('hiddenForm').submit();
+            } else {
+                alert('Please select At Least One Symptom before Predicting.');
             }
         });
-    </script>
 
-    <!-- ChatBot  -->
-    <script>
-        window.embeddedChatbotConfig = {
-            chatbotId: "{{ request.session.chatbot_id }}",
-            domain: "www.chatbase.co"
+        generateWordList();
+
+        document.getElementById('selectedList').addEventListener('click', function (event) {
+            if (event.target.tagName === 'LI') {
+                event.target.remove();
+                availableList.appendChild(event.target);
+            }
+        });
+        document.getElementById('searchInput').addEventListener('input', function () {
+            let searchInput = this.value.toLowerCase();
+            let availableListItems = document.querySelectorAll('#availableList .word-list-item');
+            availableListItems.forEach(function (item) {
+                let word = item.textContent.toLowerCase();
+                item.style.display = word.includes(searchInput) ? 'block' : 'none';
+            });
+        });
+    });
+</script>
+{% else %}
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        equalizeDetailsHeight();
+    });
+
+    function equalizeDetailsHeight() {
+        var detailsElements = document.querySelectorAll('.details');
+        var maxHeight = 0;
+
+        detailsElements.forEach(function (details) {
+            maxHeight = Math.max(maxHeight, details.clientHeight);
+        });
+
+        detailsElements.forEach(function (details) {
+            details.style.height = maxHeight + 'px';
+        });
+    }
+
+</script>
+{% endif %}
+
+
+<script>
+
+    document.addEventListener('DOMContentLoaded', function () {
+
+        var consultBtn = document.getElementById('consultNowBtn');
+
+        console.log(consultBtn);
+
+        
+        if (consultBtn) {
+
+            consultBtn.addEventListener('click', function () {
+                event.preventDefault();
+                document.getElementById('find_doctor').submit();
+            });
         }
-    </script>
-    <script src="https://www.chatbase.co/embed.min.js" chatbotId="{{ request.session.chatbot_id }}" domain="www.chatbase.co"
-        defer>
+        {% if request.session.prediction_successful %}
+        var predictedDisease = true;
+        {% else %}
+        var predictedDisease = false;
+        {% endif %}
+
+        if (predictedDisease) {
+            var resultPredictionDiv = document.getElementById('result_prediction');
+            if (resultPredictionDiv) {
+                var topOffset = resultPredictionDiv.offsetTop - 160;
+                window.scrollTo({
+                    top: topOffset,
+                    behavior: 'smooth'
+                });
+            }
+        }
+    });
+</script>
+
+<!-- ChatBot  -->
+<script>
+    window.embeddedChatbotConfig = {
+        chatbotId: "{{ request.session.chatbot_id }}",
+        domain: "www.chatbase.co"
+    }
+</script>
+<script src="https://www.chatbase.co/embed.min.js" chatbotId="{{ request.session.chatbot_id }}" domain="www.chatbase.co"
+    defer>
     </script>
 
 {% endblock %}

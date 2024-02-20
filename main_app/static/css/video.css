@@ -48,7 +48,7 @@ body{
     font-weight: 300;
 }
 
-.form-field{
+/* .form-field{
     margin-bottom: 20px;
 }
 
@@ -64,13 +64,13 @@ body{
     padding: 10px;
     font-size: 16px;
     box-sizing: border-box;
-}
-
+} */
+/* 
 .form-field input[type='submit']{
     background-color: rgb(75, 93, 172);
     border:none;
     color: #fff;
-}
+} */
 
 
 @media screen and (max-width:450px) {
@@ -95,8 +95,8 @@ body{
 #video-streams{
     display: flex;
     flex-wrap: wrap;
-    height: 85vh;
-    width: 95%;
+    height: 80vh;
+    width: 80%;
     margin:0 auto;
 }
 
@@ -149,7 +149,7 @@ body{
     width: 100%;
     justify-content: center;
     column-gap: 1em;
-    position: fixed;
+    /* position: fixed; */
     bottom: 20px;
 }
 

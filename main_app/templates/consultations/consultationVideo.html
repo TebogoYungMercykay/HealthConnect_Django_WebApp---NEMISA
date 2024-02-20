@@ -3,18 +3,21 @@
 {% block consultation_active %} active {% endblock %}
 {% block redirect_script %}
 {% if not request.session.user_id or not request.session.is_authenticated %}
-    <script type="text/javascript">
-        window.location.href = "{% url 'login' %}";
-    </script>
+<script type="text/javascript">
+    window.location.href = "{% url 'login' %}";
+</script>
 {% endif %}
 {% endblock %}
 {% block title %}Consultations{% endblock %}
 {% block pagespecificstyle %}
-    <link href="{% static 'css/chat.css' %}" rel="stylesheet">
-    <link href="{% static 'css/datatable.css' %}" rel="stylesheet">
-    <link href="{% static 'css/consultations.css' %}" rel="stylesheet">
-    <link href="{% static 'css/variables.css' %}" rel="stylesheet">
-    <link href="{% static 'css/video.css' %}" rel="stylesheet">
+<link href="{% static 'css/chat.css' %}" rel="stylesheet">
+<link href="{% static 'css/datatable.css' %}" rel="stylesheet">
+<link href="{% static 'css/consultations.css' %}" rel="stylesheet">
+<link href="{% static 'css/variables.css' %}" rel="stylesheet">
+<link href="{% static 'css/video.css' %}" rel="stylesheet">
+<link href="{% static 'css/conslt.css' %}" rel="stylesheet">
+
+
 {% endblock %}
 {% block content %}
 
@@ -22,43 +25,49 @@
 {% if lobbyInfo %}
 <!-- ConsultationVideo -->
 
-    <main class="main">
+<main id="main" class="main">
 
-        <section id="form-container">
 
-            <img id="logo" src="{% static 'img/chat-icon.png' %}"/>
+    <section class="section ">
+        <div class="consltcontainer" style=" max-width: 50%;">
+            <img id="logo" src="{% static 'img/chat-icon.png' %}" />
 
             <div id="welcome-message">
                 <h1>Welcome to He24/7thConnect VideoCalling</h1>
                 <p>Secure consultation available 247!</p>
             </div>
 
-            <form id="form" method="post" action="{% url 'open_video_consultation' consultation_id=lobbyInfo.consultation_id%}">
+            <form id="form" class="consltform" method="post"
+                action="{% url 'open_video_consultation' consultation_id=lobbyInfo.consultation_id%}">
                 <div class="field-wrapper">
 
                     <div class="form-field">
                         <label>Room:</label>
-                        <input  name="roomName" value="{{ lobbyInfo.roomNameDisplay }}" readonly style="text-transform:uppercase"/>
+                        <input name="roomName" class="input" value="{{ lobbyInfo.roomNameDisplay }}" readonly
+                            style="text-transform:uppercase" />
                         <input type="hidden" name="room" value="{{ lobbyInfo.roomName }}" readonly />
+                        <input type="hidden" name="otheruser" value="{{ lobbyInfo.otherUser }}" readonly />
+                   
                     </div>
 
                     <div class="form-field">
                         <label>Name:</label>
-                        <input name="name" value="{{ lobbyInfo.clientName }}" readonly />
+                        <input name="name" class="input" value="{{ lobbyInfo.clientName }}" readonly />
                     </div>
-                    
-                    <div class="form-field">
+
+                    <div class="d-flex justify-content-center">
                         {% csrf_token %}
                         {% if request.session.is_patient %}
-                        <input type="submit" value="Join Consultation" />
+                        <input type="submit" value="Join Consultation" class="btn-get-started btn consltbtn" />
                         {% else %}
-                        <input type="submit" value="Start Consultation" />
+                        <input type="submit" value="Start Consultation" class="btn-get-started btn consltbtn" />
                         {% endif %}
                     </div>
                 </div>
             </form>
-        </section>
-    </main>
+        </div>
+    </section>
+</main>
 
 
 {% endif %}
@@ -67,9 +76,10 @@
 <!-- ConsultationVideo -->
 
 {% if videocall_data %}
-    <main class="main-container">
+<main id="main" class="main videosec">
+    <section class="section ">
         <section id="room-name-wrapper">
-            <p>Room Name: <span id="room-name"></span></p>
+            <p class="heading">Room Name: <span id="room-name"></span></p>
         </section>
 
         <section id="video-streams"></section>
@@ -87,7 +97,8 @@
                 <img class="control-icon" id="leave-btn" src="{% static 'img/leave.svg' %}" />
             </div>
         </section>
-    </main>
+    </section>
+</main>
 
 
 {% endif %}
@@ -95,37 +106,10 @@
 
 {% block pagespecificjs %}
 
-    <!-- <script>
-    let form = document.getElementById('form')
 
-    let handleSubmit = async (e) => {
-        e.preventDefault()
-        let room = e.target.room.value.toUpperCase()
-        let name = e.target.name.value
-
-        let response = await fetch(`/get_token/?channel=${room}`)
-        let data = await response.json()
-
-        let UID = data.uid
-        let token = data.token
-
-        sessionStorage.setItem('UID', UID)
-        sessionStorage.setItem('token', token)
-        sessionStorage.setItem('room', room)
-        sessionStorage.setItem('name', name)
-
-        window.open('/room/', '_self')
-    }
-
-
-
-    //form.addEventListener('submit', handleSubmit)
-    </script> -->
-
-
-    <!-- <script type="text/javascript" src="{% static 'js/streams.js' %}" ></script> -->
-    {% if videocall_data %}
-    <script>
+<!-- <script type="text/javascript" src="{% static 'js/streams.js' %}" ></script> -->
+{% if videocall_data %}
+<script>
     // const APP_ID = 'a7da24c9908a4acdbab09c15b71c706b'
     // const TOKEN = sessionStorage.getItem('token')
     // const CHANNEL = sessionStorage.getItem('room')
@@ -138,96 +122,108 @@
     let UID = '{{videocall_data.UID}}'
     let NAME = '{{videocall_data.name}}'
     let ROOMNAME = '{{videocall_data.room_display}}'
+    let OTHERUSER = '{{videocall_data.other_user}}'
 
 
-    const client = AgoraRTC.createClient({mode:'rtc', codec:'h264'})
+    const client = AgoraRTC.createClient({ mode: 'rtc', codec: 'h264' })
 
     let localTracks = []
-    let remoteUsers = {}
+    let remoteUsers = {}//for remote users joining the stream
 
     let joinAndDisplayLocalStream = async () => {
-        window.alert( CHANNEL)
         document.getElementById('room-name').innerText = ROOMNAME
         //subscribe to event listener
         client.on('user-published', handleUserJoined)//when user-published handleUserJoined will be called
         client.on('user-left', handleUserLeft)//when user jumps off the call
 
-        try{
-            UID = await client.join(APP_ID, CHANNEL, TOKEN, UID)
-        }catch(error){
-            console.error("XX",error)
-        
+        try {
+           UID =  await client.join(APP_ID, CHANNEL, TOKEN, UID)
+            // console.log(UID)
+            
+        } catch (error) {
+            
+            //console.error("XX",error)
+
             window.open('/', '_self')
         }
-        
-        localTracks = await AgoraRTC.createMicrophoneAndCameraTracks()//get user audio and track [audio,camera]
 
-        //let member = await createMember() 
+
+        localTracks = await AgoraRTC.createMicrophoneAndCameraTracks();
+        // Continue with your code that depends on localTracks
+        console.log("Local tracks created successfully:", localTracks);
 
         let player = `<div  class="video-container" id="user-container-${UID}">
-                        <div class="video-player" id="user-${UID}"></div>
-                        <div class="username-wrapper"><span class="user-name">${NAME}</span></div>
-                    </div>`
-        
+                     <div class="video-player" id="user-${UID}"></div>
+                     <div class="username-wrapper"><span class="user-name">${NAME}</span></div>
+                  </div>`
+
         document.getElementById('video-streams').insertAdjacentHTML('beforeend', player)
+
         localTracks[1].play(`user-${UID}`)//play the video and [1] at [0] is audio
         localTracks[0].play(`user-${UID}`)//play the video and [1] at [0] is audio
         await client.publish([localTracks[0], localTracks[1]])//other people see
+
     }
 
     let handleUserJoined = async (user, mediaType) => {
 
         remoteUsers[user.uid] = user //add user to the remoteUsers
-        window.alert(user.uid)
+
         await client.subscribe(user, mediaType)
 
-        if (mediaType === 'video'){
+        if (mediaType === 'video') {
             let player = document.getElementById(`user-container-${user.uid}`)
-            if (player != null){//Incase user refreshes page/ user video element already exists
+            if (player != null) {//Incase user refreshes page/ user video element already exists
                 player.remove()//remove it so we can add a new one
+            } else {
+                console.log(user.uid)
+                
             }
 
-            //let member = await getMember(user)
-
             player = `<div  class="video-container" id="user-container-${user.uid}">
-                <div class="video-player" id="user-${user.uid}"></div>
-                <div class="username-wrapper"><span class="user-name">${NAME}</span></div>
-            </div>`
-
-            document.getElementById('video-streams').insertAdjacentHTML('beforeend', player)
-            user.videoTrack.play(`user-${user.uid}`)//Play the user's video
-
-        }
-        console.log("XXXXXXXXXX",mediaType)
-        if (mediaType === 'audio'){
+            <div class="video-player" id="user-${user.uid}"></div>
+            <div class="username-wrapper"><span class="user-name">${OTHERUSER}</span></div>
+        </div>`
+            console.log("HTML", player)
             
-            user.audioTrack.play()
+            document.getElementById('video-streams').insertAdjacentHTML('beforeend', player)
+            if (user.videoTrack) {
+                user.videoTrack.play(`user-${user.uid}`)//Play the user's video
+            }
+        }
+        console.log("XXXXXXXXXX", mediaType)
+        if (mediaType === 'audio') {
+            if (user.audioTrack) {
+                user.audioTrack.play()
+            }
         }
     }
 
     let handleUserLeft = async (user) => {
         delete remoteUsers[user.uid]
+        alert("Removed")
         document.getElementById(`user-container-${user.uid}`).remove()
     }
 
     let leaveAndRemoveLocalStream = async () => {
-        for (let i=0; localTracks.length > i; i++){
+        for (let i = 0; localTracks.length > i; i++) {
             localTracks[i].stop()
             localTracks[i].close()
         }
 
         await client.leave()
         //This is somewhat of an issue because if user leaves without actaull pressing leave button, it will not trigger
-        deleteMember()
-        window.open('/', '_self')
+        //deleteMember();
+        window.history.back();
+        //window.open('/', '_self')
     }
 
     let toggleCamera = async (e) => {
         console.log('TOGGLE CAMERA TRIGGERED')
-        if(localTracks[1].muted){
+        if (localTracks[1].muted) {
             await localTracks[1].setMuted(false)//turn camera on
             e.target.style.backgroundColor = '#fff'
-        }else{
+        } else {
             await localTracks[1].setMuted(true)
             e.target.style.backgroundColor = 'rgb(255, 80, 80, 1)'
         }
@@ -235,10 +231,10 @@
 
     let toggleMic = async (e) => {
         console.log('TOGGLE MIC TRIGGERED')
-        if(localTracks[0].muted){
+        if (localTracks[0].muted) {
             await localTracks[0].setMuted(false)
             e.target.style.backgroundColor = '#fff'
-        }else{
+        } else {
             await localTracks[0].setMuted(true)
             e.target.style.backgroundColor = 'rgb(255, 80, 80, 1)'
         }
@@ -258,6 +254,7 @@
 
 
     // let getMember = async (user) => {
+        
     //     let response = await fetch(`/get_member/?UID=${user.uid}&room_name=${CHANNEL}`)
     //     let member = await response.json()
     //     return member
@@ -283,6 +280,6 @@
     document.getElementById('mic-btn').addEventListener('click', toggleMic)
 
 
-    </script>
+</script>
 {% endif %}
 {% endblock %}

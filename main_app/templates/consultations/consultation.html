@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block consultation_active %} active  {% endblock %}
+{% block consultation_active %} active {% endblock %}
 {% block redirect_script %}
 {% if not request.session.user_id or not request.session.is_authenticated %}
 <script type="text/javascript">
@@ -15,65 +15,207 @@
 <link href="{% static 'css/datatable.css' %}" rel="stylesheet">
 <link href="{% static 'css/consultations.css' %}" rel="stylesheet">
 <link href="{% static 'css/variables.css' %}" rel="stylesheet">
+<link href="{% static 'css/conslt.css' %}" rel="stylesheet">
 {% endblock %}
 {% block content %}
 <main id="main" class="main">
     <div class="section-title">
         <h2>Consultations Manager</h2>
     </div>
-    {% if request.session.is_patient %}
-    <section class="d-flex align-items-start" >
+    <!-- {% if request.session.is_patient %}
+    <section class="d-flex align-items-start " style="background-image: url('{% static "img/telehealth.jpg" %}'); background-size: cover;background-position: center;">
         <div class="container">
-            <p>Your health services a click away.</p>
+            <p>Your health services are just a click away. Whether you're here to schedule appointments, review your consultation history, or connect with healthcare professionals, we're dedicated to making your healthcare journey seamless and convenient.</p>
             <a href="#about" class="btn-get-started scrollto">Book Now</a>
         </div>
     </section>
-    {% endif%}
+    {% endif%} -->
     <section class="d-flex align-items-start justify-content-end">
         {% if request.session.is_patient %}
         <div class="container mt-4">
-            <div class="card">
-                <div class="card-body">
+            <div>
+                <div class="cards-container">
                     <ul class="list-group list-group-horizontal">
                         <li class="list-group-item">
-                            <a href="{% url 'consultation' %}?filter=Upcoming" class="card-link">Upcoming Appointments</a>
+                            <a href="{% url 'consultation' %}?filter=Upcoming" class="card-link">
+                                <div class="cardblock">
+                                    <div class="icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                            xmlns:xlink="http://www.w3.org/1999/xlink" height="38px" width="38px"
+                                            version="1.1" id="heart" viewBox="0 0 471.701 471.701" xml:space="preserve">
+                                            <linearGradient id="gradientColor">
+                                                <stop offset="5%" stop-color="#7eaaff"></stop>
+                                                <stop offset="95%" stop-color="#5388c0"></stop>
+                                            </linearGradient>
+                                            <g>
+                                                <path
+                                                    d="M433.601,67.001c-24.7-24.7-57.4-38.2-92.3-38.2s-67.7,13.6-92.4,38.3l-12.9,12.9l-13.1-13.1   c-24.7-24.7-57.6-38.4-92.5-38.4c-34.8,0-67.6,13.6-92.2,38.2c-24.7,24.7-38.3,57.5-38.2,92.4c0,34.9,13.7,67.6,38.4,92.3   l187.8,187.8c2.6,2.6,6.1,4,9.5,4c3.4,0,6.9-1.3,9.5-3.9l188.2-187.5c24.7-24.7,38.3-57.5,38.3-92.4   C471.801,124.501,458.301,91.701,433.601,67.001z M414.401,232.701l-178.7,178l-178.3-178.3c-19.6-19.6-30.4-45.6-30.4-73.3   s10.7-53.7,30.3-73.2c19.5-19.5,45.5-30.3,73.1-30.3c27.7,0,53.8,10.8,73.4,30.4l22.6,22.6c5.3,5.3,13.8,5.3,19.1,0l22.4-22.4   c19.6-19.6,45.7-30.4,73.3-30.4c27.6,0,53.6,10.8,73.2,30.3c19.6,19.6,30.3,45.6,30.3,73.3   C444.801,187.101,434.001,213.101,414.401,232.701z">
+                                                </path>
+                                            </g>
+                                        </svg>
+                                    </div>
+                                    <p class="title">Upcoming Appointments</p>
+                                    <p class="text">Stay on top of your health journey with scheduled consultations.</p>
+                                </div>
+                            </a>
                         </li>
                         <li class="list-group-item">
-                            <a href="{% url 'self_diagnose' %}" class="card-link">Self Diagnose</a>
+                            <a href="{% url 'self_diagnose' %}" class="card-link">
+                            <div class="cardblock">
+                                <div class="icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                        height="38px" width="38px" version="1.1" id="heart"
+                                        viewBox="0 0 471.701 471.701" xml:space="preserve">
+                                        <linearGradient id="gradientColor">
+                                            <stop offset="5%" stop-color="#7eaaff"></stop>
+                                            <stop offset="95%" stop-color="#ff48fb"></stop>
+                                        </linearGradient>
+                                        <g>
+                                            <path
+                                                d="M433.601,67.001c-24.7-24.7-57.4-38.2-92.3-38.2s-67.7,13.6-92.4,38.3l-12.9,12.9l-13.1-13.1   c-24.7-24.7-57.6-38.4-92.5-38.4c-34.8,0-67.6,13.6-92.2,38.2c-24.7,24.7-38.3,57.5-38.2,92.4c0,34.9,13.7,67.6,38.4,92.3   l187.8,187.8c2.6,2.6,6.1,4,9.5,4c3.4,0,6.9-1.3,9.5-3.9l188.2-187.5c24.7-24.7,38.3-57.5,38.3-92.4   C471.801,124.501,458.301,91.701,433.601,67.001z M414.401,232.701l-178.7,178l-178.3-178.3c-19.6-19.6-30.4-45.6-30.4-73.3   s10.7-53.7,30.3-73.2c19.5-19.5,45.5-30.3,73.1-30.3c27.7,0,53.8,10.8,73.4,30.4l22.6,22.6c5.3,5.3,13.8,5.3,19.1,0l22.4-22.4   c19.6-19.6,45.7-30.4,73.3-30.4c27.6,0,53.6,10.8,73.2,30.3c19.6,19.6,30.3,45.6,30.3,73.3   C444.801,187.101,434.001,213.101,414.401,232.701z">
+                                            </path>
+                                        </g>
+                                    </svg>
+                                </div>
+                                <p class="title">Self Diagnose</p>
+                                <p class="text">Empower yourself with insightful tools to better understand your health.</p>
+                           
+                            </div></a>
                         </li>
                         <li class="list-group-item">
-                            <a href="{% url 'find_doctor' %}" class="card-link">Find a Doctor</a>
+                            <a href="{% url 'find_doctor' %}" class="card-link">
+                                <div class="cardblock">
+                                    <div class="icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                            xmlns:xlink="http://www.w3.org/1999/xlink" height="38px" width="38px"
+                                            version="1.1" id="heart" viewBox="0 0 471.701 471.701" xml:space="preserve">
+                                            <linearGradient id="gradientColor">
+                                                <stop offset="5%" stop-color="#7eaaff"></stop>
+                                                <stop offset="95%" stop-color="#ff48fb"></stop>
+                                            </linearGradient>
+                                            <g>
+                                                <path
+                                                    d="M433.601,67.001c-24.7-24.7-57.4-38.2-92.3-38.2s-67.7,13.6-92.4,38.3l-12.9,12.9l-13.1-13.1   c-24.7-24.7-57.6-38.4-92.5-38.4c-34.8,0-67.6,13.6-92.2,38.2c-24.7,24.7-38.3,57.5-38.2,92.4c0,34.9,13.7,67.6,38.4,92.3   l187.8,187.8c2.6,2.6,6.1,4,9.5,4c3.4,0,6.9-1.3,9.5-3.9l188.2-187.5c24.7-24.7,38.3-57.5,38.3-92.4   C471.801,124.501,458.301,91.701,433.601,67.001z M414.401,232.701l-178.7,178l-178.3-178.3c-19.6-19.6-30.4-45.6-30.4-73.3   s10.7-53.7,30.3-73.2c19.5-19.5,45.5-30.3,73.1-30.3c27.7,0,53.8,10.8,73.4,30.4l22.6,22.6c5.3,5.3,13.8,5.3,19.1,0l22.4-22.4   c19.6-19.6,45.7-30.4,73.3-30.4c27.6,0,53.6,10.8,73.2,30.3c19.6,19.6,30.3,45.6,30.3,73.3   C444.801,187.101,434.001,213.101,414.401,232.701z">
+                                                </path>
+                                            </g>
+                                        </svg>
+                                    </div>
+                                    <p class="title">Find a Doctor</p>
+                                    <p class="text">Discover trusted healthcare professionals ready to meet your needs.</p>
+                           
+                                </div>
+                            </a>
                         </li>
                         <li class="list-group-item">
-                            <a href="{% url 'consultation' %}?filter=Old" class="card-link">Consultation History</a>
+                            <a href="{% url 'consultation' %}?filter=Old" class="card-link">
+                                <div class="cardblock">
+                                    <div class="icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                            xmlns:xlink="http://www.w3.org/1999/xlink" height="38px" width="38px"
+                                            version="1.1" id="heart" viewBox="0 0 471.701 471.701" xml:space="preserve">
+                                            <linearGradient id="gradientColor">
+                                                <stop offset="5%" stop-color="#7eaaff"></stop>
+                                                <stop offset="95%" stop-color="#ff48fb"></stop>
+                                            </linearGradient>
+                                            <g>
+                                                <path
+                                                    d="M433.601,67.001c-24.7-24.7-57.4-38.2-92.3-38.2s-67.7,13.6-92.4,38.3l-12.9,12.9l-13.1-13.1   c-24.7-24.7-57.6-38.4-92.5-38.4c-34.8,0-67.6,13.6-92.2,38.2c-24.7,24.7-38.3,57.5-38.2,92.4c0,34.9,13.7,67.6,38.4,92.3   l187.8,187.8c2.6,2.6,6.1,4,9.5,4c3.4,0,6.9-1.3,9.5-3.9l188.2-187.5c24.7-24.7,38.3-57.5,38.3-92.4   C471.801,124.501,458.301,91.701,433.601,67.001z M414.401,232.701l-178.7,178l-178.3-178.3c-19.6-19.6-30.4-45.6-30.4-73.3   s10.7-53.7,30.3-73.2c19.5-19.5,45.5-30.3,73.1-30.3c27.7,0,53.8,10.8,73.4,30.4l22.6,22.6c5.3,5.3,13.8,5.3,19.1,0l22.4-22.4   c19.6-19.6,45.7-30.4,73.3-30.4c27.6,0,53.6,10.8,73.2,30.3c19.6,19.6,30.3,45.6,30.3,73.3   C444.801,187.101,434.001,213.101,414.401,232.701z">
+                                                </path>
+                                            </g>
+                                        </svg>
+                                    </div>
+                                    <p class="title">Consultation History</p>
+                                    <p class="text">Track your health progress and revisit past consultations effortlessly.</p>
+                           
+                                </div>
+                            </a>
                         </li>
                     </ul>
                 </div>
             </div>
         </div>
         {% elif request.session.is_doctor %}
+        
         <div class="container mt-4">
-            <div class="card">
-                <div class="card-body">
+            <div>
+                <div class="cards-container">
                     <ul class="list-group list-group-horizontal">
                         <li class="list-group-item">
-                            <a href="{% url 'consultation' %}?filter=Upcoming" class="card-link">Upcoming Appointments</a>
+                            <a href="{% url 'consultation' %}?filter=Upcoming" class="card-link">
+                                <div class="cardblock">
+                                    <div class="icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                            xmlns:xlink="http://www.w3.org/1999/xlink" height="38px" width="38px"
+                                            version="1.1" id="heart" viewBox="0 0 471.701 471.701" xml:space="preserve">
+                                            <linearGradient id="gradientColor">
+                                                <stop offset="5%" stop-color="#7eaaff"></stop>
+                                                <stop offset="95%" stop-color="#5388c0"></stop>
+                                            </linearGradient>
+                                            <g>
+                                                <path
+                                                    d="M433.601,67.001c-24.7-24.7-57.4-38.2-92.3-38.2s-67.7,13.6-92.4,38.3l-12.9,12.9l-13.1-13.1   c-24.7-24.7-57.6-38.4-92.5-38.4c-34.8,0-67.6,13.6-92.2,38.2c-24.7,24.7-38.3,57.5-38.2,92.4c0,34.9,13.7,67.6,38.4,92.3   l187.8,187.8c2.6,2.6,6.1,4,9.5,4c3.4,0,6.9-1.3,9.5-3.9l188.2-187.5c24.7-24.7,38.3-57.5,38.3-92.4   C471.801,124.501,458.301,91.701,433.601,67.001z M414.401,232.701l-178.7,178l-178.3-178.3c-19.6-19.6-30.4-45.6-30.4-73.3   s10.7-53.7,30.3-73.2c19.5-19.5,45.5-30.3,73.1-30.3c27.7,0,53.8,10.8,73.4,30.4l22.6,22.6c5.3,5.3,13.8,5.3,19.1,0l22.4-22.4   c19.6-19.6,45.7-30.4,73.3-30.4c27.6,0,53.6,10.8,73.2,30.3c19.6,19.6,30.3,45.6,30.3,73.3   C444.801,187.101,434.001,213.101,414.401,232.701z">
+                                                </path>
+                                            </g>
+                                        </svg>
+                                    </div>
+                                    <p class="title">Upcoming Appointments</p>
+                                    <p class="text">Stay on top of your scheduled consultations with patients.</p>
+                                </div>
+                            </a>
                         </li>
                         <li class="list-group-item">
-                            <a href="{% url 'create_disease' %}" class="card-link">Manage Consultations</a>
+                            <a href="{% url 'create_disease' %}" class="card-link">
+                            <div class="cardblock">
+                                <div class="icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                        height="38px" width="38px" version="1.1" id="heart"
+                                        viewBox="0 0 471.701 471.701" xml:space="preserve">
+                                        <linearGradient id="gradientColor">
+                                            <stop offset="5%" stop-color="#7eaaff"></stop>
+                                            <stop offset="95%" stop-color="#ff48fb"></stop>
+                                        </linearGradient>
+                                        <g>
+                                            <path
+                                                d="M433.601,67.001c-24.7-24.7-57.4-38.2-92.3-38.2s-67.7,13.6-92.4,38.3l-12.9,12.9l-13.1-13.1   c-24.7-24.7-57.6-38.4-92.5-38.4c-34.8,0-67.6,13.6-92.2,38.2c-24.7,24.7-38.3,57.5-38.2,92.4c0,34.9,13.7,67.6,38.4,92.3   l187.8,187.8c2.6,2.6,6.1,4,9.5,4c3.4,0,6.9-1.3,9.5-3.9l188.2-187.5c24.7-24.7,38.3-57.5,38.3-92.4   C471.801,124.501,458.301,91.701,433.601,67.001z M414.401,232.701l-178.7,178l-178.3-178.3c-19.6-19.6-30.4-45.6-30.4-73.3   s10.7-53.7,30.3-73.2c19.5-19.5,45.5-30.3,73.1-30.3c27.7,0,53.8,10.8,73.4,30.4l22.6,22.6c5.3,5.3,13.8,5.3,19.1,0l22.4-22.4   c19.6-19.6,45.7-30.4,73.3-30.4c27.6,0,53.6,10.8,73.2,30.3c19.6,19.6,30.3,45.6,30.3,73.3   C444.801,187.101,434.001,213.101,414.401,232.701z">
+                                            </path>
+                                        </g>
+                                    </svg>
+                                </div>
+                                <p class="title">Manange Consultations</p>
+                                <p class="text">Manage your time effectively by approving scheduled consultations.</p>
+                           
+                            </div></a>
                         </li>
+
                         <li class="list-group-item">
-                            <a href="{% url 'create_disease' %}" class="card-link">Something</a>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="{% url 'create_disease' %}" class="card-link">Consultation History</a>
+                            <a href="{% url 'consultation' %}?filter=Old" class="card-link">
+                                <div class="cardblock">
+                                    <div class="icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                            xmlns:xlink="http://www.w3.org/1999/xlink" height="38px" width="38px"
+                                            version="1.1" id="heart" viewBox="0 0 471.701 471.701" xml:space="preserve">
+                                            <linearGradient id="gradientColor">
+                                                <stop offset="5%" stop-color="#7eaaff"></stop>
+                                                <stop offset="95%" stop-color="#ff48fb"></stop>
+                                            </linearGradient>
+                                            <g>
+                                                <path
+                                                    d="M433.601,67.001c-24.7-24.7-57.4-38.2-92.3-38.2s-67.7,13.6-92.4,38.3l-12.9,12.9l-13.1-13.1   c-24.7-24.7-57.6-38.4-92.5-38.4c-34.8,0-67.6,13.6-92.2,38.2c-24.7,24.7-38.3,57.5-38.2,92.4c0,34.9,13.7,67.6,38.4,92.3   l187.8,187.8c2.6,2.6,6.1,4,9.5,4c3.4,0,6.9-1.3,9.5-3.9l188.2-187.5c24.7-24.7,38.3-57.5,38.3-92.4   C471.801,124.501,458.301,91.701,433.601,67.001z M414.401,232.701l-178.7,178l-178.3-178.3c-19.6-19.6-30.4-45.6-30.4-73.3   s10.7-53.7,30.3-73.2c19.5-19.5,45.5-30.3,73.1-30.3c27.7,0,53.8,10.8,73.4,30.4l22.6,22.6c5.3,5.3,13.8,5.3,19.1,0l22.4-22.4   c19.6-19.6,45.7-30.4,73.3-30.4c27.6,0,53.6,10.8,73.2,30.3c19.6,19.6,30.3,45.6,30.3,73.3   C444.801,187.101,434.001,213.101,414.401,232.701z">
+                                                </path>
+                                            </g>
+                                        </svg>
+                                    </div>
+                                    <p class="title">Consultation History</p>
+                                    <p class="text">View past consultations and reviews from patients.</p>
+                           
+                                </div>
+                            </a>
                         </li>
                     </ul>
                 </div>
             </div>
         </div>
 
-        
         {% endif%}
     </section>
 </main>
