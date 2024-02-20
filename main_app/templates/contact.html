@@ -12,6 +12,13 @@
 
 {% block content %}
     <main id="main">
+        {% for message in messages %} 
+            <div class="alert alert-success alert-dismissible fade show col-6 mx-auto" role="alert">
+                <i class="bi bi-exclamation-octagon me-1"></i>
+                {{ message }} 
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
         <section id="contact" class="contact">
             <div class="container">
                 <div class="section-title">

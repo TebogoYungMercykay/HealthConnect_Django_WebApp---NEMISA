@@ -6,7 +6,7 @@
 {% if request.session.user_id and request.session.is_authenticated %}
 {% if request.session.is_admin %}
 <script>
-    window.location.href = "{% url 'admin_page' %}";
+    window.location.href = "{% url 'dashboard' %}";
 </script>
 {% elif request.session.is_doctor or request.session.is_patient %}
 <script>
@@ -43,9 +43,26 @@
                 <div class="col-lg-4 d-flex align-items-stretch">
                     <div class="content">
                         <h3>Why Choose HealthConnect?</h3>
-                        <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                            labore et dolore magna aliqua. Duis aute irure dolor in reprehenderit Asperiores dolores sed
-                            et. Tenetur quia eos. Autem tempore quibusdam vel necessitatibus optio ad corporis. </p>
+                        <p> Accessible Care Anytime, anywhere: Our platform provides round-the-clock access to
+                            caring doctors, ensuring you can receive assistance whenever you need it, day, or night
+
+                            Personalized Healthcare Experience: With one-on-one video sessions and secure prescriptions,
+                            we deliver healthcare tailored to your specific needs, ensuring you receive the attention and
+                            treatment that best suits you.
+
+                            Inclusive Communication: We provide diagnosis letters in all South African languages, fostering
+                            clear and understanding conversations between patients and healthcare providers, ensuring effective
+                            communication for everyone.
+
+                            Proactive Wellness Management: Utilizing sentiment analysis, we stay ahead of potential health issues,
+                            prioritizing your well-being and taking proactive measures to address any concerns before they escalate.
+
+                            Community-Centric Approach: HealthConnect is more than just a healthcare platform; we're a partner in your
+                            well-being. We prioritize your health and ensure your voice is heard, fostering a sense of community and mutual
+                            support among our users.
+                            Step into a world where healthcare revolves around you. Join HealthConnect today and experience accessible,
+                            personalized, and proactive healthcare like never before.
+                        </p>
                         <div class="text-center">
                             <a href="#about" class="more-btn">Learn More <i class="bx bx-chevron-right"></i>
                             </a>
@@ -58,24 +75,25 @@
                             <div class="col-xl-4 d-flex align-items-stretch">
                                 <div class="icon-box mt-4 mt-xl-0">
                                     <i class="bx bx-receipt"></i>
-                                    <h4>Corporis voluptates sit</h4>
-                                    <p>Consequuntur sunt aut quasi enim aliquam quae harum pariatur laboris nisi ut
-                                        aliquip</p>
+                                    <h4>Experience Personalized Healthcare with HealthConnect</h4>
+                                    <p>Receive dedicated care tailored to your needs. Connect with caring doctors
+                                       anytime, anywhere, ensuring your well-being is our top priority.</p>
                                 </div>
                             </div>
                             <div class="col-xl-4 d-flex align-items-stretch">
                                 <div class="icon-box mt-4 mt-xl-0">
                                     <i class="bx bx-cube-alt"></i>
-                                    <h4>Ullamco laboris ladore pan</h4>
-                                    <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
-                                        deserunt</p>
+                                    <h4>Empowering Your Health Journey with HealthConnect</h4>
+                                    <p>Experience compassionate care and support every step of the way. Our
+                                        platform is dedicated to helping you achieve optimal health and well-being.</p>
                                 </div>
                             </div>
                             <div class="col-xl-4 d-flex align-items-stretch">
                                 <div class="icon-box mt-4 mt-xl-0">
                                     <i class="bx bx-images"></i>
-                                    <h4>Labore consequatur</h4>
-                                    <p>Aut suscipit aut cum nemo deleniti aut omnis. Doloribus ut maiores omnis facere
+                                    <h4>Enhance Your Wellness with HealthConnect</h4>
+                                    <p>Discover personalized solutions for your health needs. Whether it's support, 
+                                       guidance, or treatment, we're here to empower you every step of the way. 
                                     </p>
                                 </div>
                             </div>

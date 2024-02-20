@@ -15,6 +15,10 @@ JSON_DATA = 'application/json'
 
 def signup_patient(request):
     
+    stored_messages = messages.get_messages(request)
+    for message in stored_messages:
+        pass
+    
     if request.method == 'POST':
         
         try:
@@ -68,6 +72,10 @@ def signup_patient(request):
 
 
 def signup_doctor(request):
+    
+    stored_messages = messages.get_messages(request)
+    for message in stored_messages:
+        pass
     
     if request.method == 'POST':
         
@@ -131,6 +139,10 @@ def signup_doctor(request):
 
 def get_user(request):
 
+    stored_messages = messages.get_messages(request)
+    for message in stored_messages:
+        pass
+    
     if (request.method == 'GET' or request.method == 'POST') and not request.session.get('is_admin'):
         
         try:
@@ -177,6 +189,10 @@ def get_user(request):
 
 
 def savedata(request, user_id):
+    
+    stored_messages = messages.get_messages(request)
+    for message in stored_messages:
+        pass
     
     if request.method == 'POST':
         
