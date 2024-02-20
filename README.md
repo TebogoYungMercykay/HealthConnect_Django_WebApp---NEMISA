@@ -51,7 +51,7 @@ HealthConnect is a revolutionary healthcare platform that transcends traditional
 
 ## DISEASE PREDICTION ARCHITECTURE
 
-![ERD Diagramn](./project-diagramns/Disease_Prediction_Diagram.jpg)
+![ERD Diagramn](./project-diagramns/Disease_Prediction_Diagram.png)
 
 - #### Dataset Used:
 
