@@ -32,10 +32,11 @@ HealthConnect is a revolutionary healthcare platform that transcends traditional
         - **Health Articles:** The News API provides us with access to latest and finest articles about health around the Globe.
         - > **Link:** [The NewsAPI](https://newsapi.org)
         - > **Documentation:** [Live Documentation](https://newsapi.org/docs)
-- ### Database & Tools:
+- ### Other Tools:
     - PostgreSQL Database (AWS RDS Database)
-    - PgMyAdmin 4, Orange
-    - 
+    - PgMyAdmin 4, Orange (Database Managaement)
+    - Tensorflow (Machine Learning for Sendtimental analysis)
+    - KanbanFlow (Lean project management tool)
 
 ## PROJECT STRUCTURE
 
