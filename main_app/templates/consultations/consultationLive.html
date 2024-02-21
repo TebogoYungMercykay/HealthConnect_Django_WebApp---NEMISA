@@ -43,27 +43,27 @@
                         <div class="card-header msg_head">
                             <div class="d-flex bd-highlight">
                                 {% if request.session.is_doctor %}
-                                <div class="img_cont">
-                                    <img src="{% static 'img/testimonials/testimonials-4.jpg' %}"
-                                        class="rounded-circle user_img" alt="Profile Picture">
-                                    <span class="online_icon"></span>
-                                </div>
-                                <div class="user_info">
-                                    <span>{{ consultation_info.patient.surname }} {{ consultation_info.patient.name
-                                        }}</span>
-                                    <p>{{ consultation_chats.length }} Messages</p>
-                                </div>
+                                    <div class="img_cont">
+                                        <img src="{% static 'img/patients-profile.png' %}"
+                                            class="rounded-circle user_img" alt="Profile Picture">
+                                        <span class="online_icon"></span>
+                                    </div>
+                                    <div class="user_info">
+                                        <span>{{ consultation_info.patient.surname }} {{ consultation_info.patient.name
+                                            }}</span>
+                                        <p>{{ consultation_chats.length }} Messages</p>
+                                    </div>
                                 {% else %}
-                                <div class="img_cont">
-                                    <img src="{% static 'img/doctors/doctors-3.jpg' %}" class="rounded-circle user_img"
-                                        alt="Profile Picture">
-                                    <span class="online_icon"></span>
-                                </div>
-                                <div class="user_info">
-                                    <span>Dr {{ consultation_info.doctor.surname }} {{ consultation_info.doctor.name
-                                        }}</span>
-                                    <p>{{ consultation_chats.length }} Messages</p>
-                                </div>
+                                    <div class="img_cont">
+                                        <img src="{% static 'img/doctors-profile.jpg' %}" class="rounded-circle user_img"
+                                            alt="Profile Picture">
+                                        <span class="online_icon"></span>
+                                    </div>
+                                    <div class="user_info">
+                                        <span>Dr {{ consultation_info.doctor.surname }} {{ consultation_info.doctor.name
+                                            }}</span>
+                                        <p>{{ consultation_chats.length }} Messages</p>
+                                    </div>
                                 {% endif %}
                                 <div class="ms-auto">
                                     <div class="video_cam" id="action_menu_btn">
@@ -88,14 +88,14 @@
                                         class="msg_time_send">{{ sent_message.created_at }}</span>
                                 </div>
                                 <div class="img_cont_msg">
-                                    <img src="{% static 'img/doctors/doctors-3.jpg' %}" class="rounded-circle user_img"
+                                    <img src="{% static 'img/doctors-profile.jpg' %}" class="rounded-circle user_img"
                                         alt="Profile Picture">
                                 </div>
                             </div>
                             {% else %}
                             <div class="d-flex justify-content-start mb-4">
                                 <div class="img_cont_msg">
-                                    <img src="{% static 'img/testimonials/testimonials-4.jpg' %}"
+                                    <img src="{% static 'img/patients-profile.png' %}"
                                         class="rounded-circle user_img" alt="Profile Picture">
                                 </div>
                                 <div class="msg_cotainer col-8"> {{ sent_message.message }} <span class="msg_time">{{
@@ -110,14 +110,14 @@
                                         class="msg_time_send">{{ sent_message.created_at }}</span>
                                 </div>
                                 <div class="img_cont_msg">
-                                    <img src="{% static 'img/testimonials/testimonials-4.jpg' %}"
+                                    <img src="{% static 'img/patients-profile.png' %}"
                                         class="rounded-circle user_img" alt="Profile Picture">
                                 </div>
                             </div>
                             {% else %}
                             <div class="d-flex justify-content-start mb-4">
                                 <div class="img_cont_msg">
-                                    <img src="{% static 'img/doctors/doctors-3.jpg' %}" class="rounded-circle user_img"
+                                    <img src="{% static 'img/doctors-profile.jpg' %}" class="rounded-circle user_img"
                                         alt="Profile Picture">
                                 </div>
                                 <div class="msg_cotainer col-8"> {{ sent_message.message }} <span class="msg_time">{{

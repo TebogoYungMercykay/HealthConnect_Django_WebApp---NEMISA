@@ -22,12 +22,12 @@
                 <div class="card">
                     <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
                         {% if request.session.is_doctor %}
-                        <img src="{% static 'img/doctors/doctors-3.jpg' %}" alt="Profile" class="rounded-circle">
+                        <img src="{% static 'img/doctors-profile.jpg' %}" alt="Profile" class="rounded-circle">
                         {% elif request.session.is_patient %}
-                        <img src="{% static 'img/testimonials/testimonials-4.jpg' %}" alt="Profile"
+                        <img src="{% static 'img/patients-profile.png' %}" alt="Profile"
                             class="rounded-circle">
                         {% else %}
-                        <img src="{% static 'img/profile-img.jpg' %}" alt="Profile" class="rounded-circle">
+                        <img src="{% static 'img/patients-profile.png' %}" alt="Profile" class="rounded-circle">
                         {% endif %}
 
                         <h2>{{ request.session.name }}</h2>
@@ -144,11 +144,11 @@
                                             Image</label>
                                         <div class="col-md-8 col-lg-9">
                                             {% if request.session.is_doctor %}
-                                            <img src="{% static 'img/doctors/doctors-3.jpg' %}" alt="Profile">
+                                            <img src="{% static 'img/doctors-profile.jpg' %}" alt="Profile">
                                             {% elif request.session.is_patient %}
-                                            <img src="{% static 'img/testimonials/testimonials-4.jpg' %}" alt="Profile">
+                                            <img src="{% static 'img/patients-profile.png' %}" alt="Profile">
                                             {% else %}
-                                            <img src="{% static 'img/profile-img.jpg' %}" alt="Profile">
+                                            <img src="{% static 'img/patients-profile.png' %}" alt="Profile">
                                             {% endif %}
 
                                             <div class="pt-2">
@@ -421,11 +421,11 @@
                                             Image</label>
                                         <div class="col-md-8 col-lg-9">
                                             {% if request.session.is_doctor %}
-                                            <img src="{% static 'img/doctors/doctors-3.jpg' %}" alt="Profile">
+                                            <img src="{% static 'img/doctors-profile.jpg' %}" alt="Profile">
                                             {% elif request.session.is_patient %}
-                                            <img src="{% static 'img/testimonials/testimonials-4.jpg' %}" alt="Profile">
+                                            <img src="{% static 'img/patients-profile.png' %}" alt="Profile">
                                             {% else %}
-                                            <img src="{% static 'img/profile-img.jpg' %}" alt="Profile">
+                                            <img src="{% static 'img/patients-profile.png' %}" alt="Profile">
                                             {% endif %}
                                             <div class="pt-2">
                                                 <a href="#" class="btn btn-primary btn-sm"
