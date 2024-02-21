@@ -89,8 +89,8 @@
         <div class="container d-flex justify-content-between">
             <div class="contact-info d-flex align-items-center">
                 <i class="bi bi-envelope"></i>
-                <a href="mailto:healthconnect@nemisa.com">healthconnect@nemisa.com</a>
-                <i class="bi bi-phone"></i> +27 11 111 1111
+                <a href="mailto:info@healthconnect.co.za">info@healthconnect.co.za</a>
+                <i class="bi bi-phone"></i> +2766 532 7038
             </div>
             <!-- signed in vs out top @Include personal nav or not-->
             {% if not request.session.user_id and not request.session.is_authenticated %}
@@ -339,7 +339,7 @@
 
         </div>
     </div>
-
+    {% if 'videoconsultation_live' not in request.path %}
     <!-- Header -->
     {% if not request.session.user_id and not request.session.is_authenticated %}
     <header id="header" class="fixed-top">
@@ -379,61 +379,62 @@
     </header>
     {% else %}
     {% if request.session.is_admin %}
-    <header id="header" class="header fixed-top bg-white">
-        <div class="container d-flex align-items-center">
-            <h1 class="logo me-auto">
-                <a href="#" class="logo me-auto">
-                    <img src="{% static 'img/logo.png' %}" alt="" class="img-fluid">
-                </a>HealthConnect
-            </h1>
-            <nav id="navbar" class="navbar order-last order-lg-0">
-                <ul>
-                    <li>
-                        <a class="nav-link scrollto {{doctors_active}}" href="#">Doctors</a>
-                    </li>
-                    <li>
-                        <a class="nav-link scrollto {{diseases_active}}" href="#">Diseases</a>
-                    </li>
-                    <li>
-                        <a class="nav-link scrollto {{patients_active}}" href="#">Patients</a>
-                    </li>
-                    <li>
-                        <a class="nav-link scrollto {{dashb_active}}" href="#">Dashboard</a>
-                    </li>
-                </ul>
-                <i class="bi bi-list mobile-nav-toggle"></i>
-            </nav>
-            <a href="{% url 'logout' %}" class="appointment-btn scrollto">Logout</a>
-        </div>
-    </header>
+        <header id="header" class="header fixed-top bg-white">
+            <div class="container d-flex align-items-center">
+                <h1 class="logo me-auto">
+                    <a href="#" class="logo me-auto">
+                        <img src="{% static 'img/logo.png' %}" alt="" class="img-fluid">
+                    </a>HealthConnect
+                </h1>
+                <nav id="navbar" class="navbar order-last order-lg-0">
+                    <ul>
+                        <li>
+                            <a class="nav-link scrollto {% block diseaseinfos_active %}   {% endblock %}" href="{% url 'diseaseinfos' %}">DiseasesInfo</a>
+                        </li>
+                        <li>
+                            <a class="nav-link scrollto {% block admin_articles_active %}   {% endblock %}" href="{% url 'articles' %}">Articles</a>
+                        </li>
+                        <li>
+                            <a class="nav-link scrollto {% block dashb_active %}   {% endblock %}" href="{% url 'dashboard' %}">Dashboard</a>
+                        </li>
+                    </ul>
+                    <i class="bi bi-list mobile-nav-toggle"></i>
+                </nav>
+                <a href="{% url 'logout' %}" class="appointment-btn scrollto">Logout</a>
+            </div>
+        </header>
     {% else %}
-    <header id="header" class="header fixed-top bg-white">
-        <div class="container d-flex align-items-center">
-            <h1 class="logo me-auto">
-                <a href="#" class="logo me-auto">
-                    <img src="{% static 'img/logo.png' %}" alt="" class="img-fluid">
-                </a>HealthConnect
-            </h1>
-            <nav id="navbar" class="navbar order-last order-lg-0">
-                <ul>
-                    <li >
-                        <a class="nav-link scrollto {% block blogs_active %}   {% endblock %}" href="{% url 'all_posts' %}">Blogs</a>
-                    </li>
-                    <li>
-                        <a class="nav-link scrollto {% block consultation_active %}   {% endblock %}" href="{% url 'consulation_home' %}">Consultations</a>
-                    </li>
-                    <li>
-                        <a class="nav-link scrollto {% block schedule_active %}   {% endblock %} "  href="{% url 'calendar' %}">Schedule</a>
-                    </li>
-                    <li>
-                        <a class="nav-link scrollto {% block contact_active %}   {% endblock %}" href="{% url 'contact' %}">Contact</a>
-                    </li>
-                </ul>
-                <i class="bi bi-list mobile-nav-toggle"></i>
-            </nav>
-            <a href="{% url 'logout' %}" class="appointment-btn scrollto">Logout</a>
-        </div>
-    </header>
+        <header id="header" class="header fixed-top bg-white">
+            <div class="container d-flex align-items-center">
+                <h1 class="logo me-auto">
+                    <a href="#" class="logo me-auto">
+                        <img src="{% static 'img/logo.png' %}" alt="" class="img-fluid">
+                    </a>HealthConnect
+                </h1>
+                <nav id="navbar" class="navbar order-last order-lg-0">
+                    <ul>
+                        <li >
+                            <a class="nav-link scrollto {% block blogs_active %}   {% endblock %}" href="{% url 'all_posts' %}">Posts</a>
+                        </li>
+                        <li>
+                            <a class="nav-link scrollto {% block articles_active %}   {% endblock %} "  href="{% url 'articles' %}">Articles</a>
+                        </li>
+                        <li>
+                            <a class="nav-link scrollto {% block consultation_active %}   {% endblock %}" href="{% url 'consulation_home' %}">Consultations</a>
+                        </li>
+                        <li>
+                            <a class="nav-link scrollto {% block schedule_active %}   {% endblock %} "  href="{% url 'calendar' %}">Schedule</a>
+                        </li>
+                        <li>
+                            <a class="nav-link scrollto {% block contact_active %}   {% endblock %}" href="{% url 'contact' %}">Contact</a>
+                        </li>
+                    </ul>
+                    <i class="bi bi-list mobile-nav-toggle"></i>
+                </nav>
+                <a href="{% url 'logout' %}" class="appointment-btn scrollto">Logout</a>
+            </div>
+        </header>
+    {% endif %}
     {% endif %}
     {% endif %}
     <!-- Main Content  -->
@@ -678,6 +679,7 @@
 
     <!-- Template Main JS File -->
     <script src="{% static 'js/main.js' %}"></script>
+    <script type="text/javascript" src="{% static 'assets/AgoraRTC_N-4.20.0.js' %}"></script>
 
     {% block pagespecificjs %}
     {% endblock %}

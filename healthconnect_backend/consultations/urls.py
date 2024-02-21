@@ -9,5 +9,7 @@ urlpatterns = [
     path('close_consultation/<int:consultation_id>', views.close_consultation , name='close_consultation'),
     path('create_review/<int:doctor_id>', views.create_review , name='create_review'),
     path('get_reviews_id/<int:doctor_id>', views.get_reviews_id , name='get_reviews_id'),
-    path('get_reviews', views.get_reviews , name='get_reviews')
+    path('get_reviews', views.get_reviews , name='get_reviews'),
+    path('videoconsultation/<int:consultation_id>',views.lauchvideocaller,name='consultation_call'),
+    path('videoconsultation_live/<int:consultation_id>',views.getToken,name='open_video_consultation')
 ]  

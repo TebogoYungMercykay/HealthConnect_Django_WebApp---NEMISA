@@ -15,6 +15,10 @@ JSON_DATA = 'application/json'
 
 def signup_patient(request):
     
+    stored_messages = messages.get_messages(request)
+    for message in stored_messages:
+        pass
+    
     if request.method == 'POST':
         
         try:
@@ -47,21 +51,31 @@ def signup_patient(request):
                     
                     else:
                         messages.info(request, api_response.get('data'))
-                        return redirect(reverse('register'))
+                        return render(request,'pages-register.html')
             
             messages.info(request, MESSAGE)
-            return redirect(reverse('register'))
+            return render(request,'pages-register.html')
     
         except requests.RequestException as e:
-            messages.info(request, "Please Make Sure All Required Fields are Filled Out Correctly")
-            logging.error(f"Error Occured During Sign Up Request: {e}: Patient")
-            return redirect(reverse('register'))
+            temp_message = ""
+            try:
+                api_response = response.json()
+                temp_message = api_response.get('data')
+            except Exception as e:
+                temp_message = "Please Make Sure All Required Fields are Filled Out Correctly"
+                
+            messages.info(request, temp_message)
+            return render(request,'pages-register.html')
 
     else:
         return render(request,'pages-register.html')
 
 
 def signup_doctor(request):
+    
+    stored_messages = messages.get_messages(request)
+    for message in stored_messages:
+        pass
     
     if request.method == 'POST':
         
@@ -103,15 +117,21 @@ def signup_doctor(request):
                     
                     else:
                         messages.info(request, api_response.get('data'))
-                        return redirect(reverse('register'))
+                        return render(request,'pages-register.html')
             
             messages.info(request, MESSAGE)
-            return redirect(reverse('register'))
+            return render(request,'pages-register.html')
             
         except requests.RequestException as e:
-            messages.info(request, "Please Make Sure All Required Fields are Filled Out Correctly")
-            logging.error(f"Error Occured During Sign Up Request: {e}: Doctor")
-            return redirect(reverse('register'))
+            temp_message = ""
+            try:
+                api_response = response.json()
+                temp_message = api_response.get('data')
+            except Exception as e:
+                temp_message = "Please Make Sure All Required Fields are Filled Out Correctly"
+                
+            messages.info(request, temp_message)
+            return render(request,'pages-register.html')
         
     else:
         return render(request,'pages-register.html')
@@ -119,6 +139,10 @@ def signup_doctor(request):
 
 def get_user(request):
 
+    stored_messages = messages.get_messages(request)
+    for message in stored_messages:
+        pass
+    
     if (request.method == 'GET' or request.method == 'POST') and not request.session.get('is_admin'):
         
         try:
@@ -148,16 +172,27 @@ def get_user(request):
                     return render(request, 'users-profile.html', { 'profile_data': response_data })
 
             
-            logging.error(f"Error Occured When Requesting for Doctors Data: {e}: User Id: {user_id}")
+            messages.error(request, f"Error Occured When Requesting for Doctors Data, User Id: {user_id}")
                 
         except requests.RequestException as e:
-            logging.error(f"Error Occured When Requesting User Data: {e}: User Id: {user_id}")
+            temp_message = ""
+            try:
+                api_response = response.json()
+                temp_message = api_response.get('data')
+            except Exception as e:
+                temp_message = f"Error Occured When Requesting User Data, User Id: {user_id}"
+                
+            messages.info(request, temp_message)
 
-    messages.error("Could not retrieve user information.")
+    messages.error(request, "Could not retrieve user information.")
     return render(request, 'users-profile.html', { 'profile_data': utils.get_random_user() })
 
 
 def savedata(request, user_id):
+    
+    stored_messages = messages.get_messages(request)
+    for message in stored_messages:
+        pass
     
     if request.method == 'POST':
         
@@ -204,7 +239,14 @@ def savedata(request, user_id):
                 messages.error(request, "Incorrect User Id used.")
 
         except requests.RequestException as e:
-            logging.error(f"Error Occured When Updating User Data: {e}: User Id: {user_id}")
+            temp_message = ""
+            try:
+                api_response = response.json()
+                temp_message = api_response.get('data')
+            except Exception as e:
+                temp_message = f"Error Occured When Updating User Data, User Id: {user_id}"
+                
+            messages.error(request, temp_message)
             return None
         
     else:
