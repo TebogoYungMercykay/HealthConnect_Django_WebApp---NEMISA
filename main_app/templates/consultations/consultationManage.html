@@ -98,48 +98,79 @@
                         <p><strong>Address</strong>: {{ consultation_info.doctor.address }}</p>
                         <p><strong>Rating</strong>: {{ consultation_info.doctor.rating }}</p>
                     </div>
-                    <!-- Only allow rating once consultation has been had -->
-                    <!-- {%if consultation.status == 'closed' %}
-                    <button type="submit" class="btn btn-primary" id="rateDoctor">Rate Doctor</button>
-
-                    {% endif %} -->
-
 
                     <div>
                     </div>
                 </div>
                 {% endif %}
             </div>
-            <div class="consltcontainer" id="ratingForm" style="max-width: 50%; display:none;">
-                <form class="consltform"
-                    action="{% url 'create_review' doctor_id=consultation_info.doctor.doctor_id %}"
-                    method="post">
-                    {% csrf_token %}
-                   
-                    <div class="form-group">
-                        <input type="hidden" class="input" id="hiddenConsultID" name="consultation_id" value="{{consultation_info.consultation_id}}">
-                    </div>
-                    <div class="form-group">
-                        <!-- {% comment %} <label for="doctorId">Doctor ID:</label> {% endcomment %} -->
-                        <input type="hidden" class="input" id="doctor_id" name="doctor_id"
-                            value="{{consultation_info.doctor.doctor_id}}">
-                    </div>
-                    <div class="form-group">
-                        <label for="rating">Rating:</label>
-                        <input type="number" class="input" id="rating" name="rating"
-                            placeholder="Enter Rating" min="0" max="5" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="review">Review:</label>
-                        <textarea class="input" id="review" name="review" rows="4"
-                            placeholder="Enter Review" required></textarea>
-                    </div>
-                    <div class="d-flex justify-content-center">
-                        <button type="submit" class="btn-get-started btn consltbtn">Submit</button>
-                    </div>
-        
-                </form>
-            </div>
+            {% if request.session.is_patient %}
+                <div class="consltcontainer" id="ratingForm" style="max-width: 50%; display:none;">
+                    <form class="consltform"
+                        action="{% url 'create_review' doctor_id=consultation_info.doctor.doctor_id %}"
+                        method="post">
+                        {% csrf_token %}
+                    
+                        <div class="form-group">
+                            <input type="hidden" class="input" id="hiddenConsultID" name="consultation_id" value="{{consultation_info.consultation_id}}">
+                        </div>
+                        <div class="form-group">
+                            <!-- {% comment %} <label for="doctorId">Doctor ID:</label> {% endcomment %} -->
+                            <input type="hidden" class="input" id="doctor_id" name="doctor_id"
+                                value="{{consultation_info.doctor.doctor_id}}">
+                        </div>
+                        <div class="form-group">
+                            <label for="rating">Rating:</label>
+                            <input type="number" class="input" id="rating" name="rating"
+                                placeholder="Enter Rating" min="0" max="5" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="review">Review:</label>
+                            <textarea class="input" id="review" name="review" rows="4"
+                                placeholder="Enter Review" required></textarea>
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <button type="submit" class="btn-get-started btn consltbtn">Submit</button>
+                        </div>
+            
+                    </form>
+                </div>
+            {% else %}
+                <div class="consltcontainer" id="ratingForm" style="max-width: 50%; display:none;">
+                    <form class="consltform"
+                        action="{% url 'rate_prediction' consultation_id=consultation_info.consultation_id %}"
+                        method="post">
+                        {% csrf_token %}
+
+                        <!-- Hidden Fields -->
+                        <input type="hidden" class="input" name="doctor_id" value="{{ consultation_info.doctor.doctor_id }}">
+                        <input type="hidden" class="input" name="diseaseinfo_id" value="{{ consultation_info.diseaseinfo.id }}">
+                        <input type="hidden" class="input" name="consultation_id" value="{{ consultation_info.consultation_id }}">
+
+                        <div class="form-group">
+                            <label for="rating">Rating:</label>
+                            <input type="number" class="input" id="rating" name="rating"
+                                placeholder="Enter Rating" min="0" max="5" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="diseasename" class="form-label">Disease Name:</label>
+                            <input type="text" name="diseasename" class="input"
+                                id="diseasename" required placeholder="Disease Name">
+                        </div>
+                        <div class="form-group">
+                            <label for="symptoms" class="form-label">Symptoms:</label>
+                            <input type="text" name="symptoms" class="input"
+                                id="symptoms" required placeholder="symptom_1, symptom_2, symptom_3">
+                        </div>
+
+                        <div class="d-flex justify-content-center">
+                            <button type="submit" class="btn-get-started btn consltbtn">Submit</button>
+                        </div>
+            
+                    </form>
+                </div>
+            {% endif %}
             {% endif %}
         </div>
 
@@ -162,7 +193,7 @@
                                 <div class="d-flex bd-highlight">
                                     {% if request.session.is_doctor %}
                                         <div class="img_cont">
-                                            <img src="{% static 'img/testimonials/testimonials-4.jpg' %}" class="rounded-circle user_img" alt="Profile Picture">
+                                            <img src="{% static 'img/patients-profile.png' %}" class="rounded-circle user_img" alt="Profile Picture">
                                             <span class="online_icon"></span>
                                         </div>
                                         <div class="user_info">
@@ -171,7 +202,7 @@
                                         </div>
                                     {% else %}
                                         <div class="img_cont">
-                                            <img src="{% static 'img/doctors/doctors-3.jpg' %}" class="rounded-circle user_img" alt="Profile Picture">
+                                            <img src="{% static 'img/doctors-profile.jpg' %}" class="rounded-circle user_img" alt="Profile Picture">
                                             <span class="online_icon"></span>
                                         </div>
                                         <div class="user_info">
@@ -195,11 +226,9 @@
                                                 </a>
                                             </span>
                                             {% endif %}
-                                            {% if request.session.is_patient %}
-                                                <span class="star-icon"  id="rateDoctor" onclick="openRatingModal()">
-                                                    <i class="fas fa-star"></i>
-                                                </span>
-                                            {% endif %}
+                                            <span class="star-icon"  id="rateDoctor">
+                                                <i class="fas fa-star"></i>
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
@@ -212,13 +241,13 @@
                                                 <div class="msg_cotainer_send col-8"> {{ sent_message.message }} <span class="msg_time_send">{{ sent_message.created_at }}</span>
                                                 </div>
                                                 <div class="img_cont_msg">
-                                                    <img src="{% static 'img/doctors/doctors-3.jpg' %}" class="rounded-circle user_img" alt="Profile Picture">
+                                                    <img src="{% static 'img/doctors-profile.jpg' %}" class="rounded-circle user_img" alt="Profile Picture">
                                                 </div>
                                             </div>
                                         {% else %}
                                             <div class="d-flex justify-content-start mb-4">
                                                 <div class="img_cont_msg">
-                                                    <img src="{% static 'img/testimonials/testimonials-4.jpg' %}" class="rounded-circle user_img" alt="Profile Picture">
+                                                    <img src="{% static 'img/patients-profile.png' %}" class="rounded-circle user_img" alt="Profile Picture">
                                                 </div>
                                                 <div class="msg_cotainer col-8"> {{ sent_message.message }} <span class="msg_time">{{ sent_message.created_at }}</span>
                                                 </div>
@@ -230,13 +259,13 @@
                                                 <div class="msg_cotainer_send col-8"> {{ sent_message.message }} <span class="msg_time_send">{{ sent_message.created_at }}</span>
                                                 </div>
                                                 <div class="img_cont_msg">
-                                                    <img src="{% static 'img/testimonials/testimonials-4.jpg' %}" class="rounded-circle user_img" alt="Profile Picture">
+                                                    <img src="{% static 'img/patients-profile.png' %}" class="rounded-circle user_img" alt="Profile Picture">
                                                 </div>
                                             </div>
                                         {% else %}
                                             <div class="d-flex justify-content-start mb-4">
                                                 <div class="img_cont_msg">
-                                                    <img src="{% static 'img/doctors/doctors-3.jpg' %}" class="rounded-circle user_img" alt="Profile Picture">
+                                                    <img src="{% static 'img/doctors-profile.jpg' %}" class="rounded-circle user_img" alt="Profile Picture">
                                                 </div>
                                                 <div class="msg_cotainer col-8"> {{ sent_message.message }} <span class="msg_time">{{ sent_message.created_at }}</span>
                                                 </div>
@@ -355,7 +384,6 @@
     {% endblock %}
 
     {% block pagespecificjs %}
-    {%if not request.session.is_doctor or request.session.is_admin %}
     <script>
         document.addEventListener('DOMContentLoaded', function () {
 
@@ -369,5 +397,4 @@
 
         });
     </script>
-    {% endif %}
     {% endblock %}
