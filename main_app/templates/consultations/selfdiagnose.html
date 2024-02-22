@@ -149,6 +149,63 @@
                 'yellow_crust_ooze'
             ];
 
+
+            for (let word of words.sort()) {
+                let listItem = document.createElement('li');
+                
+                let iconSpan = document.createElement('span');
+                iconSpan.innerHTML = '<i class="bi bi-plus-circle"></i>';
+                // <i class="bi bi-x-circle"></i>
+                iconSpan.classList.add('icon');
+            
+                listItem.textContent = word;
+
+                listItem.appendChild(iconSpan);
+                listItem.classList.add('word-list-item');
+            
+                // Add click event listener
+                listItem.addEventListener('click', function () {
+                    let currentList = this.parentNode.id;
+                    if (currentList === 'availableList') {
+                        let selectedWord = this.cloneNode(true);
+                        selectedWord.querySelector('.icon').innerHTML = '<i class="bi bi-x-circle"></i>';
+                        selectedList.appendChild(selectedWord);
+                        this.remove();
+                    } else if (currentList === 'selectedList') {
+                        let availableWord = this.cloneNode(true);
+                        availableWord.querySelector('.icon').innerHTML = '<i class="bi bi-plus-circle"></i>';
+                        availableList.appendChild(availableWord);
+                        this.remove();
+                    }
+                });
+            
+                availableList.appendChild(listItem);
+            }
+
+            var styleElement = document.createElement('style');
+            styleElement.type = 'text/css';
+            var styles = `
+                .bi-x-circle::before {
+                    margin-left: 20px;
+                    background-color: rgb(176, 23, 0);
+                    border-radius: 50%;
+                }
+                
+                .bi-plus-circle::before {
+                    margin-left: 20px;
+                    background-color: rgb(73, 190, 0);
+                    border-radius: 50%;
+                }
+            `;
+
+            if (styleElement.styleSheet) {
+                styleElement.styleSheet.cssText = styles;
+            } else {
+                styleElement.appendChild(document.createTextNode(styles));
+            }
+
+            document.head.appendChild(styleElement);
+
             for (let word of words.sort()) {
                 let listItem = document.createElement('li');
                 listItem.textContent = word;
@@ -157,10 +214,12 @@
                     let currentList = this.parentNode.id;
                     if (currentList === 'availableList') {
                         let selectedWord = this.cloneNode(true);
+                        selectedWord.querySelector('.icon').innerHTML = '<i class="bi bi-x-circle"></i>';
                         selectedList.appendChild(selectedWord);
                         this.remove();
                     } else if (currentList === 'selectedList') {
                         let availableWord = this.cloneNode(true);
+                        availableWord.querySelector('.icon').innerHTML = '<i class="bi bi-plus-circle"></i>';
                         availableList.appendChild(availableWord);
                         this.remove();
                     }
