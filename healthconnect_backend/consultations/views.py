@@ -444,12 +444,9 @@ def create_review(request, doctor_id):
                     "review": request.POST['review'],
                     "doctor_id": request.POST['doctor_id']
                 }
+                
                 post_data = json.dumps(post_data, indent=4, ensure_ascii=False)
-
-                headers = {
-                    "Content-Type": JSON_DATA,
-                    "Authorization": f"{token_type} {jwt_token}",
-                }
+                headers = { "Content-Type": JSON_DATA, "Authorization": f"{token_type} {jwt_token}", }
 
                 response = requests.post(
                     api_url, data=post_data, headers=headers)
@@ -460,13 +457,6 @@ def create_review(request, doctor_id):
                     consultationID = request.POST['consultation_id']
                     if api_response.get('status') == "success":
                         return redirect('consultation_view', consultationID)
-
-                        # title = request.session.get('token_type')[:2]
-                        # 
-                        # if title == 'dr':
-                        #     return redirect('consultation_view_patient', consultationID)
-                        # else:
-                        #     return redirect('consultation_view_doctor', consultationID)
 
                 logging.error(
                     f"Error Occured When Creating Reviews, User Id: {user_id}")
@@ -481,8 +471,73 @@ def create_review(request, doctor_id):
     else:
         messages.error(request, METHOD_ERROR)
 
-    return redirect(reverse('home'))
+    return redirect(reverse('consultation'))
 
+
+def rate_prediction(request, consultation_id):
+    
+    stored_messages = messages.get_messages(request)
+    for message in stored_messages:
+        pass
+    
+    request.session['prediction_successful'] = False
+    request.session['message_successful'] = False
+    
+    if request.method == 'POST':
+        
+        if not request.POST['diseasename'] or not request.POST['rating'] or not request.POST['doctor_id'] or not request.POST['diseaseinfo_id'] or not request.POST['consultation_id'] or not request.POST['symptoms']:
+            messages.error(request, MESSAGE)
+            
+            redirect(reverse('home'))
+        
+        try:
+            user_id = request.session.get('user_id')
+            
+            if user_id is not None:
+                
+                jwt_token = request.session.get('access_token')
+                token_type = request.session.get('token_type')
+
+                api_url = os.getenv("API_ENDPOINT") + '/consultations/rate_prediction'
+
+                symptoms = request.POST['symptoms'].split(',')
+                post_data = {
+                    "symptoms": symptoms,
+                    "rating": request.POST['rating'],
+                    "diseasename": request.POST['diseasename'],
+                    "doctor_id": request.POST['doctor_id'],
+                    "diseaseinfo_id": request.POST['diseaseinfo_id'],
+                    "consultation_id": request.POST['consultation_id'],
+                }
+                
+                post_data = json.dumps(post_data, indent=4, ensure_ascii=False)
+                headers = { "Content-Type": JSON_DATA, "Authorization": f"{token_type} {jwt_token}", }
+                
+                response = requests.post(api_url, data=post_data, headers=headers)
+                response.raise_for_status()
+                
+                if response.status_code == 200:
+                    api_response = response.json()
+                    if api_response.get('status') == "success":
+
+                        messages.success(request, "Rating Prediction Posted Successfully")
+                    
+                        consultation_url = reverse('consultation_view', args=[consultation_id])
+                        return HttpResponseRedirect(consultation_url)
+                
+                messages.error(f"Error Occured When Requesting FeedBack Data, User Id: {user_id}")
+            
+            else:
+                messages.error(request, USER_MESSAGE)
+      
+        except requests.RequestException as e:
+            messages.error(f"Error Occured When Requesting FeedBack Data, User Id: {user_id}")
+
+    else:
+        messages.error(request, METHOD_ERROR)
+    
+    redirect(reverse('consultation'))
+    
 
 def get_reviews_id(request, doctor_id):
 

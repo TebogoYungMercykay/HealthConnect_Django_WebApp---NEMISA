@@ -40,12 +40,26 @@
         </nav>
     </div>
     <!-- End Page Title -->
-    {% for message in messages %} 
-        <div class="alert alert-danger alert-dismissible fade show col-6 mx-auto" role="alert">
-            <i class="bi bi-exclamation-octagon me-1"></i>
-            {{ message }} 
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
+    {% for message in messages %}
+        {% if message.tags == 'success' %}
+            <div class="alert alert-success alert-dismissible fade show col-6 mx-auto" role="alert">
+                <i class="bi bi-exclamation-octagon me-1"></i>
+                {{ message }} 
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% elif message.tags == 'info' %}
+            <div class="alert alert-info alert-dismissible fade show col-6 mx-auto" role="alert">
+                <i class="bi bi-exclamation-octagon me-1"></i>
+                {{ message }} 
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% else %}
+            <div class="alert alert-danger alert-dismissible fade show col-6 mx-auto" role="alert">
+                <i class="bi bi-exclamation-octagon me-1"></i>
+                {{ message }} 
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endif %}
     {% endfor %}
     <div class="container">
         <section class="section register d-flex flex-column align-items-center justify-content-center py-4">
@@ -178,7 +192,7 @@
                                                             <input class="form-check-input" name="terms" type="checkbox"
                                                                 value="" id="acceptTermsPatient" required>
                                                             <label class="form-check-label" for="acceptTermsPatient">I
-                                                                agree and accept the <a href="#">terms and
+                                                                agree and accept the <a href="{% url 'get_terms_and_conditions' %}">terms and
                                                                     conditions</a></label>
                                                             <div class="invalid-feedback">You must agree before
                                                                 submitting.</div>
@@ -347,7 +361,7 @@
                                                             <input class="form-check-input" name="terms" type="checkbox"
                                                                 value="" id="acceptTerms" required>
                                                             <label class="form-check-label" for="acceptTerms">I
-                                                                agree and accept the <a href="#">terms and
+                                                                agree and accept the <a href="{% url 'get_terms_and_conditions' %}">terms and
                                                                     conditions</a></label>
                                                             <div class="invalid-feedback">You must agree before
                                                                 submitting.</div>
