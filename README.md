@@ -1,4 +1,4 @@
-# HealthConnect Django Application Documentation
+# [HealthConnect Django Application Documentation](https://github.com/DanPhala/HealthConnect---NEMISA)
 
 ![HealthConnect Django Application](./main_app/static/img/about.jpg)
 
