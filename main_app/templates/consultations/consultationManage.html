@@ -10,8 +10,8 @@
 {% endblock %}
 {% block title %}Consultations{% endblock %}
 {% block pagespecificstyle %}
-<link href="{% static 'css/chat.css' %}" rel="stylesheet">
 <link href="{% static 'css/datatable.css' %}" rel="stylesheet">
+<link href="{% static 'css/chat.css' %}" rel="stylesheet">
 <link href="{% static 'css/consultations.css' %}" rel="stylesheet">
 <link href="{% static 'css/variables.css' %}" rel="stylesheet">
 <link href="{% static 'css/conslt.css' %}" rel="stylesheet">
@@ -294,7 +294,7 @@
                         <table class="table table-striped" aria-label="Consultation History Table">
                             <thead>
                                 <tr>
-                                    <th scope="col">ID</th>
+                                    <!-- <th scope="col">ID</th> -->
                                     <th scope="col">Start Date</th>
                                     <th scope="col">Diseasename</th>
                                     <th scope="col">Confidence (%)</th>
@@ -307,7 +307,7 @@
                             <tbody>
                                 {% for consultation in consultation_history %}
                                 <tr>
-                                    <th scope="row">{{ consultation.consultation_id }}</th>
+                                    <!-- <th scope="row">{{ consultation.consultation_id }}</th> -->
                                     <td>{{ consultation.consultation_date }}</td>
                                     <td>{{ consultation.diseaseinfo.diseasename }}</td>
                                     <td>{{ consultation.diseaseinfo.confidence }}</td>

@@ -28,6 +28,7 @@ def home_id(request, fragment):
         return redirect(url)
     else:
         return redirect('')
+
 #@Tebogo please help,move this as needed
 def consultation_home(request):
 

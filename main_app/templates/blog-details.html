@@ -158,7 +158,7 @@
                             {% endfor %}
                             <!-- End comment #4 -->
                             {% if request.session.is_doctor %}
-                            <div class="reply-form">
+                            <div class="reply-form" id="reply_form">
                                 <h4>Leave a Professional Reply</h4>
                                 <form id="replyForm" action="{% url 'create_reply' %}" method="post" class="mx-auto col-12">
                                     {% csrf_token %}

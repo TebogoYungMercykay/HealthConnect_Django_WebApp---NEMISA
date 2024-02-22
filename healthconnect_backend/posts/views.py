@@ -336,7 +336,12 @@ def get_post(request, post_id):
         
     return render(request, POST_TEMPLATE, {'post_details': utils.get_posts_retrieval_error()})
 
-
+def get_post_reply(request, post_id, fragment):
+    if request.method == 'GET':
+        url = reverse('get_post', args=[post_id]) + f'#{fragment}'
+        return redirect(url)
+    else:
+        return redirect('')
 def update_post(request, post_id):
     
     stored_messages = messages.get_messages(request)

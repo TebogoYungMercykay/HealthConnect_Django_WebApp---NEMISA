@@ -684,3 +684,6 @@
     font-size: 20px;
     color: rgba(239, 47, 47, 0.722);
 }
+.maxheight {
+    min-height: 100vh !important;
+}
