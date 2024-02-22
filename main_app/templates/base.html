@@ -90,7 +90,7 @@
             <div class="contact-info d-flex align-items-center">
                 <i class="bi bi-envelope"></i>
                 <a href="mailto:info@healthconnect.co.za">info@healthconnect.co.za</a>
-                <i class="bi bi-phone"></i> +2766 532 7038
+                <i class="bi bi-phone"></i> +27 66 270 4321
             </div>
             <!-- signed in vs out top @Include personal nav or not-->
             {% if not request.session.user_id and not request.session.is_authenticated %}
@@ -448,10 +448,10 @@
                 <div class="row">
                     <div class="col-lg-3 col-md-6 footer-contact">
                         <h3>HealthConnect</h3>
-                        <p> A108 Adam Street <br> New York, NY 535022 <br> United States <br>
+                        <p> 88 Adam Street <br> Port Elizabeth, 2000 <br> South Africa <br>
                             <br>
-                            <strong>Phone:</strong> +1 5589 55488 55 <br>
-                            <strong>Email:</strong> info@example.com <br>
+                            <strong>Phone:</strong> +27 66 270 4321 <br>
+                            <strong>Email:</strong> info@healthconnect.com <br>
                         </p>
                     </div>
                     <div class="col-lg-2 col-md-6 footer-links">
@@ -506,7 +506,7 @@
                     </div>
                     <div class="col-lg-4 col-md-6 footer-newsletter">
                         <h4>Join Our Newsletter</h4>
-                        <p>Tamen quem nulla quae legam multos aute sint culpa legam noster magna</p>
+                        <p>Know what is happening in HealthConnect</p>
                         <form action="" method="post">
                             <input title="email" type="email" name="email">
                             <input type="submit" value="Subscribe" disabled>
@@ -519,7 +519,7 @@
             <div class="me-md-auto text-center text-md-start">
                 <div class="copyright"> &copy; Copyright <strong>
                         <span>HealthConnect</span>
-                    </strong>. All Rights Reserved </div>
+                    </strong>. All Rights Reserved  <a href="{% url 'get_terms_and_conditions' %}" ><br>Terms and Conditions</a> </div>
             </div>
             <div class="social-links text-center text-md-right pt-3 pt-md-0">
                 <a href="" class="twitter">
@@ -547,10 +547,10 @@
                 <div class="row">
                     <div class="col-lg-3 col-md-6 footer-contact">
                         <h3>HealthConnect</h3>
-                        <p> A108 Adam Street <br> New York, NY 535022 <br> United States <br>
+                        <p> 88 Adam Street <br> Port Elizabeth, 2000 <br> South Africa <br>
                             <br>
-                            <strong>Phone:</strong> +1 5589 55488 55 <br>
-                            <strong>Email:</strong> info@example.com <br>
+                            <strong>Phone:</strong> +27 66 270 4321 <br>
+                            <strong>Email:</strong> info@healthconnect.com <br>
                         </p>
                     </div>
                     <div class="col-lg-2 col-md-6 footer-links">
@@ -605,7 +605,7 @@
                     </div>
                     <div class="col-lg-4 col-md-6 footer-newsletter">
                         <h4>Join Our Newsletter</h4>
-                        <p>Tamen quem nulla quae legam multos aute sint culpa legam noster magna</p>
+                        <p>Know what is happening in HealthConnect</p>
                         <form action="" method="post">
                             <input title="email" type="email" name="email">
                             <input type="submit" value="Subscribe" disabled>
@@ -618,7 +618,7 @@
             <div class="me-md-auto text-center text-md-start">
                 <div class="copyright"> &copy; Copyright <strong>
                         <span>HealthConnect</span>
-                    </strong>. All Rights Reserved </div>
+                    </strong>. All Rights Reserved  <a href="{% url 'get_terms_and_conditions' %}" > <br>Terms and Conditions</a></div>
             </div>
             <div class="social-links text-center text-md-right pt-3 pt-md-0">
                 <a href="" class="twitter">
@@ -649,7 +649,8 @@
     <footer id="footer" class="footer">
         <div class="copyright"> &copy; Copyright <strong>
                 <span>HealthConnect</span>
-            </strong>. All Rights Reserved </div>
+            </strong>. All Rights Reserved  <a href="{% url 'get_terms_and_conditions' %}" > <br>Terms and Conditions</a></div>
+            
     </footer>
     {% endif %}
 

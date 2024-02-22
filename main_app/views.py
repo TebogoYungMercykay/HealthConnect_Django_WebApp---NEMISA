@@ -125,8 +125,16 @@ def login(request):
     else:
         return redirect('home')
 
+def terms_and_conditions(request):
+
+    if request.method == 'GET':
     
+            return render(request, 'terms-and-conditions.html')
+
+    else:
+        return redirect('home')
+
 def login_temp(request):
 
-    print("Form Submists Successfully")
+    print("Form Submits Successfully")
     return redirect('home')
