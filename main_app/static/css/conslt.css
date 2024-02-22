@@ -18,7 +18,7 @@
     cursor: pointer;
     font-family: 'Poppins', sans-serif;
   }
-  
+    
   .cardblock .icon{
     margin: 0 auto;
     width: 100%;
@@ -57,10 +57,10 @@
     margin-top: 20px;
     color: #2c4964;
     font-weight: 200;
-    letter-spacing: 2px;
     opacity: 0;
     max-height: 0;
     transition: all 0.3s ease;
+    box-sizing: unset;
   }
   
   .cardblock:hover {

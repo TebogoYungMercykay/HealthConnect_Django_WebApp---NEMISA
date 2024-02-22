@@ -62,7 +62,7 @@
                                             </li>
                                             <li class="d-flex align-items-center">
                                                 <i class="bi bi-chat-dots"></i>
-                                                <a href="#">
+                                                <a href="{% url 'get_post_reply' post_id=post.Post.id fragment='reply_form' %}">
                                                     {{ post.replies|length }}
                                                     {% if post.replies|length == 1 %}
                                                     Reply

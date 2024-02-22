@@ -6,6 +6,7 @@ urlpatterns = [
     path('articles', views.articles , name='articles'),
     path('search_posts' , views.search_posts, name='search_posts'),
     path('create_post' , views.create_post, name='create_post'),
+    path('get/<int:post_id>/<str:fragment>/' , views.get_post_reply, name='get_post_reply'),
     path('get/<int:post_id>' , views.get_post, name='get_post'),
     path('update/<int:post_id>' , views.update_post, name='update_post'),
     path('delete/<int:post_id>' , views.delete_post, name='delete_post'),
