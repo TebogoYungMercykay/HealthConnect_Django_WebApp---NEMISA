@@ -1,4 +1,4 @@
-[={% load static %}
+{% load static %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -116,77 +116,24 @@
                     <!-- Notification Nav -->
                     <li class="nav-item dropdown">
                         <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
-                            <i class="bi bi-bell"></i>
-                            <span class="badge bg-primary badge-number">4</span>
+                            <i class="bi bi-newspaper"></i>
+                            <span class="badge bg-primary badge-number" id="healthposts_1">4</span>
                         </a>
                         <!-- Notification Dropdown Items -->
                         <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
-                            <li class="dropdown-header"> You have 4 new notifications <a href="#">
+                            <li class="dropdown-header"> You have <span id="healthposts"> </span> <a href="#">
                                     <span class="badge rounded-pill bg-primary p-2 ms-2">View all</span>
                                 </a>
                             </li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <!-- Notification about a post reply -->
-                            <li class="notification-item">
-                                <i class="bi bi-reply text-info"></i>
-                                <div>
-                                    <h4>Post Reply</h4>
-                                    <p>Someone replied to your post on health tips</p>
-                                    <p>30 min. ago</p>
-                                </div>
-                            </li>
-                            <!-- End Notification about a post reply -->
+                            
+                            <div id="postsList">
+                            </div>
 
-                            <!-- Notification about an open consultation -->
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li class="notification-item">
-                                <i class="bi bi-calendar-plus text-success"></i>
-                                <div>
-                                    <h4>New Consultation</h4>
-                                    <p>A new consultation is open for scheduling</p>
-                                    <p>1 hr. ago</p>
-                                </div>
-                            </li>
-                            <!-- End Notification about an open consultation -->
-
-                            <!-- Notification about a closed consultation -->
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li class="notification-item">
-                                <i class="bi bi-calendar-check text-danger"></i>
-                                <div>
-                                    <h4>Closed Consultation</h4>
-                                    <p>Your recent consultation has been closed</p>
-                                    <p>2 hrs. ago</p>
-                                </div>
-                            </li>
-                            <!-- End Notification about a closed consultation -->
-
-                            <!-- Notification about a post reply -->
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li class="notification-item">
-                                <i class="bi bi-reply text-info"></i>
-                                <div>
-                                    <h4>Post Reply</h4>
-                                    <p>Someone replied to your post on healthy recipes</p>
-                                    <p>4 hrs. ago</p>
-                                </div>
-                            </li>
-                            <!-- End Notification about a post reply -->
-
-                            <!-- Show all notifications link -->
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
                             <li class="dropdown-footer">
-                                <a href="#">Show all notifications</a>
+                                <a href="{% url 'all_posts' %}">Show all Posts</a>
                             </li>
                         </ul>
                         <!-- End Notification Dropdown Items -->
@@ -196,72 +143,24 @@
                     <!-- Messages Icon -->
                     <li class="nav-item dropdown">
                         <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
-                            <i class="bi bi-chat-left-text"></i>
-                            <span class="badge bg-success badge-number">3</span>
+                            <i class="bi bi-bell"></i>
+                            <span class="badge bg-success badge-number" id="notifications_1">3</span>
                         </a>
                         <!-- Messages Dropdown Items -->
                         <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
-                            <li class="dropdown-header"> You have 3 new messages <a href="#">
+                            <li class="dropdown-header"> You have <span id="notifications"> </span> <a href="#">
                                     <span class="badge rounded-pill bg-primary p-2 ms-2">View all</span>
                                 </a>
                             </li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <!-- Message about feedback on a consultation -->
-                            <li class="message-item">
-                                <a href="#">
-                                    <img src="{% static 'img/messages-1.jpg' %}" alt="Image Loading.."
-                                        class="rounded-circle">
-                                    <div>
-                                        <h4>Maria Hudson</h4>
-                                        <p>Provided feedback on your recent consultation</p>
-                                        <p>4 hrs. ago</p>
-                                    </div>
-                                </a>
-                            </li>
-                            <!-- End Message about feedback on a consultation -->
 
-                            <!-- Message about feedback on a consultation -->
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li class="message-item">
-                                <a href="#">
-                                    <img src="{% static 'img/messages-2.jpg' %}" alt="Image Loading.."
-                                        class="rounded-circle">
-                                    <div>
-                                        <h4>Anna Nelson</h4>
-                                        <p>Asked for clarification on your recent consultation</p>
-                                        <p>6 hrs. ago</p>
-                                    </div>
-                                </a>
-                            </li>
-                            <!-- End Message about feedback on a consultation -->
+                            <div id="notificationsList">
+                            </div>
 
-                            <!-- Message about feedback on a consultation -->
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li class="message-item">
-                                <a href="#">
-                                    <img src="{% static 'img/messages-3.jpg' %}" alt="Image Loading.."
-                                        class="rounded-circle">
-                                    <div>
-                                        <h4>David Muldon</h4>
-                                        <p>Thanked you for your advice in the last consultation</p>
-                                        <p>8 hrs. ago</p>
-                                    </div>
-                                </a>
-                            </li>
-                            <!-- End Message about feedback on a consultation -->
-
-                            <!-- Show all messages link -->
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
                             <li class="dropdown-footer">
-                                <a href="#">Show all messages</a>
+                                <a href="#">Show all Notifications</a>
                             </li>
                         </ul>
                         <!-- End Messages Dropdown Items -->
