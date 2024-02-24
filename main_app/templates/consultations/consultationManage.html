@@ -43,8 +43,8 @@
             <div class="row justify-content-around">
                 {%if not request.session.is_patient or request.session.is_admin %}
                 {% comment %} PatientInfo Info {% endcomment %}
-                <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
-                    <div class="icon-box">
+                <div class="plan col-lg-4 col-md-6 mb-4 mb-lg-0">
+                    <div class="inner icon-box">
                         <div class="icon">
                             <i class="fas fa-hospital-user"></i>
                         </div>
@@ -63,16 +63,16 @@
                 {% endif %}
                 {% if consultation_info.diseaseinfo %}
                 {% comment %} Disease Info {% endcomment %}
-                <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
-                    <div class="icon-box">
+                <div class="plan col-lg-4 col-md-6 mb-4 mb-lg-0">
+                    <div class="inner icon-box">
                         <div class="icon">
                             <i class="fas fa-notes-medical"></i>
                         </div>
-                        <h4>
+                        <h4 class="title">
                             <a href="">Disease Information</a>
                         </h4>
-                        <p><strong>Name: {{ consultation_info.diseaseinfo.diseasename }}</strong></p>
-                        <p><strong>Confidence</strong> {{ consultation_info.diseaseinfo.confidence }} Percent</p>
+                        <p><strong>Name: </strong>{{ consultation_info.diseaseinfo.diseasename }}</p>
+                        <p><strong>Confidence</strong>: {{ consultation_info.diseaseinfo.confidence }} Percent</p>
                         <p><strong>ConsultDoctor</strong>: {{ consultation_info.diseaseinfo.consultdoctor }}</p>
                         <p><strong>Symptoms</strong>: {{ consultation_info.diseaseinfo.symptoms }}</p>
                         <p><strong>Consultation Status</strong>: {{ consultation_info.status }}</p>
@@ -82,12 +82,12 @@
                 {% endif %}
                 {%if not request.session.is_doctor or request.session.is_admin %}
                 <!-- {% comment %} Doctor Info {% endcomment %} -->
-                <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
-                    <div class="icon-box">
+                <div class="plan col-lg-4 col-md-6 mb-4 mb-lg-0">
+                    <div class="inner icon-box">
                         <div class="icon">
                             <i class="fas fa-hospital-user"></i>
                         </div>
-                        <h4>
+                        <h4 class="title">
                             <a href="">Doctor Information</a>
                         </h4>
                         <p><strong>Dr {{ consultation_info.doctor.surname }} {{ consultation_info.doctor.name}}</strong>
@@ -97,6 +97,30 @@
                         <p><strong>Specialization</strong>: {{ consultation_info.doctor.specialization }}</p>
                         <p><strong>Address</strong>: {{ consultation_info.doctor.address }}</p>
                         <p><strong>Rating</strong>: {{ consultation_info.doctor.rating }}</p>
+                    </div>
+
+                    <div>
+                    </div>
+                </div>
+                {% endif %}
+                {%if  request.session.is_doctor or request.session.is_patient %}
+                <!-- The Rating option -->
+                <div class="plan col-lg-4 col-md-6 mb-4 mb-lg-0">
+                    <div class="inner icon-box">
+                        <div class="icon">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                        <h4>
+                            <a href="">System Feedback</a>
+                        </h4>
+                        <p><strong>We value your input</strong>
+                        </p>
+                        <p class="info" style="  padding-top: 2rem;padding-bottom: 2rem;">Help us enhance your experience by sharing your thoughts. Together, we can make our system even better.</p>
+                        <div class="action" id="rateDoctor">
+                            <a class="btn-get-started btn consltbtn" href="#">
+                                Review
+                            </a>
+                            </div>
                     </div>
 
                     <div>
@@ -226,9 +250,9 @@
                                                 </a>
                                             </span>
                                             {% endif %}
-                                            <span class="star-icon"  id="rateDoctor">
+                                            <!-- <span class="star-icon"  id="rateDoctor">
                                                 <i class="fas fa-star"></i>
-                                            </span>
+                                            </span> -->
                                         </div>
                                     </div>
                                 </div>
