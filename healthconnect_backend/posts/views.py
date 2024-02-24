@@ -56,6 +56,9 @@ def all_posts(request):
 
                             owner_date = post["Post"]["owner"]["created_at"]
                             post["Post"]["owner"]["created_at"] = utils.format_date(owner_date)
+                            
+                            if "Post" in post and "published" in post["Post"]:
+                                del post["Post"]["published"]
 
                             post["Post"]["image_link"] = shuffled_images[index % len(shuffled_images)]
                         

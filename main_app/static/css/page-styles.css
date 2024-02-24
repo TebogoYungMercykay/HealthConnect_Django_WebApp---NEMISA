@@ -447,7 +447,7 @@
     display: flex;
 }
 
-.header-nav .messages .message-item img {
+.header-nav .messages .message-item a .rounded-circle {
     margin: 0 20px 0 10px;
     max-height: 40px;
 }
@@ -456,8 +456,15 @@
     font-size: 16px;
     font-weight: 600;
     margin-bottom: 5px;
+    margin-left: 5px;
     color: #444444;
 }
+
+
+.header-nav .messages .message-item div {
+    padding-left: 5px;
+}
+
 
 .header-nav .messages .message-item p {
     font-size: 13px;

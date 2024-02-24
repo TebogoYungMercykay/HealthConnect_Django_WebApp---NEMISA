@@ -323,6 +323,85 @@
             return true;
         }
     </script>
+    
+    {% if all_posts %}
+        <script>
+            var posts = {{ all_posts | safe }};
+            let k = true;
+
+            document.addEventListener("DOMContentLoaded", function() {    
+
+                var randomNumber1 = Math.floor(Math.random() * 3) + 1;
+                var randomNumber2 = Math.floor(Math.random() * 3) + 1;
+                
+                document.getElementById('healthposts_1').innerText = randomNumber1;
+                document.getElementById('notifications_1').innerText = randomNumber2;
+                
+                document.getElementById('healthposts').innerText = randomNumber1 + (randomNumber1 > 1 ? ' New Posts' : ' New Post');
+                document.getElementById('notifications').innerText = randomNumber2 + (randomNumber2 > 1 ? ' New Notifications' : ' New Notification');
+
+                var postsList = document.getElementById('postsList');
+                var notificationList = document.getElementById('notificationsList');
+                
+                for (var k = 0; k < randomNumber1; k++) {
+
+                    postsList.innerHTML += `
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li class="notification-item">
+                        <i class="bi bi-calendar-plus text-success"></i>
+                        <div>
+                            <h4>Latest Health Post(s)</h4>
+                            <p>Title: ${ posts[k].Post.title } </p>
+                            <p>${ posts[k].Post.created_at }</p>
+                        </div>
+                    </li>`;
+                }
+
+                var healthnotifications = []
+                var rand_time = Math.floor(Math.random() * 59) + 14;
+
+                for (var post of posts) {
+                    if (post.replies.length > 0) {
+                        healthnotifications.push(post)
+                    } else if (post.votes > 0) {
+                        healthnotifications.push(post)
+                    }
+                }
+
+                var k = 0;
+                for (var notification of healthnotifications) {
+                    if (notification.replies.length > 0 && k < randomNumber2) {
+                        notificationList.innerHTML += `
+                        <li class="message-item">
+                            <a href="#">
+                                <div>
+                                    <h4>Latest Post Reply</h4>
+                                    <p>${ notification.replies[0].content }</p>
+                                    <p>${ notification.replies[0].created_at }</p>
+                                </div>
+                            </a>
+                        </li>`;
+                        k += 1;
+                    }
+                    if (notification.votes > 0 && k < randomNumber2) {
+                        notificationList.innerHTML += `
+                        <li class="message-item">
+                            <a href="#">
+                                <div>
+                                    <h4>Health Notification</h4>
+                                    <p>This Latest Post Got ${ notification.votes } Reactions </p>
+                                    <p>${ rand_time } mins ago</p>
+                                </div>
+                            </a>
+                        </li>`;
+                        k += 1;
+                    }
+                }
+            });
+        </script>
+    {% endif %}
 
     <!-- ChatBot -->
     <script>
